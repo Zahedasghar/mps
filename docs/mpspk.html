@@ -194,19 +194,23 @@ Content:  documents: 1
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "01012018.txt" "02032023.txt" "04042023.txt" "07072022.txt" "07082022.txt"
- [6] "08032022.txt" "09042016.txt" "10102022.txt" "12062023.txt" "12092015.txt"
-[11] "12122023.txt" "14072018.txt" "14092023.txt" "14122021.txt" "15032014.txt"
-[16] "15052020.txt" "15112014.txt" "16042020.txt" "16072019.txt" "16092019.txt"
-[21] "17032020.txt" "17052014.txt" "19032021.txt" "19112021.txt" "20052017.txt"
-[26] "20052019.txt" "20092014.txt" "20092021.txt" "21032015.txt" "21052016.txt"
-[31] "21092020.txt" "21112015.txt" "22012021.txt" "22072017.txt" "22082022.txt"
-[36] "22112019.txt" "23012023.txt" "23052015.txt" "23052022.txt" "23112020.txt"
-[41] "24012022.txt" "24032020.txt" "24092016.txt" "24112017.txt" "25032017.txt"
-[46] "25052018.txt" "25062020.txt" "25112022.txt" "26062023.txt" "26112017.txt"
-[51] "27072021.txt" "28012017.txt" "28012020.txt" "28052021.txt" "29012024.txt"
-[56] "29032019.txt" "29092017.txt" "29092018.txt" "30012016.txt" "30032018.txt"
-[61] "30072016.txt" "30102023.txt" "30112018.txt" "31012019.txt" "31072023.txt"</code></pre>
+<pre><code> [1] "01012018.txt" "02032023.txt" "04042023.txt" "05102012.txt" "07072022.txt"
+ [6] "07082022.txt" "08032022.txt" "08062012.txt" "08102011.txt" "09042016.txt"
+[11] "10102022.txt" "12042013.txt" "12062023.txt" "12092015.txt" "12122023.txt"
+[16] "13042012.txt" "13112013.txt" "14072018.txt" "14092023.txt" "14122012.txt"
+[21] "14122021.txt" "15032014.txt" "15052020.txt" "15112014.txt" "16042020.txt"
+[26] "16072019.txt" "16092019.txt" "17032020.txt" "17052014.txt" "19032021.txt"
+[31] "19112021.txt" "20052017.txt" "20052019.txt" "20092014.txt" "20092021.txt"
+[36] "21032015.txt" "21052011.txt" "21052016.txt" "21062013.txt" "21092020.txt"
+[41] "21112015.txt" "22012021.txt" "22072017.txt" "22082022.txt" "22112019.txt"
+[46] "23012023.txt" "23052015.txt" "23052022.txt" "23112020.txt" "24012022.txt"
+[51] "24032020.txt" "24052010.txt" "24092016.txt" "24112009.txt" "24112017.txt"
+[56] "25032017.txt" "25052018.txt" "25062020.txt" "25112022.txt" "26032011.txt"
+[61] "26062023.txt" "26112017.txt" "27032010.txt" "27072021.txt" "28012017.txt"
+[66] "28012020.txt" "28052021.txt" "29012024.txt" "29032019.txt" "29092010.txt"
+[71] "29092017.txt" "29092018.txt" "29112010.txt" "30012016.txt" "30032018.txt"
+[76] "30072016.txt" "30102023.txt" "30112011.txt" "30112018.txt" "31012019.txt"
+[81] "31072023.txt"</code></pre>
 </div>
 </div>
 <section id="cleaning-and-preprocessing" class="level3" data-number="3.1">
@@ -270,11 +274,11 @@ Content:  documents: 1
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(termFreq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>accordingly     account    accounts     achieve    activity      adjust 
-         11         272          14          33         121           3 </code></pre>
+         12         331          26          35         137           4 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(termFreq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>    emerged   immediate  influenced    notified recalibrate       serve 
+<pre><code>     twelve     defense     emerged    notified recalibrate       serve 
           1           1           1           1           1           1 </code></pre>
 </div>
 </div>
@@ -283,45 +287,45 @@ Content:  documents: 1
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dtm.sparse <span class="ot">&lt;-</span> <span class="fu">removeSparseTerms</span>(dtm,<span class="fl">0.05</span>)</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dtm.sparse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 65 12</code></pre>
+<pre><code>[1] 81 12</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>term.frequencies <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.sparse))</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>order.frequencies <span class="ot">&lt;-</span> <span class="fu">order</span>(term.frequencies)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>term.frequencies[<span class="fu">head</span>(order.frequencies)] <span class="co"># View DTM by word frequency using head/tail functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> decided economic expected     rate  account  current 
-      66      189      243      248      272      310 </code></pre>
+<pre><code> decided expected     rate  deficit  account  current 
+      85      286      306      330      331      387 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>term.frequencies[<span class="fu">tail</span>(order.frequencies)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   sector    growth  monetary    policy inflation   percent 
-      318       429       443       511       719       733 </code></pre>
+<pre><code>   sector  monetary    growth    policy inflation   percent 
+      415       511       520       604       897       905 </code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.100</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">100</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "account"   "current"   "economic"  "expected"  "growth"    "inflation"
+<pre><code> [1] "account"   "current"   "deficit"   "expected"  "growth"    "inflation"
  [7] "monetary"  "percent"   "policy"    "rate"      "sector"   </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.200</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">200</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.200</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "account"   "current"   "expected"  "growth"    "inflation" "monetary" 
- [7] "percent"   "policy"    "rate"      "sector"   </code></pre>
+<pre><code> [1] "account"   "current"   "deficit"   "expected"  "growth"    "inflation"
+ [7] "monetary"  "percent"   "policy"    "rate"      "sector"   </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.300</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">300</span>)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.300</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "current"   "growth"    "inflation" "monetary"  "percent"   "policy"   
-[7] "sector"   </code></pre>
+<pre><code> [1] "account"   "current"   "deficit"   "growth"    "inflation" "monetary" 
+ [7] "percent"   "policy"    "rate"      "sector"   </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.500</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">500</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.500</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "inflation" "percent"   "policy"   </code></pre>
+<pre><code>[1] "growth"    "inflation" "monetary"  "percent"   "policy"   </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.700</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">700</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.700</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -353,25 +357,25 @@ Content:  documents: 1
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>sorted.frequencies <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.sparse)), <span class="at">decreasing=</span><span class="cn">TRUE</span>)   </span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sorted.frequencies, <span class="dv">20</span>)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  percent inflation    policy  monetary    growth    sector   current   account 
-      733       719       511       443       429       318       310       272 
-     rate  expected  economic   decided 
-      248       243       189        66 </code></pre>
+<pre><code>  percent inflation    policy    growth  monetary    sector   current   account 
+      905       897       604       520       511       415       387       331 
+  deficit      rate  expected   decided 
+      330       306       286        85 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">word=</span><span class="fu">names</span>(sorted.frequencies), <span class="at">freq=</span>sorted.frequencies)   </span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(word.frequencies.frame,<span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               word freq
-percent     percent  733
-inflation inflation  719
-policy       policy  511
-monetary   monetary  443
-growth       growth  429
-sector       sector  318
-current     current  310
-account     account  272
-rate           rate  248
-expected   expected  243</code></pre>
+percent     percent  905
+inflation inflation  897
+policy       policy  604
+growth       growth  520
+monetary   monetary  511
+sector       sector  415
+current     current  387
+account     account  331
+deficit     deficit  330
+rate           rate  306</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame <span class="ot">&lt;-</span> word.frequencies.frame[<span class="fu">order</span>(<span class="sc">-</span>sorted.frequencies),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -516,32 +520,32 @@ expected   expected  243</code></pre>
 <span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>dtm.tf.idf.sparse<span class="ot">&lt;-</span><span class="fu">removeSparseTerms</span>(dtm.tf.idf,<span class="fl">0.95</span>) </span>
 <span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dtm.tf.idf.sparse) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]   65 1090</code></pre>
+<pre><code>[1]   81 1160</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>term.frequencies.tf.idf <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.tf.idf.sparse))</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>sorted.frequencies.tf.idf <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.tf.idf.sparse)), <span class="at">decreasing=</span><span class="cn">TRUE</span>)   </span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sorted.frequencies.tf.idf, <span class="dv">20</span>)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>coronavirus         jul       noted       covid    recovery      global 
-  0.2235064   0.2145417   0.1898940   0.1620721   0.1614860   0.1592920 
-      views      floods     meeting      market      action      impact 
-  0.1510763   0.1483892   0.1393437   0.1382922   0.1375864   0.1358744 
-       half         yoy     earlier       money   continued     economy 
-  0.1355516   0.1345569   0.1344717   0.1327807   0.1322656   0.1320138 
-      month       risks 
-  0.1298995   0.1277581 </code></pre>
+<pre><code>        jul       noted  borrowings coronavirus   committee      global 
+  0.2841889   0.2759655   0.2673504   0.2441497   0.2295718   0.2025230 
+    meeting    recovery       covid      floods      system     economy 
+  0.1977287   0.1942000   0.1863952   0.1823993   0.1822402   0.1697131 
+       half      market       month        debt     banking       views 
+  0.1683789   0.1666185   0.1665209   0.1658002   0.1652578   0.1650299 
+       thus    improved 
+  0.1646712   0.1616948 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame.tf.idf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">word=</span><span class="fu">names</span>(sorted.frequencies.tf.idf), <span class="at">freq=</span>sorted.frequencies.tf.idf)   </span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(word.frequencies.frame.tf.idf) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   word      freq
-coronavirus coronavirus 0.2235064
-jul                 jul 0.2145417
-noted             noted 0.1898940
-covid             covid 0.1620721
-recovery       recovery 0.1614860
-global           global 0.1592920</code></pre>
+jul                 jul 0.2841889
+noted             noted 0.2759655
+borrowings   borrowings 0.2673504
+coronavirus coronavirus 0.2441497
+committee     committee 0.2295718
+global           global 0.2025230</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -624,16 +628,16 @@ global           global 0.1592920</code></pre>
 <span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(word.frequencies.frame.tf.idf,<span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   word      freq
-coronavirus coronavirus 0.2235064
-jul                 jul 0.2145417
-noted             noted 0.1898940
-covid             covid 0.1620721
-recovery       recovery 0.1614860
-global           global 0.1592920
-views             views 0.1510763
-floods           floods 0.1483892
-meeting         meeting 0.1393437
-market           market 0.1382922</code></pre>
+jul                 jul 0.2841889
+noted             noted 0.2759655
+borrowings   borrowings 0.2673504
+coronavirus coronavirus 0.2441497
+committee     committee 0.2295718
+global           global 0.2025230
+meeting         meeting 0.1977287
+recovery       recovery 0.1942000
+covid             covid 0.1863952
+floods           floods 0.1823993</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame.tf.idf <span class="ot">&lt;-</span> word.frequencies.frame.tf.idf[<span class="fu">order</span>(<span class="sc">-</span>sorted.frequencies.tf.idf),]</span>
 <span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -804,69 +808,85 @@ market           market 0.1382922</code></pre>
 <span id="cb71-21"><a href="#cb71-21" aria-hidden="true" tabindex="-1"></a>lda.topics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             [,1]
-01012018.txt    3
-02032023.txt    3
+01012018.txt    1
+02032023.txt    4
 04042023.txt    1
-07072022.txt    3
+05102012.txt    1
+07072022.txt    4
 07082022.txt    2
-08032022.txt    4
-09042016.txt    4
+08032022.txt    3
+08062012.txt    3
+08102011.txt    1
+09042016.txt    2
 10102022.txt    3
+12042013.txt    2
 12062023.txt    3
 12092015.txt    3
-12122023.txt    3
+12122023.txt    1
+13042012.txt    3
+13112013.txt    3
 14072018.txt    3
-14092023.txt    1
-14122021.txt    2
-15032014.txt    1
-15052020.txt    1
-15112014.txt    4
+14092023.txt    4
+14122012.txt    3
+14122021.txt    3
+15032014.txt    4
+15052020.txt    2
+15112014.txt    3
 16042020.txt    2
 16072019.txt    2
 16092019.txt    1
-17032020.txt    3
+17032020.txt    4
 17052014.txt    3
-19032021.txt    3
+19032021.txt    4
 19112021.txt    3
 20052017.txt    1
-20052019.txt    1
+20052019.txt    2
 20092014.txt    1
-20092021.txt    4
-21032015.txt    4
-21052016.txt    4
-21092020.txt    2
-21112015.txt    3
-22012021.txt    2
-22072017.txt    4
+20092021.txt    1
+21032015.txt    1
+21052011.txt    3
+21052016.txt    3
+21062013.txt    2
+21092020.txt    1
+21112015.txt    1
+22012021.txt    4
+22072017.txt    1
 22082022.txt    2
-22112019.txt    1
-23012023.txt    3
+22112019.txt    3
+23012023.txt    1
 23052015.txt    2
-23052022.txt    3
+23052022.txt    4
 23112020.txt    1
-24012022.txt    4
-24032020.txt    1
+24012022.txt    3
+24032020.txt    2
+24052010.txt    3
 24092016.txt    2
-24112017.txt    2
-25032017.txt    1
-25052018.txt    3
-25062020.txt    2
-25112022.txt    3
+24112009.txt    1
+24112017.txt    1
+25032017.txt    3
+25052018.txt    1
+25062020.txt    4
+25112022.txt    1
+26032011.txt    1
 26062023.txt    2
-26112017.txt    2
-27072021.txt    4
-28012017.txt    1
-28012020.txt    2
-28052021.txt    1
-29012024.txt    2
+26112017.txt    4
+27032010.txt    1
+27072021.txt    3
+28012017.txt    2
+28012020.txt    4
+28052021.txt    4
+29012024.txt    1
 29032019.txt    3
-29092017.txt    4
+29092010.txt    1
+29092017.txt    1
 29092018.txt    2
-30012016.txt    4
-30032018.txt    4
-30072016.txt    1
-30102023.txt    3
-30112018.txt    1
+29112010.txt    4
+30012016.txt    3
+30032018.txt    1
+30072016.txt    2
+30102023.txt    4
+30112011.txt    3
+30112018.txt    2
 31012019.txt    3
 31072023.txt    1</code></pre>
 </div>
@@ -875,18 +895,18 @@ market           market 0.1382922</code></pre>
 <span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(ldaOut.terms,file=paste("LDAGibbs",k,"TopicsToTerms.csv"))</span></span>
 <span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>lda.results.terms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>      Topic 1     Topic 2     Topic 3     Topic 4    
- [1,] "monetary"  "inflation" "percent"   "growth"   
- [2,] "policy"    "expected"  "inflation" "current"  
- [3,] "sector"    "rate"      "growth"    "account"  
- [4,] "economic"  "policy"    "current"   "policy"   
- [5,] "decided"   "monetary"  "account"   "sector"   
- [6,] "percent"   "decided"   "decided"   "rate"     
- [7,] "account"   "account"   "economic"  "decided"  
- [8,] "current"   "percent"   "expected"  "economic" 
- [9,] "expected"  "current"   "monetary"  "expected" 
-[10,] "growth"    "sector"    "policy"    "inflation"
-[11,] "inflation" "economic"  "rate"      "monetary" </code></pre>
+<pre><code>      Topic 1     Topic 2    Topic 3     Topic 4    
+ [1,] "growth"    "policy"   "percent"   "inflation"
+ [2,] "percent"   "rate"     "current"   "monetary" 
+ [3,] "sector"    "expected" "account"   "percent"  
+ [4,] "policy"    "monetary" "deficit"   "decided"  
+ [5,] "expected"  "decided"  "policy"    "policy"   
+ [6,] "inflation" "percent"  "decided"   "rate"     
+ [7,] "account"   "sector"   "expected"  "current"  
+ [8,] "current"   "account"  "growth"    "deficit"  
+ [9,] "decided"   "current"  "inflation" "account"  
+[10,] "deficit"   "deficit"  "monetary"  "expected" 
+[11,] "monetary"  "growth"   "rate"      "growth"   </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probabilities associated with each topic assignment</span></span>
 <span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>topic.probabilities <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(lda.results<span class="sc">@</span>gamma)</span>
@@ -1017,9 +1037,9 @@ market           market 0.1382922</code></pre>
 <span id="cb81-13"><a href="#cb81-13" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(wordscores) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   monetary      policy   committee   statement   pakistans    economic 
--0.31574582 -0.26634193 -0.70045196  0.02210561  0.01364468 -0.19070800 
+-0.31834700 -0.26834445 -0.70253373  0.01884639  0.01165021 -0.19203767 
      growth       track     achieve     highest 
- 0.01740596  0.02210561  0.01871610  0.01364468 </code></pre>
+ 0.01485533  0.01884639  0.01596416  0.01165021 </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting predicted wordscores</span></span>
 <span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>predicted.wordscores <span class="ot">&lt;-</span> <span class="fu">predict</span>(wordscores)</span>
