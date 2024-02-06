@@ -21,41 +21,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
 }
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
 }
-</style>
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="mpspk_files/libs/clipboard/clipboard.min.js"></script>
@@ -134,7 +120,6 @@ window.Quarto = {
   <li><a href="#plotting-wordfish-score" id="toc-plotting-wordfish-score" class="nav-link" data-scroll-target="#plotting-wordfish-score"><span class="header-section-number">7.3</span> Plotting Wordfish Score</a></li>
   <li><a href="#plotting-wordscores-score" id="toc-plotting-wordscores-score" class="nav-link" data-scroll-target="#plotting-wordscores-score"><span class="header-section-number">7.4</span> Plotting Wordscores Score</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8</span> Conclusion</a></li>
   </ul>
 </nav>
 </div>
@@ -168,9 +153,11 @@ window.Quarto = {
 
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
-<p>Dealing with text is typically not considered as important in training of economics and social sciences training for data analysis. This is in direct contrast with how often it has to be dealt with prior to more common analysis, or how interesting it might be to have text be the focus of analysis <a href="https://m-clark.github.io/text-analysis-with-R/intro.html#overview">Text Analysis in R</a>. This document and corresponding workshop will aim to provide a sense of the things one can do with text, and the sorts of analyses that might be useful.</p>
-<p>With this motivation, we apply textual analysis to monetary policy statements by the State Bank of Pakistan (SBP) which is aimed at understanding the monetary policy stance of the central bank. The monetary policy statement (MPS) is a document that is released by the central bank to communicate its monetary policy stance to the public. The MPS is released after the Monetary Policy Committee (MPC) meeting, which is held every two months. The MPS contains information on the current state of the economy, the central bank’s assessment of the economy, and the central bank’s monetary policy stance. The MPS is an important document for the public, as it provides information on the central bank’s monetary policy stance, which can have implications for the economy.</p>
-<p>Unstructured data, often rich in textual content, encompasses a wide array of sources such as news articles, social media posts, Twitter feeds, transcriptions from videos, and formal documents. Its abundance offers fresh opportunities and simultaneous challenges for researchers and research institutions alike. In this paper, I explore various methodologies for text analysis and propose a systematic approach to leverage text mining techniques. Furthermore, I examine potential empirical applications of these methods. This paper focuses on the primer of extracting information from unstructured data, and the potential applications of text mining in the context of monetary policy statements. Quantitative analysis of text data is a rapidly growing field, and the methods and techniques used in this paper are not exhaustive. These methods are in extensive use in political science, sociology, linguistics and information security but are not in wide use in economics and finance in Pakistan. Nevertheless, there is a growing interest in the use of text mining in economics and finance, and this paper aims to provide a starting point for researchers interested in text mining and its applications in economics and finance. Recent advances in open source software and the availability of large text datasets have made it easier for researchers to apply text mining techniques to their research. As text data is usually unstructured, therefore, it is important that a reproducible and systematic approach is used to extract information from text data. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements. Monetary policy and fiscal policy are two of the most important tools that governments and central banks use to manage the economy. Monetary policy refers to the actions taken by the central bank to influence the money supply and interest rates in the economy. The central bank uses monetary policy to achieve its objectives, such as price stability, full employment, and economic growth. The central bank uses a variety of tools to implement monetary policy, such as open market operations, discount rate changes, and reserve requirement changes. The central bank communicates its monetary policy stance to the public through monetary policy statements. Therefore, it is important to analyze these statements to understand the central bank’s monetary policy stance. Text mining techniques can be used to extract information from monetary policy statements, and to analyze the central bank’s monetary policy stance. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements.</p>
+<p>Dealing with text is typically not considered as important in training of economics and social sciences training for data analysis. This is in direct contrast with how often it has to be dealt with prior to more common analysis, or how interesting it might be to have text be the focus of analysis <a href="https://m-clark.github.io/text-analysis-with-R/intro.html#overview">Text Analysis in R</a>. This document and corresponding workshop will aim to provide a sense of the things one can do with text, and the sorts of analyses that might be useful. Moreover, in era of ML, AI and NLP, text analysis is becoming more and more important as human may miss some important information and computer-based approaches can process and summarise text more efficiently than humans. Also, textual analysis may extract meaning from text missed by human readers, who may overlook certain patterns because they do not conform to prior beliefs and expectations (Herasymova, 2022). There are many studies which have done in detail textual analysis of central bank statements <span class="citation" data-cites="shapiro2021">Shapiro and Wilson (<a href="#ref-shapiro2021" role="doc-biblioref">2021</a>)</span>. I have mainly followed</p>
+<p><span class="citation" data-cites="benchimol2022">Benchimol, Kazinnik, and Saadon (<a href="#ref-benchimol2022" role="doc-biblioref">2022</a>)</span> guidelines in this paper.</p>
+<p>With this motivation, we apply textual analysis to monetary policy statements by the State Bank of Pakistan (SBP) which is aimed at understanding the monetary policy stance of the central bank. The monetary policy statement (MPS) is a document that is released by the central bank to communicate its monetary policy stance to the public. The MPS is released after the Monetary Policy Committee (MPC) meeting, which is usually held every two months. The MPS contains information on the current state of the economy, the central bank’s assessment of the economy, and the central bank’s monetary policy stance. The MPS is an important document for the public, as it provides information on the central bank’s monetary policy stance, which can have implications for the economy.</p>
+<p>The primary objective of these statements is to inform and guide economic analysts and other stakeholders involved in advising traders within the financial markets. They provide insights into recent economic developments and anticipate future trends, thereby facilitating informed decision-making. Therefore, it becomes all the important to analyse how effectively SBP communicates through its policy statements. In assessing the effectiveness of these MPS, we employ textual analysis techniques. Unstructured data, often rich in textual content, encompasses a wide array of sources such as news articles, social media posts, Twitter feeds, transcriptions from videos, and formal documents. Its abundance offers fresh opportunities and simultaneous challenges for researchers and research institutions alike. In this paper, I explore various methodologies for text analysis and propose a systematic approach to leverage text mining techniques. Furthermore, I examine potential empirical applications of these methods.</p>
+<p>This paper focuses on the primer of extracting information from unstructured data, and the potential applications of text mining in the context of monetary policy statements. Quantitative analysis of text data is a rapidly growing field, and the methods and techniques used in this paper are not exhaustive. These methods are in extensive use in political science, sociology, linguistics and information security but are not in wide use in economics and finance in Pakistan. Nevertheless, there is a growing interest in the use of text mining in economics and finance, and this paper aims to provide a starting point for researchers interested in text mining and its applications in economics and finance. Recent advances in open source software and the availability of large text datasets have made it easier for researchers to apply text mining techniques to their research. As text data is usually unstructured, therefore, it is important that a reproducible and systematic approach is used to extract information from text data. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements. Monetary policy and fiscal policy are two of the most important tools that governments and central banks use to manage the economy. Monetary policy refers to the actions taken by the central bank to influence the money supply and interest rates in the economy. The central bank uses monetary policy to achieve its objectives, such as price stability, full employment, and economic growth. The central bank uses a variety of tools to implement monetary policy, such as open market operations, discount rate changes, and reserve requirement changes. The central bank communicates its monetary policy stance to the public through monetary policy statements. Therefore, it is important to analyze these statements to understand the central bank’s monetary policy stance. Text mining techniques can be used to extract information from monetary policy statements, and to analyze the central bank’s monetary policy stance. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements.</p>
 <p>Monetary policy statements are an important source of information for researchers, as they provide information on the central bank’s monetary policy stance, which can have implications for the economy. I have extracted monetary policy statements from the State Bank of Pakistan (SBP) website, and used text mining techniques to extract information from these statements.</p>
 <p>The paper is organized as follows. Section 2 provides an overview of text mining and its applications in economics and finance. Section 3 provides a systematic approach to text mining, and Section 4 provides an overview of the potential applications of text mining in the context of monetary policy statements. Section 5 concludes the paper.</p>
 </section>
@@ -180,8 +167,7 @@ window.Quarto = {
 </section>
 <section id="data" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="data"><span class="header-section-number">3</span> Data</h2>
-<p>Ten years data of monetary policy statements is extracted from the SBP website. There are total 65 MPS documents from 2014 to 2024 I have used in this analysis. Couple of statements are missing from the website. The data is in PDF format and I have used the <code>pdftools</code> package to extract the text from the PDF files. The text is then cleaned and preprocessed to remove any unwanted characters and symbols. The text is then tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. ‘tm’ package is used to clean and preprocess the text data, and to create the document term matrix. <code>tidyverse</code> and <code>tidytext</code> packages are used to analyze the text data and visualize data. I have used <code>tm</code> package to store data as corpus. There are other forms of data storage in R such as <code>tibble</code> and <code>dataframe</code> but I have used <code>tm</code> package to store data as corpus.</p>
-<p>All 65 MPS are stored as <code>.txt</code> files in a directory and then read into R using <code>tm</code> package. The text is then cleaned and preprocessed to remove any unwanted characters and symbols. The text is then tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. ‘tm’ package is used to clean and preprocess the text data, and to create the document term matrix.</p>
+<p>I apply topic, sentiment, and linguistic analysis to the Monetary Policy Statements (MPS) of the State Bank of Pakistan from 2005-2024 to capture the focus, tone, and clarity of monetary policy communications. Almost 19 years data of monetary policy statements is extracted from the SBP website. There are total 81 MPS documents from 2005 to 2024 I have used in this analysis. There are few statements which have very different structures, therefore are not included. Reason for excluding these statement is usually MPS is 2 to 3 pages but these occasional statements spread over 30 pages, so not included to have 95% documents of same structure. Couple of statements are missing from the website. The data is in PDF format and I have used the <code>pdftools</code> package to extract the text from the PDF files. The text is then cleaned and pre-processed to remove any unwanted characters and symbols. The text is then tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. <code>tm</code> package is used to clean and preprocess the text data, and to create the document term matrix. <code>tidyverse</code> and <code>tidytext</code> packages are used to analyze and visualize the text data. I have used <code>tm</code> package to store data as corpus. There are other forms of data storage in R such as <code>tibble</code> and <code>dataframe</code> but I have used <code>tm</code> package to store data as corpus.<code>tm</code> package is used to clean and preprocess the text data, and to create the document term matrix.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;&lt;SimpleCorpus&gt;&gt;
@@ -217,24 +203,6 @@ Content:  documents: 1
 <h3 data-number="3.1" class="anchored" data-anchor-id="cleaning-and-preprocessing"><span class="header-section-number">3.1</span> Cleaning and Preprocessing</h3>
 <p>The text data is cleaned and preprocessed to remove any unwanted characters and symbols. The text data is then tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. ‘tm’ package is used to clean and preprocess the text data, and to create the document term matrix. All the tokens not necessarily carry meaningful information. Text cleaning (or text preprocessing) makes an unstructured set of texts uniform across and within and eliminates idiosyncratic characters or meaningless terms.6 Text cleaning can be loosely divided into a set of steps as shown below. Numbers can also be removed from the text data using <code>tm_map(corpus, removeNumbers)</code>. Therefore, it is important to remove the stop words from the text data. Stop words are the most common words in a language, such as ‘the’, ‘is’, ‘at’, ‘which’, and ‘on’. These words do not carry much meaning, and can be removed from the text data. The <code>tm</code> package is used to remove the stop words from the text data. However, before removing stopwords, all words are converted to <code>lowercase</code> to make the text uniform. <code>corpus &lt;- tm_map(corpus, tolower</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using this function to remove idiosyncratic characters, numbers/punctuation, stop-words</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>toSpace <span class="ot">&lt;-</span> <span class="fu">content_transformer</span>(<span class="cf">function</span>(x, pattern){<span class="fu">return</span> (<span class="fu">gsub</span>(pattern, <span class="st">" "</span>, x))})</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">"-"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">")"</span>)</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">":"</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">"%"</span>)</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">"@"</span>)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">" - "</span>)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">","</span>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#corpus &lt;- tm_map(corpus, toSpace, ".")</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, <span class="cf">function</span>(x) <span class="fu">iconv</span>(x, <span class="at">to=</span><span class="st">'latin1'</span>, <span class="at">sub=</span><span class="st">'byte'</span>))</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, removeNumbers) </span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, stripWhitespace) </span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, removePunctuation)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, stripWhitespace)</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(corpus[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;&lt;SimpleCorpus&gt;&gt;
 Metadata:  corpus specific: 1, document level (indexed): 0
@@ -243,19 +211,6 @@ Content:  documents: 1
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              01012018.txt 
  MONETARY POLICY COMMITTEE STATE BANK OF PAKISTAN Monetary Policy Statement January Pakistans economic growth is on track to achieve its highest level in the last eleven years Average headline inflation remains within the forecast range of SBP but core inflation has continued to increase Fiscal deficit for H FY is expected to fall close to the last years percent There has been visible improvement in export growth and remittances are marginally higher However largely due to high level of imports the current account deficit remains under pressure The exchange rate adjustment in December is expected to help ease the pressure on the external front The progress in the real sector indicates that agriculture sector is set to perform better for the second year in a row Production of all major Kharif crops except maize has surpassed the level of FY Similarly large scale manufacturing LSM recorded a healthy broad based growth of percent during Jul Nov FY as compared to percent during the same period last year While there could be some deceleration in LSM growth due to sector specific issues such as sugar POL and fertilizer overall industrial activity is likely to remain strong Benefiting from both infrastructure and CPEC related investments construction and its allied industries are expected to maintain their higher growth momentum After incorporating the impact of commodity sector dynamics on the services sector the real GDP growth is projected to be around percent significantly higher than FY but marginally lower than the annual target of percent for FY This is largely due to expectations of a below target wheat crop because of a reduction in area under cultivation Average headline inflation for H FY stands at percent Meanwhile core inflation non food non energy continued to maintain its higher trajectory and clocked in at percent during the first half of the year as compared to percent last year This together with a lagged impact of PKR depreciation and rising international oil prices are likely to increase inflation in the coming months Taking into account the impact of all these developments while the average inflation for FY is still projected to fall in the range of to percent end of fiscal year YoY inflation is likely to inch towards the annual target of percent Broad money supply grew marginally by percent during st Jul th Jan FY This is a reflection of the decline in NFA and government efforts to contain expenditures Higher tax collection and proceeds from the issuance of Sukuk and Eurobond have led to reduction in net budgetary borrowing which stood at Rs billion during st Jul th Jan FY as compared to Rs billion in the corresponding period of the previous year Moreover the delay in the sugar crushing season also contributed to a moderation of demand in private sector credit On the external front export receipts posted the highest growth in the last seven years of percent in H FY against a reduction of percent in H FY Workers remittances also recorded growth percent during the first half of the year as compared to a decline in the same period last year However favorable impact of these positives was overshadowed by the continuation of strong growth in imports of goods and services The current account deficit widened to US billion during the first half of the year which was times of the deficit during the same period last year Developments in financial accounts show that one fifth of this deficit was financed by healthy foreign direct investments inflows and the rest was managed by the official flows and the countrys own resources As a result SBPs liquid foreign exchange reserves Page MONETARY POLICY COMMITTEE STATE BANK OF PAKISTAN witnessed a decline of US billion since end June to reach US billion as of th January Going forward the PKR depreciation in December the export package the lagged impact of adjustments in regulatory duties favorable external environment and expected increase in workers remittances will contribute to a gradual reduction in the countrys current account deficit While increase in international oil prices pose a major risk to this assessment managing overall balance of payments in near term depends on the realization of official financial flows Four key factors of Pakistans economy have witnessed important changes since November impinging upon the policy rate decision Firstly PKR has depreciated by around percent Secondly oil prices are hovering near USD per barrel Thirdly a number of central banks have started to adjust their policy rates upwards adversely affecting PKR interest rate differentials vis à vis their currencies Fourthly multiple indicators show that the output gap has significantly narrowed indicating a buildup of demand pressures Based on these developments MPC is of the view that in order to preempt overheating of the economy and inflation breaching its target rate this is the right time to make a policy decision that would balance growth and stability in the medium to long term Accordingly the Monetary Policy Committee has decided to raise the policy rate by bps to percent Page  </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, tolower)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#corpus &lt;- tm_map(corpus, stripWhitespace)</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, removeWords, <span class="fu">stopwords</span>(<span class="st">"english"</span>))</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#corpus &lt;- tm_map(corpus, stemDocument)</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, removeWords, <span class="fu">c</span>( <span class="st">"end"</span>, <span class="st">"also"</span>, <span class="st">"age"</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"analysis"</span>, <span class="st">"number"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"minut"</span>, <span class="st">"third"</span>, <span class="st">"fourth"</span>, <span class="st">"spokesperson"</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"staff"</span>, <span class="st">"like"</span>, <span class="st">"five"</span>, <span class="st">"four"</span>, </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"topf"</span>, <span class="st">"governor"</span>, <span class="st">"six"</span>,<span class="st">"state"</span>,<span class="st">"bank"</span>,<span class="st">"year"</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"page"</span>,<span class="st">"pakistan"</span>, <span class="st">"sbp"</span>,<span class="st">"mpc"</span>,<span class="st">"november"</span>,<span class="st">"october"</span>,<span class="st">"june"</span>,<span class="st">"july"</span>,<span class="st">"may"</span>,</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"august"</span>,<span class="st">"september"</span>,<span class="st">"december"</span>,<span class="st">"january"</span>,<span class="st">"february"</span>,<span class="st">"march"</span>,<span class="st">"april"</span>))                                   </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, stripWhitespace)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Below is the text left from corpus after removing the stop words.</p>
 <blockquote class="blockquote">
@@ -263,72 +218,46 @@ Content:  documents: 1
 </blockquote>
 <p>One final step is to stem the words. Stemming is the process of reducing words to their root form. For example, the words ‘running’, ‘runs’, and ‘ran’ are all reduced to the root form ‘run’. The <code>tm</code> package is used to stem the words in the text data.</p>
 <p>Once we have cleaned and preprocessed the text data, we can convert the text data to a document term matrix (dtm)</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting the corpsus into Document Term Matrix</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Choosing words with length between 3 and 12 characters</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">DocumentTermMatrix</span>(corpus, <span class="at">control=</span><span class="fu">list</span>(<span class="at">wordLengths=</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">12</span>))) <span class="co"># https://en.wikipedia.org/wiki/Document-term_matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>Now we create a matrix with term frequencies</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>termFreq <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(termFreq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>accordingly     account    accounts     achieve    activity      adjust 
          12         331          26          35         137           4 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(termFreq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     twelve     defense     emerged    notified recalibrate       serve 
           1           1           1           1           1           1 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing some of the most sparse terms</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dtm.sparse <span class="ot">&lt;-</span> <span class="fu">removeSparseTerms</span>(dtm,<span class="fl">0.05</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dtm.sparse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 81 12</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>term.frequencies <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.sparse))</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>order.frequencies <span class="ot">&lt;-</span> <span class="fu">order</span>(term.frequencies)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>term.frequencies[<span class="fu">head</span>(order.frequencies)] <span class="co"># View DTM by word frequency using head/tail functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> decided expected     rate  deficit  account  current 
       85      286      306      330      331      387 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>term.frequencies[<span class="fu">tail</span>(order.frequencies)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   sector  monetary    growth    policy inflation   percent 
       415       511       520       604       897       905 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.100</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">100</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "account"   "current"   "deficit"   "expected"  "growth"    "inflation"
  [7] "monetary"  "percent"   "policy"    "rate"      "sector"   </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.200</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">200</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.200</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "account"   "current"   "deficit"   "expected"  "growth"    "inflation"
  [7] "monetary"  "percent"   "policy"    "rate"      "sector"   </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.300</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">300</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.300</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "account"   "current"   "deficit"   "growth"    "inflation" "monetary" 
  [7] "percent"   "policy"    "rate"      "sector"   </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.500</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">500</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.500</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "growth"    "inflation" "monetary"  "percent"   "policy"   </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.700</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">700</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.700</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "inflation" "percent"  </code></pre>
 </div>
@@ -338,12 +267,6 @@ Content:  documents: 1
 <section id="plotting-data" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="plotting-data"><span class="header-section-number">4</span> Plotting data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>corlimit <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>title <span class="ot">&lt;-</span> <span class="st">""</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>freq.term.tdm <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm,<span class="at">lowfreq=</span><span class="dv">150</span>)  </span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dtm,<span class="at">main=</span>title,<span class="at">cex.main =</span> <span class="dv">3</span>, <span class="at">term=</span>freq.term.tdm, <span class="at">corThreshold=</span>corlimit,</span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">attrs=</span><span class="fu">list</span>(<span class="at">node=</span><span class="fu">list</span>(<span class="at">width=</span><span class="dv">15</span>,<span class="at">fontsize=</span><span class="dv">40</span>,<span class="at">fontcolor=</span><span class="dv">129</span>,<span class="at">color=</span><span class="st">"red"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -353,17 +276,12 @@ Content:  documents: 1
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating Corpus Histogram</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>sorted.frequencies <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.sparse)), <span class="at">decreasing=</span><span class="cn">TRUE</span>)   </span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sorted.frequencies, <span class="dv">20</span>)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  percent inflation    policy    growth  monetary    sector   current   account 
       905       897       604       520       511       415       387       331 
   deficit      rate  expected   decided 
       330       306       286        85 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">word=</span><span class="fu">names</span>(sorted.frequencies), <span class="at">freq=</span>sorted.frequencies)   </span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(word.frequencies.frame,<span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               word freq
 percent     percent  905
@@ -377,19 +295,8 @@ account     account  331
 deficit     deficit  330
 rate           rate  306</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame <span class="ot">&lt;-</span> word.frequencies.frame[<span class="fu">order</span>(<span class="sc">-</span>sorted.frequencies),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting Frequencies</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Term appears at least 100 times in the corpus (can be customized)</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">subset</span>(word.frequencies.frame, freq<span class="sc">&gt;</span><span class="dv">100</span>), <span class="fu">aes</span>(<span class="fu">reorder</span>(word, <span class="sc">-</span>freq), freq))    </span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>)   </span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">18</span>)) </span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>), <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">16</span>,<span class="at">face=</span><span class="st">"bold"</span>))</span>
-<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plotted.frequencies &lt;- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))</span></span>
-<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Corpus Terms"</span>) </span>
-<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Frequencies"</span>) </span>
-<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>plotted.frequencies  <span class="co"># Printing word frequencies</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -399,16 +306,6 @@ rate           rate  306</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting Frequencies (term appears at least 200 times in the corpus)</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">subset</span>(word.frequencies.frame, freq<span class="sc">&gt;</span><span class="dv">200</span>), <span class="fu">aes</span>(<span class="fu">reorder</span>(word, <span class="sc">-</span>freq), freq))    </span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>)   </span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">18</span>)) </span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>), <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">16</span>,<span class="at">face=</span><span class="st">"bold"</span>))</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co">#plotted.frequencies &lt;- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))</span></span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Corpus Terms"</span>) </span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Frequencies"</span>) </span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="co">#printing word frequencies</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -418,10 +315,6 @@ rate           rate  306</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dendogram Figure</span></span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>dendogram <span class="ot">&lt;-</span> <span class="fu">dist</span>(<span class="fu">t</span>(dtm.sparse), <span class="at">method=</span><span class="st">"euclidian"</span>)   </span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>dendogram.fit <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dendogram, <span class="at">method=</span><span class="st">"ward.D"</span>)   </span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dendogram.fit, <span class="at">cex=</span><span class="fl">1.4</span>, <span class="at">main=</span><span class="st">""</span>, <span class="at">cex.main=</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -431,17 +324,6 @@ rate           rate  306</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjacency Figure</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>dtm.sparse.matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dtm.sparse)</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>tdm.sparse.matrix <span class="ot">&lt;-</span> <span class="fu">t</span>(dtm.sparse.matrix)</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>tdm.sparse.matrix <span class="ot">&lt;-</span> tdm.sparse.matrix <span class="sc">%*%</span> dtm.sparse.matrix</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>graph.tdm.sparse <span class="ot">&lt;-</span> <span class="fu">graph.adjacency</span>(tdm.sparse.matrix, <span class="at">weighted=</span>T, <span class="at">mode=</span><span class="st">"undirected"</span>)</span>
-<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>graph.tdm.sparse <span class="ot">&lt;-</span> <span class="fu">simplify</span>(graph.tdm.sparse)</span>
-<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizing the Adjacency Figure</span></span>
-<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.igraph</span>(graph.tdm.sparse, <span class="at">layout=</span><span class="fu">layout.fruchterman.reingold</span>(graph.tdm.sparse, <span class="at">niter=</span><span class="dv">10</span>, <span class="at">area=</span><span class="dv">120</span><span class="sc">*</span><span class="fu">vcount</span>(graph.tdm.sparse)<span class="sc">^</span><span class="dv">2</span>),</span>
-<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">vertex.color =</span> <span class="dv">169</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -455,11 +337,6 @@ rate           rate  306</code></pre>
 <h2 data-number="5" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">5</span> Word Cloud</h2>
 <p>The <code>wordcloud</code> package is used to visualize the text data. The word cloud is a visual representation of the frequency of words in the text data. The size of the word in the word cloud is proportional to the frequency of the word in the text data. The <code>wordcloud</code> package is used to create the word cloud. The word cloud is created using the document term matrix. The word cloud is used to identify the most frequent words in the text data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wordclouds</span></span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">142</span>) <span class="co"># This is just the design of the wordcloud picture, can be changed (use same seed)</span></span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>pal2 <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">8</span>,<span class="st">"Dark2"</span>) <span class="co"># This is just the design of the wordcloud picture, can be changed</span></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">50</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>)) <span class="co"># Can be changed depending on the desired term frequency</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -467,7 +344,6 @@ rate           rate  306</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">100</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>)) <span class="co"># Can be changed depending on the desired term frequency</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -475,7 +351,6 @@ rate           rate  306</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">200</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>)) <span class="co"># Can be changed depending on the desired term frequency</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -483,7 +358,6 @@ rate           rate  306</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">300</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -491,7 +365,6 @@ rate           rate  306</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">400</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -499,7 +372,6 @@ rate           rate  306</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">500</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -512,20 +384,9 @@ rate           rate  306</code></pre>
 <h3 data-number="5.1" class="anchored" data-anchor-id="weighting-scheme"><span class="header-section-number">5.1</span> Weighting Scheme</h3>
 <p>Another weighting scheme - term frequency/inverse document frequency is given here to create word clouds. The term frequency/inverse document frequency is a statistical measure used to evaluate the importance of a word in a document relative to a collection of documents.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Another weighting scheme - term frequency/inverse document frequency</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Wordclouds w. tf-idf</span></span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a new dtm with tf-idf weighting instead of term frequency weighting</span></span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>dtm.tf.idf <span class="ot">&lt;-</span> <span class="fu">DocumentTermMatrix</span>(corpus, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">weighting =</span> weightTfIdf, <span class="at">wordLengths=</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">12</span>)))</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>dtm.tf.idf.sparse<span class="ot">&lt;-</span><span class="fu">removeSparseTerms</span>(dtm.tf.idf,<span class="fl">0.95</span>) </span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dtm.tf.idf.sparse) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]   81 1160</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>term.frequencies.tf.idf <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.tf.idf.sparse))</span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>sorted.frequencies.tf.idf <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.tf.idf.sparse)), <span class="at">decreasing=</span><span class="cn">TRUE</span>)   </span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sorted.frequencies.tf.idf, <span class="dv">20</span>)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        jul       noted  borrowings coronavirus   committee      global 
   0.2841889   0.2759655   0.2673504   0.2441497   0.2295718   0.2025230 
@@ -536,8 +397,6 @@ rate           rate  306</code></pre>
        thus    improved 
   0.1646712   0.1616948 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame.tf.idf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">word=</span><span class="fu">names</span>(sorted.frequencies.tf.idf), <span class="at">freq=</span>sorted.frequencies.tf.idf)   </span>
-<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(word.frequencies.frame.tf.idf) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   word      freq
 jul                 jul 0.2841889
@@ -549,15 +408,6 @@ global           global 0.2025230</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Barplot of tf-idf terms</span></span>
-<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">subset</span>(word.frequencies.frame.tf.idf, freq<span class="sc">&gt;</span><span class="fl">0.5</span>), <span class="fu">aes</span>(<span class="fu">reorder</span>(word, <span class="sc">-</span>freq), freq))    </span>
-<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>)   </span>
-<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">18</span>)) </span>
-<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>), <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>))</span>
-<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plotted.frequencies &lt;- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))</span></span>
-<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Corpus Terms"</span>) </span>
-<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Frequencies"</span>) </span>
-<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf  <span class="co">#printing word frequencies</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -567,11 +417,6 @@ global           global 0.2025230</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wordclouds with tf-idf</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">142</span>) <span class="co"># This is just the design of the wordcloud picture, can be changed (use same seed)</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>pal2 <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">8</span>,<span class="st">"Dark2"</span>)</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies.tf.idf), term.frequencies.tf.idf, <span class="at">min.freq=</span><span class="fl">0.05</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="dv">6</span>, .<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -579,7 +424,6 @@ global           global 0.2025230</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies.tf.idf), term.frequencies.tf.idf, <span class="at">min.freq=</span><span class="fl">0.10</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="dv">6</span>, .<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -587,7 +431,6 @@ global           global 0.2025230</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies.tf.idf), term.frequencies.tf.idf, <span class="at">min.freq=</span><span class="fl">0.30</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="dv">5</span>, .<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -595,7 +438,6 @@ global           global 0.2025230</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies.tf.idf), term.frequencies.tf.idf, <span class="at">min.freq=</span><span class="fl">0.40</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="dv">5</span>, .<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -603,7 +445,6 @@ global           global 0.2025230</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies.tf.idf), term.frequencies.tf.idf, <span class="at">min.freq=</span><span class="fl">0.50</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="dv">5</span>, .<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -623,9 +464,6 @@ global           global 0.2025230</code></pre>
 <h3 data-number="5.2" class="anchored" data-anchor-id="tidytext-data-table"><span class="header-section-number">5.2</span> Tidytext data table</h3>
 <p>Now I shall use <code>tidytext</code> with the help of unnest_tokens to convert one word per row.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating Corpus Histogram w. Tf-Idf Weighting</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame.tf.idf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">word=</span><span class="fu">names</span>(sorted.frequencies.tf.idf), <span class="at">freq=</span>sorted.frequencies.tf.idf)   </span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(word.frequencies.frame.tf.idf,<span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   word      freq
 jul                 jul 0.2841889
@@ -639,17 +477,6 @@ recovery       recovery 0.1942000
 covid             covid 0.1863952
 floods           floods 0.1823993</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame.tf.idf <span class="ot">&lt;-</span> word.frequencies.frame.tf.idf[<span class="fu">order</span>(<span class="sc">-</span>sorted.frequencies.tf.idf),]</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting Frequencies</span></span>
-<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">subset</span>(word.frequencies.frame.tf.idf, freq<span class="sc">&gt;</span><span class="fl">0.15</span>), <span class="fu">aes</span>(<span class="fu">reorder</span>(word, <span class="sc">-</span>freq), freq))    </span>
-<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>)   </span>
-<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">18</span>)) </span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>), <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>))</span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="co"># plotted.frequencies &lt;- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))</span></span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Corpus Terms"</span>) </span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Frequencies w. tf-idf Weighting"</span>) </span>
-<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf  <span class="co"># printing word frequencies</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -659,14 +486,6 @@ floods           floods 0.1823993</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dendogram Figure</span></span>
-<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>tdm.tf.idf.sparse <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">t</span>(dtm.tf.idf.sparse))</span>
-<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>tdm.tf.idf.sparse <span class="ot">&lt;-</span> tdm.tf.idf.sparse <span class="sc">%*%</span> <span class="fu">t</span>(tdm.tf.idf.sparse)</span>
-<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>dtm.tf.idf.sparse<span class="fl">.095</span> <span class="ot">&lt;-</span> <span class="fu">removeSparseTerms</span>(dtm.tf.idf, <span class="fl">0.05</span>)</span>
-<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>dendogram <span class="ot">&lt;-</span> <span class="fu">dist</span>(<span class="fu">t</span>(dtm.tf.idf.sparse<span class="fl">.095</span>), <span class="at">method=</span><span class="st">"euclidian"</span>)   </span>
-<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>dendogram.fit <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dendogram, <span class="at">method=</span><span class="st">"ward.D"</span>)    </span>
-<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dendogram.fit, <span class="at">cex=</span><span class="fl">1.4</span>, <span class="at">main=</span><span class="st">""</span>, <span class="at">cex.main=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -674,60 +493,12 @@ floods           floods 0.1823993</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>null device 
           1 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># HeatMap w. Tf-Idf (change format)</span></span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>dtm.tf.idf.sparse.matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dtm.tf.idf.sparse)</span>
-<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co"># rownames(dtm.tf.idf.sparse.matrix) &lt;- document.corpus.names.df$date</span></span>
-<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="co"># arrange(document.corpus.names.df, date)</span></span>
-<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>date.dtm.tf.idf.sparse.matrix <span class="ot">&lt;-</span> <span class="fu">cbind</span>(dtm.tf.idf.sparse.matrix,document.corpus.names.df<span class="sc">$</span>date)</span>
-<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>my_palette <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"white"</span>, <span class="st">"pink"</span>, <span class="st">"red"</span>))(<span class="at">n =</span> <span class="dv">99</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmaps</span></span>
-<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">'D:/RepTemplates/mps/sbp/heatmaps.pdf'</span>)</span>
-<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap.2</span>(date.dtm.tf.idf.sparse.matrix[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>],</span>
-<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">""</span>, <span class="co"># heat map title</span></span>
-<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
-<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">keysize =</span> <span class="dv">1</span>,</span>
-<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>),  <span class="co"># Adjusted margin values</span></span>
-<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">density.info =</span> <span class="st">"none"</span>,  <span class="co"># turns off density plot inside color legend</span></span>
-<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">trace =</span> <span class="st">"none"</span>,         <span class="co"># turns off trace lines inside the heat map</span></span>
-<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> my_palette,       <span class="co"># use on color palette defined earlier</span></span>
-<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">srtCol =</span> <span class="dv">45</span>,</span>
-<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">cexCol =</span> <span class="fl">1.4</span>,</span>
-<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">Colv =</span> <span class="st">"NA"</span>)            <span class="co"># turn off column clustering</span></span>
-<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap.2</span>(date.dtm.tf.idf.sparse.matrix[<span class="dv">13</span><span class="sc">:</span><span class="dv">24</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>],</span>
-<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">"Frequencies"</span>, <span class="co"># heat map title</span></span>
-<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
-<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">keysize =</span> <span class="dv">1</span>,</span>
-<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>),  <span class="co"># Adjusted margin values</span></span>
-<span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">density.info =</span> <span class="st">"none"</span>,  <span class="co"># turns off density plot inside color legend</span></span>
-<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">trace =</span> <span class="st">"none"</span>,         <span class="co"># turns off trace lines inside the heat map</span></span>
-<span id="cb62-22"><a href="#cb62-22" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> my_palette,       <span class="co"># use on color palette defined earlier</span></span>
-<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">srtCol =</span> <span class="dv">45</span>,</span>
-<span id="cb62-24"><a href="#cb62-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">cexCol =</span> <span class="fl">1.4</span>,</span>
-<span id="cb62-25"><a href="#cb62-25" aria-hidden="true" tabindex="-1"></a>          <span class="at">Colv =</span> <span class="st">"NA"</span>)            <span class="co"># turn off column clustering</span></span>
-<span id="cb62-26"><a href="#cb62-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-27"><a href="#cb62-27" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap.2</span>(date.dtm.tf.idf.sparse.matrix[<span class="dv">25</span><span class="sc">:</span><span class="dv">36</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>],</span>
-<span id="cb62-28"><a href="#cb62-28" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">"Frequencies"</span>, <span class="co"># heat map title</span></span>
-<span id="cb62-29"><a href="#cb62-29" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
-<span id="cb62-30"><a href="#cb62-30" aria-hidden="true" tabindex="-1"></a>          <span class="at">keysize =</span> <span class="dv">1</span>,</span>
-<span id="cb62-31"><a href="#cb62-31" aria-hidden="true" tabindex="-1"></a>          <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>),  <span class="co"># Adjusted margin values</span></span>
-<span id="cb62-32"><a href="#cb62-32" aria-hidden="true" tabindex="-1"></a>          <span class="at">density.info =</span> <span class="st">"none"</span>,  <span class="co"># turns off density plot inside color legend</span></span>
-<span id="cb62-33"><a href="#cb62-33" aria-hidden="true" tabindex="-1"></a>          <span class="at">trace =</span> <span class="st">"none"</span>,         <span class="co"># turns off trace lines inside the heat map</span></span>
-<span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> my_palette,       <span class="co"># use on color palette defined earlier</span></span>
-<span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a>          <span class="at">srtCol =</span> <span class="dv">45</span>,</span>
-<span id="cb62-36"><a href="#cb62-36" aria-hidden="true" tabindex="-1"></a>          <span class="at">cexCol =</span> <span class="fl">1.4</span>,</span>
-<span id="cb62-37"><a href="#cb62-37" aria-hidden="true" tabindex="-1"></a>          <span class="at">Colv =</span> <span class="st">"NA"</span>)            <span class="co"># turn off column clustering</span></span>
-<span id="cb62-38"><a href="#cb62-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb62-39"><a href="#cb62-39" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>png 
   2 </code></pre>
@@ -738,74 +509,27 @@ floods           floods 0.1823993</code></pre>
 <section id="exploratory-data-analysis" class="level2" data-number="6">
 <h2 data-number="6" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">6</span> Exploratory Data Analysis</h2>
 <p>With conversion to dtm, exploratory data analysis is performed to identify patterns and trends in the text data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>order.frequencies<span class="ot">&lt;-</span><span class="fu">order</span>(term.frequencies)</span>
-<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(order.frequencies,<span class="dv">6</span>)</span>
-<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">tail</span>(order.frequencies,<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <section id="word-counting" class="level3" data-number="6.1">
 <h3 data-number="6.1" class="anchored" data-anchor-id="word-counting"><span class="header-section-number">6.1</span> Word counting</h3>
 <p>Dictionary-based text analysis is popular approach mainly because its easy to implement and interpret. The dictionary-based approach is based on the idea that the frequency of certain words in a text can be used to infer the sentiment of the text. However, sentiment words from one discipline to another might be different. For example, words used in psychology to express positive sentiments might be different from words used in economics. Therefore, it is important to use a dictionary that is specific to the discipline. The <code>tidytext</code> package is used to count the frequency of words in the text data. The <code>get_sentiments</code> function is used to get the sentiment words from the dictionary. In this document, I am using Loughran and McDonald dictionary to count the frequency of positive and negative words in the text data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>dictionary.finance.negative <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">read.csv</span>(<span class="st">"negative.csv"</span>, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>)[,<span class="dv">1</span>]</span>
-<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>dictionary.finance.positive <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">read.csv</span>(<span class="st">"positive.csv"</span>, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>)[,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>It is important to be careful in use of words to be positive or negative. For example, the word ‘increase’ is generally considered to be positive, but in the context of inflation, it is considered to be negative. Similarly the word ‘decrease’ is generally considered to be negative, but in the context of inflation, it is considered to be positive. Another example is <code>tight</code> and <code>loose</code> monetary policy. The word <code>tight</code> is generally considered to be positive, but in the context of monetary policy, it is considered to be negative. Similarly, the word <code>loose</code> is generally considered to be negative, but in the context of monetary policy, it is considered to be positive. Therefore, it is important to be careful in use of words to be positive or negative.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>dictionary.negative <span class="sc">&lt;</span> <span class="sc">-</span><span class="fu">tolower</span>(dictionary.negative)dictionary.negative <span class="sc">&lt;</span> <span class="sc">-</span><span class="fu">stemDocument</span>(dictionary.negative)dictionary.negative <span class="sc">&lt;</span> <span class="sc">-</span><span class="fu">unique</span>(dictionary.negative)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>Next we use the <code>match</code> function that compares the terms in both dictionary and the text data. The <code>match</code> function returns the position of the first match. If there is no match, the <code>match</code> function returns <code>NA</code>. The <code>match</code> function is used to count the frequency of positive and negative words in the text data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>corpus.terms <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">colnames</span>(dtm)positive.matches <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">match</span>(corpus.terms, dictionary.positive, <span class="at">nomatch=</span><span class="dv">0</span>)negative.matches <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">match</span>(corpus.terms, dictionary.negative, <span class="at">nomatch=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 <p>We then assign a value of 1 to the positive and negative matches. The <code>ifelse</code> function is used to assign a value of 1 to the positive and negative, and measure the overall sentiment for each document <span class="math inline">\(i\)</span> by the following formula: <span class="math inline">\(Score_i = \frac{Positive_i - Negative_i}{Positive_i + Negative} \in [-1,1]\)</span></p>
 <p>A document is considered to be positive if the score is greater than 0, and negative if the score is less than 0.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>document.score<span class="ot">=</span><span class="fu">sum</span>(positive.matches) <span class="sc">-</span> <span class="fu">sum</span>(negative.matches)</span>
-<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>scores.data.frame<span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">scores=</span> document.score) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 <section id="relative-frequency" class="level3" data-number="6.2">
 <h3 data-number="6.2" class="anchored" data-anchor-id="relative-frequency"><span class="header-section-number">6.2</span> Relative frequency</h3>
 <p>The relative frequency of positive and negative words is calculated by dividing the frequency of positive and negative words by the total number of words in the text.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>wordscore.estimation.results <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">wordfish</span>(corpus,dir </span>
-<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 <section id="semantic-analysis" class="level3" data-number="6.3">
 <h3 data-number="6.3" class="anchored" data-anchor-id="semantic-analysis"><span class="header-section-number">6.3</span> Semantic analysis</h3>
 <p>The semantic analysis is performed to identify the semantic orientation of the text data. The semantic orientation is the degree to which a word is positive or negative. The semantic orientation is calculated by dividing the frequency of positive words by the frequency of negative words. The semantic orientation is calculated for each document in the text data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>lsa_model <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">textmodel_lsa</span>(dtm)lsa_predict <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">predict</span>(lsa_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 </section>
 <section id="topic-models" class="level2" data-number="7">
 <h2 data-number="7" class="anchored" data-anchor-id="topic-models"><span class="header-section-number">7</span> Topic models</h2>
 <p>Topic modeling is a type of statistical model for discovering the abstract “topics” that occur in a collection of documents. Topic modeling is a frequently used text-mining tool for discovery of hidden semantic structures in a text body. Intuitively, given that a document is about a particular topic, one would expect particular words to appear in the document more or less frequently: “dog” and “bone” will appear more often in documents about dogs, “cat” and “meow” will appear in documents about cats, and “the” and “is” will appear equally in both. A document typically concerns multiple topics in different proportions; thus, in a document that is 10% about cats and 90% about dogs, there would probably be about 9 times more dog words than cat words. The “topics” produced by topic modeling techniques are clusters of similar words. A topic model captures this intuition in a mathematical framework, which allows examining a set of documents and discovering, based on the statistics of the words in each, what the topics might be and what each document’s balance of topics is.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(topicmodels)</span>
-<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Gibbs Sampling Calibration</span></span>
-<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>burnin <span class="ot">&lt;-</span> <span class="dv">4000</span></span>
-<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>iter <span class="ot">&lt;-</span> <span class="dv">1500</span></span>
-<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>thin <span class="ot">&lt;-</span> <span class="dv">500</span></span>
-<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>seed <span class="ot">&lt;-</span><span class="fu">list</span>(<span class="dv">2003</span>,<span class="dv">5</span>,<span class="dv">63</span>,<span class="dv">100001</span>,<span class="dv">765</span>)</span>
-<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a>nstart <span class="ot">&lt;-</span> <span class="dv">5</span></span>
-<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>best <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
-<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of topics</span></span>
-<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="co"># This is arbitrary, need to make educated guess/play around with data</span></span>
-<span id="cb71-12"><a href="#cb71-12" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">4</span></span>
-<span id="cb71-13"><a href="#cb71-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-14"><a href="#cb71-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Run LDA using Gibbs sampling</span></span>
-<span id="cb71-15"><a href="#cb71-15" aria-hidden="true" tabindex="-1"></a>lda.results <span class="ot">&lt;-</span><span class="fu">LDA</span>(dtm.sparse, k, <span class="at">method=</span><span class="st">"Gibbs"</span>, <span class="at">control=</span><span class="fu">list</span>(<span class="at">nstart=</span>nstart, <span class="at">seed =</span> seed, <span class="at">best=</span>best, <span class="at">burnin =</span> burnin, <span class="at">iter =</span> iter, <span class="at">thin=</span>thin))</span>
-<span id="cb71-16"><a href="#cb71-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-17"><a href="#cb71-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Write out results</span></span>
-<span id="cb71-18"><a href="#cb71-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Docs to topics</span></span>
-<span id="cb71-19"><a href="#cb71-19" aria-hidden="true" tabindex="-1"></a>lda.topics <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">topics</span>(lda.results))</span>
-<span id="cb71-20"><a href="#cb71-20" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(ldaOut.topics,file=paste("LDAGibbs",k,"DocsToTopics.csv"))</span></span>
-<span id="cb71-21"><a href="#cb71-21" aria-hidden="true" tabindex="-1"></a>lda.topics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             [,1]
 01012018.txt    1
@@ -890,10 +614,6 @@ floods           floods 0.1823993</code></pre>
 31012019.txt    3
 31072023.txt    1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 6 terms in each topic</span></span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>lda.results.terms <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">terms</span>(lda.results,<span class="dv">11</span>))</span>
-<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(ldaOut.terms,file=paste("LDAGibbs",k,"TopicsToTerms.csv"))</span></span>
-<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>lda.results.terms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Topic 1     Topic 2    Topic 3     Topic 4    
  [1,] "growth"    "policy"   "percent"   "inflation"
@@ -908,41 +628,11 @@ floods           floods 0.1823993</code></pre>
 [10,] "deficit"   "deficit"  "monetary"  "expected" 
 [11,] "monetary"  "growth"   "rate"      "growth"   </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probabilities associated with each topic assignment</span></span>
-<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>topic.probabilities <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(lda.results<span class="sc">@</span>gamma)</span>
-<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(topic.probabilities,<span class="at">file=</span><span class="fu">paste</span>(<span class="st">"LDAGibbs"</span>, k ,<span class="st">"TopicProbabilities.csv"</span>))</span>
-<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>topic.probabilities <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(topic.probabilities)</span>
-<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Probabilities for each term in each topic.</span></span>
-<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>posterior.terms <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">posterior</span>(lda.results)<span class="sc">$</span>terms)</span>
-<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmaps with topic modeling</span></span>
-<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a><span class="co"># This is set manually by considering the words appearing in each list</span></span>
-<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(topic.probabilities) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Policy Rate"</span>, <span class="st">"Inflation"</span>, <span class="st">"Monetary Policy"</span>, <span class="st">"Current Account"</span>)</span>
-<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a><span class="co"># rownames(topic.probabilities) &lt;- document.corpus.names.df$date</span></span>
-<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb75-15"><a href="#cb75-15" aria-hidden="true" tabindex="-1"></a>date.topic.probabilities <span class="ot">&lt;-</span> <span class="fu">cbind</span>(document.corpus.names.df<span class="sc">$</span>date, topic.probabilities)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <section id="heatmap" class="level3" data-number="7.1">
 <h3 data-number="7.1" class="anchored" data-anchor-id="heatmap"><span class="header-section-number">7.1</span> Heatmap</h3>
 <p>The heatmap is used to visualize the frequency of positive and negative words in the text data. The <code>heatmap</code> function is used to create the heatmap. The <code>heatmap</code> function takes the frequency of positive and negative words as input and creates the heatmap. The <code>heatmap</code> function is used to create the heatmap. The <code>heatmap</code> function takes the frequency of positive and negative words as input and creates the heatmap.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">'D:/RepTemplates/mps/sbp/heatmaps_lda.pdf'</span>)</span>
-<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap.2</span>(date.topic.probabilities[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, ],</span>
-<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">""</span>,</span>
-<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
-<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">keysize =</span> <span class="dv">1</span>,</span>
-<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">8</span>),</span>
-<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">density.info =</span> <span class="st">"none"</span>,</span>
-<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">trace =</span> <span class="st">"none"</span>,</span>
-<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> my_palette,</span>
-<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">srtCol =</span> <span class="dv">45</span>,</span>
-<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">cexCol =</span> <span class="fl">1.4</span>,</span>
-<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">Colv =</span> <span class="st">"NA"</span>)</span>
-<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>png 
   2 </code></pre>
@@ -951,124 +641,27 @@ floods           floods 0.1823993</code></pre>
 </section>
 <section id="wordfish" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="wordfish"><span class="header-section-number">7.2</span> Wordfish</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting our corpus into another format</span></span>
-<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>quanteda.corpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(corpus)</span>
-<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>dfm.corpus <span class="ot">&lt;-</span> <span class="fu">dfm</span>(quanteda.corpus)</span>
-<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(dfm.corpus) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(document.corpus.names.df)</span>
-<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Defining which documents in the corpus represent the most dovish and the most hawkish positions</span></span>
-<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>dovish <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">rownames</span>(dfm.corpus) <span class="sc">%in%</span> <span class="st">"15032014"</span> <span class="sc">|</span> <span class="fu">rownames</span>(dfm.corpus) <span class="sc">%in%</span> <span class="st">"29012024"</span>)</span>
-<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>hawkish <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">rownames</span>(dfm.corpus) <span class="sc">%in%</span> <span class="st">"17052014"</span> <span class="sc">|</span> <span class="fu">rownames</span>(dfm.corpus) <span class="sc">%in%</span> <span class="st">"15112014"</span>)</span>
-<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Running the wordfish algorithm</span></span>
-<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a>wordfish <span class="ot">&lt;-</span> <span class="fu">textmodel_wordfish</span>(dfm.corpus, <span class="at">dir =</span> <span class="fu">c</span>(dovish, hawkish))</span>
-<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(wordfish, n = 10)</span></span>
-<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a><span class="co"># coef(wordfish) |&gt; head(10)</span></span>
-<span id="cb78-14"><a href="#cb78-14" aria-hidden="true" tabindex="-1"></a><span class="co"># str(wordfish) </span></span>
-<span id="cb78-15"><a href="#cb78-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-16"><a href="#cb78-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting estimated parameters</span></span>
-<span id="cb78-17"><a href="#cb78-17" aria-hidden="true" tabindex="-1"></a>documents <span class="ot">&lt;-</span> wordfish<span class="sc">$</span>docs</span>
-<span id="cb78-18"><a href="#cb78-18" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> wordfish<span class="sc">$</span>theta</span>
-<span id="cb78-19"><a href="#cb78-19" aria-hidden="true" tabindex="-1"></a>se.theta <span class="ot">&lt;-</span> wordfish<span class="sc">$</span>se.theta</span>
-<span id="cb78-20"><a href="#cb78-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-21"><a href="#cb78-21" aria-hidden="true" tabindex="-1"></a>predicted.wordfish <span class="ot">&lt;-</span> <span class="fu">predict</span>(wordfish, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
-<span id="cb78-22"><a href="#cb78-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-23"><a href="#cb78-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting sentiment score based on the algorithm</span></span>
-<span id="cb78-24"><a href="#cb78-24" aria-hidden="true" tabindex="-1"></a>wordfish.score <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(predicted.wordfish<span class="sc">$</span>fit)</span>
-<span id="cb78-25"><a href="#cb78-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-26"><a href="#cb78-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting Wordfish Score</span></span>
-<span id="cb78-27"><a href="#cb78-27" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>day <span class="ot">&lt;-</span> <span class="fu">substr</span>(document.corpus.names, <span class="dv">1</span>, <span class="dv">2</span>)</span>
-<span id="cb78-28"><a href="#cb78-28" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">substr</span>(document.corpus.names, <span class="dv">3</span>, <span class="dv">4</span>)</span>
-<span id="cb78-29"><a href="#cb78-29" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">substr</span>(document.corpus.names, <span class="dv">5</span>, <span class="dv">8</span>)</span>
-<span id="cb78-30"><a href="#cb78-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-31"><a href="#cb78-31" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">paste</span>(wordfish.score<span class="sc">$</span>month, wordfish.score<span class="sc">$</span>day, wordfish.score<span class="sc">$</span>year, <span class="at">sep=</span><span class="st">"/"</span>)</span>
-<span id="cb78-32"><a href="#cb78-32" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(wordfish.score<span class="sc">$</span>date, <span class="st">"%m/%d/%Y"</span>)</span>
-<span id="cb78-33"><a href="#cb78-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-34"><a href="#cb78-34" aria-hidden="true" tabindex="-1"></a>wordfish.score <span class="ot">&lt;-</span> wordfish.score[ <span class="fu">order</span>(wordfish.score<span class="sc">$</span>date), ]</span>
-<span id="cb78-35"><a href="#cb78-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb78-36"><a href="#cb78-36" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>lag <span class="ot">&lt;-</span> <span class="fu">lag</span>(wordfish.score<span class="sc">$</span>fit)</span>
-<span id="cb78-37"><a href="#cb78-37" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>change <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(wordfish.score<span class="sc">$</span>fit <span class="sc">-</span> wordfish.score<span class="sc">$</span>lag)<span class="sc">/</span>wordfish.score<span class="sc">$</span>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section>
 <section id="plotting-wordfish-score" class="level3" data-number="7.3">
 <h3 data-number="7.3" class="anchored" data-anchor-id="plotting-wordfish-score"><span class="header-section-number">7.3</span> Plotting Wordfish Score</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">'D:/RepTemplates/mps/sbp/wordfish.pdf'</span>)</span>
-<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wordfish.score, <span class="fu">aes</span>(date, fit, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> wordfish.score<span class="sc">$</span>date, <span class="at">y =</span> fit)) <span class="sc">+</span> </span>
-<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_hc</span>() <span class="sc">+</span></span>
-<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_hc</span>() <span class="sc">+</span></span>
-<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Date"</span>) <span class="sc">+</span> </span>
-<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sentiment"</span>) <span class="sc">+</span></span>
-<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
-<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>)) </span>
-<span id="cb79-11"><a href="#cb79-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb79-12"><a href="#cb79-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Change in Wordfish Score over time</span></span>
-<span id="cb79-13"><a href="#cb79-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wordfish.score, <span class="fu">aes</span>(date, change, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb79-14"><a href="#cb79-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> change)) <span class="sc">+</span> </span>
-<span id="cb79-15"><a href="#cb79-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb79-16"><a href="#cb79-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_hc</span>() <span class="sc">+</span></span>
-<span id="cb79-17"><a href="#cb79-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_hc</span>() <span class="sc">+</span></span>
-<span id="cb79-18"><a href="#cb79-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Date"</span>) <span class="sc">+</span> </span>
-<span id="cb79-19"><a href="#cb79-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sentiment"</span>) <span class="sc">+</span></span>
-<span id="cb79-20"><a href="#cb79-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
-<span id="cb79-21"><a href="#cb79-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>)) </span>
-<span id="cb79-22"><a href="#cb79-22" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>png 
   2 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assiging scores to documents that we think represent most dovish/hawkish positions</span></span>
-<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>reference.scores <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(dfm.corpus))</span>
-<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>reference.scores[<span class="fu">str_detect</span>(<span class="fu">rownames</span>(dfm.corpus), <span class="st">"15032014"</span>)] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span>  </span>
-<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>reference.scores[<span class="fu">str_detect</span>(<span class="fu">rownames</span>(dfm.corpus), <span class="st">"29012024"</span>)] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span>  </span>
-<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>reference.scores[<span class="fu">str_detect</span>(<span class="fu">rownames</span>(dfm.corpus), <span class="st">"17052014"</span>)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a>reference.scores[<span class="fu">str_detect</span>(<span class="fu">rownames</span>(dfm.corpus), <span class="st">"15112014"</span>)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Running the Wordscores algorithm</span></span>
-<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a>wordscores <span class="ot">&lt;-</span> <span class="fu">textmodel_wordscores</span>(dfm.corpus, reference.scores, <span class="at">scale=</span><span class="st">"linear"</span>, <span class="at">smooth=</span><span class="dv">1</span>) </span>
-<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb81-12"><a href="#cb81-12" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(wordscores, n = 10)</span></span>
-<span id="cb81-13"><a href="#cb81-13" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(wordscores) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   monetary      policy   committee   statement   pakistans    economic 
 -0.31834700 -0.26834445 -0.70253373  0.01884639  0.01165021 -0.19203767 
      growth       track     achieve     highest 
  0.01485533  0.01884639  0.01596416  0.01165021 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting predicted wordscores</span></span>
-<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>predicted.wordscores <span class="ot">&lt;-</span> <span class="fu">predict</span>(wordscores)</span>
-<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>wordscores.score <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(predicted.wordscores)</span>
-<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>wordscores.score<span class="sc">$</span>document.corpus.names <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plots</span></span>
-<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a><span class="co"># wordscores.score &lt;- wordscores.score[ order(wordscores.score$date), ]</span></span>
-<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a>wordscores.score<span class="sc">$</span>lag <span class="ot">&lt;-</span> <span class="fu">lag</span>(wordscores.score<span class="sc">$</span>predicted.wordscores)</span>
-<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a>wordscores.score<span class="sc">$</span>change <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(wordscores.score<span class="sc">$</span>predicted.wordscores <span class="sc">-</span> wordscores.score<span class="sc">$</span>lag)<span class="sc">/</span>wordscores.score<span class="sc">$</span>predicted.wordscores</span>
-<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a>wordscores.score<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">rownames</span>(wordscores.score)</span>
-<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a>wordscores.score<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(wordscores.score<span class="sc">$</span>date, <span class="at">format =</span> <span class="st">"%d%m%Y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plotting-wordscores-score" class="level3" data-number="7.4">
 <h3 data-number="7.4" class="anchored" data-anchor-id="plotting-wordscores-score"><span class="header-section-number">7.4</span> Plotting Wordscores Score</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Wordscores Score over time</span></span>
-<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wordscores.score, <span class="fu">aes</span>(date, predicted.wordscores)) <span class="sc">+</span></span>
-<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> predicted.wordscores)) <span class="sc">+</span> </span>
-<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_hc</span>() <span class="sc">+</span></span>
-<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_hc</span>() <span class="sc">+</span></span>
-<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Date"</span>) <span class="sc">+</span> </span>
-<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sentiment"</span>) <span class="sc">+</span></span>
-<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
-<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1076,16 +669,6 @@ floods           floods 0.1823993</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Change in Wordscores Score over time</span></span>
-<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wordscores.score, <span class="fu">aes</span>(date, change)) <span class="sc">+</span></span>
-<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> change)) <span class="sc">+</span> </span>
-<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
-<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_hc</span>() <span class="sc">+</span></span>
-<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_hc</span>() <span class="sc">+</span></span>
-<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Date"</span>) <span class="sc">+</span> </span>
-<span id="cb85-8"><a href="#cb85-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sentiment"</span>) <span class="sc">+</span></span>
-<span id="cb85-9"><a href="#cb85-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
-<span id="cb85-10"><a href="#cb85-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1094,13 +677,18 @@ floods           floods 0.1823993</code></pre>
 </div>
 </div>
 </div>
+
 </section>
-</section>
-<section id="conclusion" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8</span> Conclusion</h2>
 </section>
 
-</main>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-benchimol2022" class="csl-entry" role="listitem">
+Benchimol, Jonathan, Sophia Kazinnik, and Yossi Saadon. 2022. <span>“Text Mining Methodologies with R: An Application to Central Bank Texts.”</span> <em>Machine Learning with Applications</em> 8 (June): 100286. <a href="https://doi.org/10.1016/j.mlwa.2022.100286">https://doi.org/10.1016/j.mlwa.2022.100286</a>.
+</div>
+<div id="ref-shapiro2021" class="csl-entry" role="listitem">
+Shapiro, Adam Hale, and Daniel J Wilson. 2021. <span>“Taking the Fed at Its Word: A New Approach to Estimating Central Bank Objectives Using Text Analysis.”</span> <em>The Review of Economic Studies</em> 89 (5): 2768–2805. <a href="https://doi.org/10.1093/restud/rdab094">https://doi.org/10.1093/restud/rdab094</a>.
+</div>
+</div></section></div></main>
 <!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
