@@ -1,0 +1,1472 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.528">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Zahid Asghar">
+
+<title>Text Mining Monetary Policy Statements</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="mpspk_files/libs/clipboard/clipboard.min.js"></script>
+<script src="mpspk_files/libs/quarto-html/quarto.js"></script>
+<script src="mpspk_files/libs/quarto-html/popper.min.js"></script>
+<script src="mpspk_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="mpspk_files/libs/quarto-html/anchor.min.js"></script>
+<link href="mpspk_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="mpspk_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="mpspk_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="mpspk_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="mpspk_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#theoretical-background" id="toc-theoretical-background" class="nav-link" data-scroll-target="#theoretical-background"><span class="header-section-number">2</span> Theoretical Background</a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">3</span> Data</a>
+  <ul class="collapse">
+  <li><a href="#cleaning-and-preprocessing" id="toc-cleaning-and-preprocessing" class="nav-link" data-scroll-target="#cleaning-and-preprocessing"><span class="header-section-number">3.1</span> Cleaning and Preprocessing</a></li>
+  </ul></li>
+  <li><a href="#plotting-data" id="toc-plotting-data" class="nav-link" data-scroll-target="#plotting-data"><span class="header-section-number">4</span> Plotting data</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">5</span> Word Cloud</a>
+  <ul class="collapse">
+  <li><a href="#weighting-scheme" id="toc-weighting-scheme" class="nav-link" data-scroll-target="#weighting-scheme"><span class="header-section-number">5.1</span> Weighting Scheme</a></li>
+  <li><a href="#tidytext-data-table" id="toc-tidytext-data-table" class="nav-link" data-scroll-target="#tidytext-data-table"><span class="header-section-number">5.2</span> Tidytext data table</a></li>
+  </ul></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">6</span> Exploratory Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#word-counting" id="toc-word-counting" class="nav-link" data-scroll-target="#word-counting"><span class="header-section-number">6.1</span> Word counting</a></li>
+  <li><a href="#relative-frequency" id="toc-relative-frequency" class="nav-link" data-scroll-target="#relative-frequency"><span class="header-section-number">6.2</span> Relative frequency</a></li>
+  <li><a href="#semantic-analysis" id="toc-semantic-analysis" class="nav-link" data-scroll-target="#semantic-analysis"><span class="header-section-number">6.3</span> Semantic analysis</a></li>
+  </ul></li>
+  <li><a href="#topic-models" id="toc-topic-models" class="nav-link" data-scroll-target="#topic-models"><span class="header-section-number">7</span> Topic models</a>
+  <ul class="collapse">
+  <li><a href="#heatmap" id="toc-heatmap" class="nav-link" data-scroll-target="#heatmap"><span class="header-section-number">7.1</span> Heatmap</a></li>
+  <li><a href="#wordfish" id="toc-wordfish" class="nav-link" data-scroll-target="#wordfish"><span class="header-section-number">7.2</span> Wordfish</a></li>
+  <li><a href="#plotting-wordfish-score" id="toc-plotting-wordfish-score" class="nav-link" data-scroll-target="#plotting-wordfish-score"><span class="header-section-number">7.3</span> Plotting Wordfish Score</a></li>
+  <li><a href="#plotting-wordscores-score" id="toc-plotting-wordscores-score" class="nav-link" data-scroll-target="#plotting-wordscores-score"><span class="header-section-number">7.4</span> Plotting Wordscores Score</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">8</span> Conclusion</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Text Mining Monetary Policy Statements</h1>
+<p class="subtitle lead">A Primer</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Zahid Asghar </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>Dealing with text is typically not considered as important in training of economics and social sciences training for data analysis. This is in direct contrast with how often it has to be dealt with prior to more common analysis, or how interesting it might be to have text be the focus of analysis <a href="https://m-clark.github.io/text-analysis-with-R/intro.html#overview">Text Analysis in R</a>. This document and corresponding workshop will aim to provide a sense of the things one can do with text, and the sorts of analyses that might be useful.</p>
+<p>With this motivation, we apply textual analysis to monetary policy statements by the State Bank of Pakistan (SBP) which is aimed at understanding the monetary policy stance of the central bank. The monetary policy statement (MPS) is a document that is released by the central bank to communicate its monetary policy stance to the public. The MPS is released after the Monetary Policy Committee (MPC) meeting, which is held every two months. The MPS contains information on the current state of the economy, the central bank’s assessment of the economy, and the central bank’s monetary policy stance. The MPS is an important document for the public, as it provides information on the central bank’s monetary policy stance, which can have implications for the economy.</p>
+<p>Unstructured data, often rich in textual content, encompasses a wide array of sources such as news articles, social media posts, Twitter feeds, transcriptions from videos, and formal documents. Its abundance offers fresh opportunities and simultaneous challenges for researchers and research institutions alike. In this paper, I explore various methodologies for text analysis and propose a systematic approach to leverage text mining techniques. Furthermore, I examine potential empirical applications of these methods. This paper focuses on the primer of extracting information from unstructured data, and the potential applications of text mining in the context of monetary policy statements. Quantitative analysis of text data is a rapidly growing field, and the methods and techniques used in this paper are not exhaustive. These methods are in extensive use in political science, sociology, linguistics and information security but are not in wide use in economics and finance in Pakistan. Nevertheless, there is a growing interest in the use of text mining in economics and finance, and this paper aims to provide a starting point for researchers interested in text mining and its applications in economics and finance. Recent advances in open source software and the availability of large text datasets have made it easier for researchers to apply text mining techniques to their research. As text data is usually unstructured, therefore, it is important that a reproducible and systematic approach is used to extract information from text data. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements. Monetary policy and fiscal policy are two of the most important tools that governments and central banks use to manage the economy. Monetary policy refers to the actions taken by the central bank to influence the money supply and interest rates in the economy. The central bank uses monetary policy to achieve its objectives, such as price stability, full employment, and economic growth. The central bank uses a variety of tools to implement monetary policy, such as open market operations, discount rate changes, and reserve requirement changes. The central bank communicates its monetary policy stance to the public through monetary policy statements. Therefore, it is important to analyze these statements to understand the central bank’s monetary policy stance. Text mining techniques can be used to extract information from monetary policy statements, and to analyze the central bank’s monetary policy stance. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements.</p>
+<p>Monetary policy statements are an important source of information for researchers, as they provide information on the central bank’s monetary policy stance, which can have implications for the economy. I have extracted monetary policy statements from the State Bank of Pakistan (SBP) website, and used text mining techniques to extract information from these statements.</p>
+<p>The paper is organized as follows. Section 2 provides an overview of text mining and its applications in economics and finance. Section 3 provides a systematic approach to text mining, and Section 4 provides an overview of the potential applications of text mining in the context of monetary policy statements. Section 5 concludes the paper.</p>
+</section>
+<section id="theoretical-background" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="theoretical-background"><span class="header-section-number">2</span> Theoretical Background</h2>
+<p>The principal goal of text mining is to capture and analyze all possible meanings embeded in text. Text mining transform unstructured data into structured data, and to extract information from text data. Text mining is a rapidly growing field, and has applications in a wide range of fields, such as information retrieval, natural language processing, and data mining. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data. Text mining techniques can be used to extract information from text data, and to analyze the text data. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can also be used to summarize the content of text data, and to extract information from the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data. Text mining techniques can be used to extract information from text data, and to analyze the text data. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can also be used to summarize the content of text data, and to extract information from the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data. Text mining techniques can be used to extract information from text data, and to analyze the text data. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can also be used to summarize the content of text data, and to extract information from the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data.</p>
+</section>
+<section id="data" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="data"><span class="header-section-number">3</span> Data</h2>
+<p>Ten years data of monetary policy statements is extracted from the SBP website. There are total 65 MPS documents from 2014 to 2024 I have used in this analysis. Couple of statements are missing from the website. The data is in PDF format and I have used the <code>pdftools</code> package to extract the text from the PDF files. The text is then cleaned and preprocessed to remove any unwanted characters and symbols. The text is then tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. ‘tm’ package is used to clean and preprocess the text data, and to create the document term matrix. <code>tidyverse</code> and <code>tidytext</code> packages are used to analyze the text data and visualize data. I have used <code>tm</code> package to store data as corpus. There are other forms of data storage in R such as <code>tibble</code> and <code>dataframe</code> but I have used <code>tm</code> package to store data as corpus.</p>
+<p>All 65 MPS are stored as <code>.txt</code> files in a directory and then read into R using <code>tm</code> package. The text is then cleaned and preprocessed to remove any unwanted characters and symbols. The text is then tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. ‘tm’ package is used to clean and preprocess the text data, and to create the document term matrix.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;&lt;SimpleCorpus&gt;&gt;
+Metadata:  corpus specific: 1, document level (indexed): 0
+Content:  documents: 1
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                01012018.txt 
+                               MONETARY POLICY COMMITTEE\n                                STATE BANK OF PAKISTAN\nMonetary Policy Statement\nJanuary 2018\n\nPakistan’s economic growth is on track to achieve its highest level in the last eleven years. Average\nheadline inflation remains within the forecast range of SBP, but core inflation has continued to\nincrease. Fiscal deficit for H1-FY18 is expected to fall close to the last year’s 2.5 percent. There has\nbeen visible improvement in export growth and remittances are marginally higher. However, largely\ndue to high level of imports the current account deficit remains under pressure. The exchange rate\nadjustment in December 2017 is expected to help ease the pressure on the external front.\n\nThe progress in the real sector indicates that agriculture sector is set to perform better for the\nsecond year in a row. Production of all major Kharif crops, except maize, has surpassed the level of\nFY17. Similarly, large scale manufacturing (LSM) recorded a healthy broad-based growth of 7.2\npercent during Jul-Nov FY18 as compared to 3.2 percent during the same period last year. While\nthere could be some deceleration in LSM growth due to sector specific issues such as sugar, POL\nand fertilizer, overall industrial activity is likely to remain strong. Benefiting from both infrastructure\nand CPEC related investments, construction and its allied industries are expected to maintain their\nhigher growth momentum. After incorporating the impact of commodity sector dynamics on the\nservices sector, the real GDP growth is projected to be around 5.8 percent, significantly higher than\nFY17, but marginally lower than the annual target of 6 percent for FY18. This is largely due to\nexpectations of a below-target wheat crop because of a reduction in area under cultivation.\n\nAverage headline inflation for H1-FY18 stands at 3.8 percent. Meanwhile, core inflation (non-food-\nnon-energy) continued to maintain its higher trajectory, and clocked in at 5.5 percent during the first\nhalf of the year as compared to 4.9 percent last year. This together with a lagged impact of PKR\ndepreciation and rising international oil prices are likely to increase inflation in the coming months.\nTaking into account the impact of all these developments, while the average inflation for FY18 is\nstill projected to fall in the range of 4.5 to 5.5 percent, end of fiscal year YoY inflation is likely to\ninch towards the annual target of 6 percent.\n\nBroad money supply grew marginally by 1.9 percent during 1st Jul-12th Jan FY18.. This is a reflection\nof the decline in NFA and government efforts to contain expenditures. Higher tax collection and\nproceeds from the issuance of Sukuk and Eurobond have led to reduction in net budgetary\nborrowing which stood at Rs. 401.9 billion during 1st Jul-12th Jan FY18 as compared to Rs. 470.4\nbillion in the corresponding period of the previous year. Moreover, the delay in the sugar crushing\nseason also contributed to a moderation of demand in private sector credit.\n\nOn the external front, export receipts posted the highest growth in the last seven years of 10.8\npercent in H1-FY18 against a reduction of 1.4 percent in H1-FY17. Worker’s remittances also\nrecorded growth (2.5 percent) during the first half of the year as compared to a decline in the same\nperiod last year. However, favorable impact of these positives was overshadowed by the\ncontinuation of strong growth in imports of goods and services. The current account deficit\nwidened to US$ 7.4 billion during the first half of the year, which was 1.6 times of the deficit during\nthe same period last year. Developments in financial accounts show that one-fifth of this deficit was\nfinanced by healthy foreign direct investments inflows, and the rest was managed by the official\nflows and the country’s own resources. As a result, SBP’s liquid foreign exchange reserves\n\n                                                                                                     Page 1\n\n                               MONETARY POLICY COMMITTEE\n                               STATE BANK OF PAKISTAN\nwitnessed a decline of US$ 2.6 billion since end June 2017 to reach US$ 13.5 billion as of 19th\nJanuary 2018. Going forward, the PKR depreciation in December 2017, the export package, the\nlagged impact of adjustments in regulatory duties, favorable external environment, and expected\nincrease in workers’ remittances, will contribute to a gradual reduction in the country’s current\naccount deficit. While increase in international oil prices pose a major risk to this assessment,\nmanaging overall balance of payments in near term depends on the realization of official financial\nflows.\n\nFour key factors of Pakistan’s economy have witnessed important changes since November 2017\nimpinging upon the policy rate decision. Firstly, PKR has depreciated by around 5 percent.\nSecondly, oil prices are hovering near USD 70 per barrel. Thirdly, a number of central banks have\nstarted to adjust their policy rates upwards adversely affecting PKR interest-rate differentials vis-à-\nvis their currencies. Fourthly, multiple indicators show that the output gap has significantly\nnarrowed indicating a buildup of demand pressures.\n\nBased on these developments, MPC is of the view that in order to preempt overheating of the\neconomy and inflation breaching its target rate, this is the right time to make a policy decision that\nwould balance growth and stability in the medium to long term. Accordingly, the Monetary Policy\nCommittee has decided to raise the policy rate by 25 bps to 6.00 percent.\n\n\n\n\n                                                                                                    Page 2\n </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "01012018.txt" "02032023.txt" "04042023.txt" "07072022.txt" "07082022.txt"
+ [6] "08032022.txt" "09042016.txt" "10102022.txt" "12062023.txt" "12092015.txt"
+[11] "12122023.txt" "14072018.txt" "14092023.txt" "14122021.txt" "15032014.txt"
+[16] "15052020.txt" "15112014.txt" "16042020.txt" "16072019.txt" "16092019.txt"
+[21] "17032020.txt" "17052014.txt" "19032021.txt" "19112021.txt" "20052017.txt"
+[26] "20052019.txt" "20092014.txt" "20092021.txt" "21032015.txt" "21052016.txt"
+[31] "21092020.txt" "21112015.txt" "22012021.txt" "22072017.txt" "22082022.txt"
+[36] "22112019.txt" "23012023.txt" "23052015.txt" "23052022.txt" "23112020.txt"
+[41] "24012022.txt" "24032020.txt" "24092016.txt" "24112017.txt" "25032017.txt"
+[46] "25052018.txt" "25062020.txt" "25112022.txt" "26062023.txt" "26112017.txt"
+[51] "27072021.txt" "28012017.txt" "28012020.txt" "28052021.txt" "29012024.txt"
+[56] "29032019.txt" "29092017.txt" "29092018.txt" "30012016.txt" "30032018.txt"
+[61] "30072016.txt" "30102023.txt" "30112018.txt" "31012019.txt" "31072023.txt"</code></pre>
+</div>
+</div>
+<section id="cleaning-and-preprocessing" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="cleaning-and-preprocessing"><span class="header-section-number">3.1</span> Cleaning and Preprocessing</h3>
+<p>The text data is cleaned and preprocessed to remove any unwanted characters and symbols. The text data is then tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. ‘tm’ package is used to clean and preprocess the text data, and to create the document term matrix. All the tokens not necessarily carry meaningful information. Text cleaning (or text preprocessing) makes an unstructured set of texts uniform across and within and eliminates idiosyncratic characters or meaningless terms.6 Text cleaning can be loosely divided into a set of steps as shown below. Numbers can also be removed from the text data using <code>tm_map(corpus, removeNumbers)</code>. Therefore, it is important to remove the stop words from the text data. Stop words are the most common words in a language, such as ‘the’, ‘is’, ‘at’, ‘which’, and ‘on’. These words do not carry much meaning, and can be removed from the text data. The <code>tm</code> package is used to remove the stop words from the text data. However, before removing stopwords, all words are converted to <code>lowercase</code> to make the text uniform. <code>corpus &lt;- tm_map(corpus, tolower</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using this function to remove idiosyncratic characters, numbers/punctuation, stop-words</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>toSpace <span class="ot">&lt;-</span> <span class="fu">content_transformer</span>(<span class="cf">function</span>(x, pattern){<span class="fu">return</span> (<span class="fu">gsub</span>(pattern, <span class="st">" "</span>, x))})</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">"-"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">")"</span>)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">":"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">"%"</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">"@"</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">" - "</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, toSpace, <span class="st">","</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#corpus &lt;- tm_map(corpus, toSpace, ".")</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, <span class="cf">function</span>(x) <span class="fu">iconv</span>(x, <span class="at">to=</span><span class="st">'latin1'</span>, <span class="at">sub=</span><span class="st">'byte'</span>))</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, removeNumbers) </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, stripWhitespace) </span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, removePunctuation)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, stripWhitespace)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">inspect</span>(corpus[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;&lt;SimpleCorpus&gt;&gt;
+Metadata:  corpus specific: 1, document level (indexed): 0
+Content:  documents: 1
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             01012018.txt 
+ MONETARY POLICY COMMITTEE STATE BANK OF PAKISTAN Monetary Policy Statement January Pakistans economic growth is on track to achieve its highest level in the last eleven years Average headline inflation remains within the forecast range of SBP but core inflation has continued to increase Fiscal deficit for H FY is expected to fall close to the last years percent There has been visible improvement in export growth and remittances are marginally higher However largely due to high level of imports the current account deficit remains under pressure The exchange rate adjustment in December is expected to help ease the pressure on the external front The progress in the real sector indicates that agriculture sector is set to perform better for the second year in a row Production of all major Kharif crops except maize has surpassed the level of FY Similarly large scale manufacturing LSM recorded a healthy broad based growth of percent during Jul Nov FY as compared to percent during the same period last year While there could be some deceleration in LSM growth due to sector specific issues such as sugar POL and fertilizer overall industrial activity is likely to remain strong Benefiting from both infrastructure and CPEC related investments construction and its allied industries are expected to maintain their higher growth momentum After incorporating the impact of commodity sector dynamics on the services sector the real GDP growth is projected to be around percent significantly higher than FY but marginally lower than the annual target of percent for FY This is largely due to expectations of a below target wheat crop because of a reduction in area under cultivation Average headline inflation for H FY stands at percent Meanwhile core inflation non food non energy continued to maintain its higher trajectory and clocked in at percent during the first half of the year as compared to percent last year This together with a lagged impact of PKR depreciation and rising international oil prices are likely to increase inflation in the coming months Taking into account the impact of all these developments while the average inflation for FY is still projected to fall in the range of to percent end of fiscal year YoY inflation is likely to inch towards the annual target of percent Broad money supply grew marginally by percent during st Jul th Jan FY This is a reflection of the decline in NFA and government efforts to contain expenditures Higher tax collection and proceeds from the issuance of Sukuk and Eurobond have led to reduction in net budgetary borrowing which stood at Rs billion during st Jul th Jan FY as compared to Rs billion in the corresponding period of the previous year Moreover the delay in the sugar crushing season also contributed to a moderation of demand in private sector credit On the external front export receipts posted the highest growth in the last seven years of percent in H FY against a reduction of percent in H FY Workers remittances also recorded growth percent during the first half of the year as compared to a decline in the same period last year However favorable impact of these positives was overshadowed by the continuation of strong growth in imports of goods and services The current account deficit widened to US billion during the first half of the year which was times of the deficit during the same period last year Developments in financial accounts show that one fifth of this deficit was financed by healthy foreign direct investments inflows and the rest was managed by the official flows and the countrys own resources As a result SBPs liquid foreign exchange reserves Page MONETARY POLICY COMMITTEE STATE BANK OF PAKISTAN witnessed a decline of US billion since end June to reach US billion as of th January Going forward the PKR depreciation in December the export package the lagged impact of adjustments in regulatory duties favorable external environment and expected increase in workers remittances will contribute to a gradual reduction in the countrys current account deficit While increase in international oil prices pose a major risk to this assessment managing overall balance of payments in near term depends on the realization of official financial flows Four key factors of Pakistans economy have witnessed important changes since November impinging upon the policy rate decision Firstly PKR has depreciated by around percent Secondly oil prices are hovering near USD per barrel Thirdly a number of central banks have started to adjust their policy rates upwards adversely affecting PKR interest rate differentials vis à vis their currencies Fourthly multiple indicators show that the output gap has significantly narrowed indicating a buildup of demand pressures Based on these developments MPC is of the view that in order to preempt overheating of the economy and inflation breaching its target rate this is the right time to make a policy decision that would balance growth and stability in the medium to long term Accordingly the Monetary Policy Committee has decided to raise the policy rate by bps to percent Page  </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, tolower)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#corpus &lt;- tm_map(corpus, stripWhitespace)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, removeWords, <span class="fu">stopwords</span>(<span class="st">"english"</span>))</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#corpus &lt;- tm_map(corpus, stemDocument)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, removeWords, <span class="fu">c</span>( <span class="st">"end"</span>, <span class="st">"also"</span>, <span class="st">"age"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"analysis"</span>, <span class="st">"number"</span>, <span class="st">"two"</span>, <span class="st">"three"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"minut"</span>, <span class="st">"third"</span>, <span class="st">"fourth"</span>, <span class="st">"spokesperson"</span>,</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"staff"</span>, <span class="st">"like"</span>, <span class="st">"five"</span>, <span class="st">"four"</span>, </span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>                                        <span class="st">"topf"</span>, <span class="st">"governor"</span>, <span class="st">"six"</span>,<span class="st">"state"</span>,<span class="st">"bank"</span>,<span class="st">"year"</span>,</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"page"</span>,<span class="st">"pakistan"</span>, <span class="st">"sbp"</span>,<span class="st">"mpc"</span>,<span class="st">"november"</span>,<span class="st">"october"</span>,<span class="st">"june"</span>,<span class="st">"july"</span>,<span class="st">"may"</span>,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                                       <span class="st">"august"</span>,<span class="st">"september"</span>,<span class="st">"december"</span>,<span class="st">"january"</span>,<span class="st">"february"</span>,<span class="st">"march"</span>,<span class="st">"april"</span>))                                   </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>corpus <span class="ot">&lt;-</span> <span class="fu">tm_map</span>(corpus, stripWhitespace)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Below is the text left from corpus after removing the stop words.</p>
+<blockquote class="blockquote">
+<p>monetary policy committee monetary policy statement ’s economic growth track achieve highest level last eleven years average headline inflation remains within forecast range core inflation continued increase fiscal deficit h fy expected fall close last ’s percent visible improvement export growth remittances marginally higher however largely due high level imports current account deficit remains pressure exchange rate adjustment expected help ease pressure external front progress real sector indicates agriculture sector set perform better second row production major kharif crops except maize surpassed level fy similarly large scale manufacturing lsm recorded healthy broad based growth percent.</p>
+</blockquote>
+<p>One final step is to stem the words. Stemming is the process of reducing words to their root form. For example, the words ‘running’, ‘runs’, and ‘ran’ are all reduced to the root form ‘run’. The <code>tm</code> package is used to stem the words in the text data.</p>
+<p>Once we have cleaned and preprocessed the text data, we can convert the text data to a document term matrix (dtm)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting the corpsus into Document Term Matrix</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Choosing words with length between 3 and 12 characters</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>dtm <span class="ot">&lt;-</span> <span class="fu">DocumentTermMatrix</span>(corpus, <span class="at">control=</span><span class="fu">list</span>(<span class="at">wordLengths=</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">12</span>))) <span class="co"># https://en.wikipedia.org/wiki/Document-term_matrix</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now we create a matrix with term frequencies</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>termFreq <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(termFreq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>accordingly     account    accounts     achieve    activity      adjust 
+         11         272          14          33         121           3 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(termFreq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    emerged   immediate  influenced    notified recalibrate       serve 
+          1           1           1           1           1           1 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Removing some of the most sparse terms</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>dtm.sparse <span class="ot">&lt;-</span> <span class="fu">removeSparseTerms</span>(dtm,<span class="fl">0.05</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dtm.sparse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 65 12</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>term.frequencies <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.sparse))</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>order.frequencies <span class="ot">&lt;-</span> <span class="fu">order</span>(term.frequencies)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>term.frequencies[<span class="fu">head</span>(order.frequencies)] <span class="co"># View DTM by word frequency using head/tail functions</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> decided economic expected     rate  account  current 
+      66      189      243      248      272      310 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>term.frequencies[<span class="fu">tail</span>(order.frequencies)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   sector    growth  monetary    policy inflation   percent 
+      318       429       443       511       719       733 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.100</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">100</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "account"   "current"   "economic"  "expected"  "growth"    "inflation"
+ [7] "monetary"  "percent"   "policy"    "rate"      "sector"   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.200</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">200</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.200</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "account"   "current"   "expected"  "growth"    "inflation" "monetary" 
+ [7] "percent"   "policy"    "rate"      "sector"   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.300</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">300</span>)</span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>find.frequency.terms<span class="fl">.300</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "current"   "growth"    "inflation" "monetary"  "percent"   "policy"   
+[7] "sector"   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.500</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">500</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.500</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "inflation" "percent"   "policy"   </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.700</span> <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm.sparse,<span class="at">lowfreq=</span><span class="dv">700</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a> find.frequency.terms<span class="fl">.700</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "inflation" "percent"  </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="plotting-data" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="plotting-data"><span class="header-section-number">4</span> Plotting data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>corlimit <span class="ot">&lt;-</span> <span class="fl">0.4</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>title <span class="ot">&lt;-</span> <span class="st">""</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>freq.term.tdm <span class="ot">&lt;-</span> <span class="fu">findFreqTerms</span>(dtm,<span class="at">lowfreq=</span><span class="dv">150</span>)  </span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dtm,<span class="at">main=</span>title,<span class="at">cex.main =</span> <span class="dv">3</span>, <span class="at">term=</span>freq.term.tdm, <span class="at">corThreshold=</span>corlimit,</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>     <span class="at">attrs=</span><span class="fu">list</span>(<span class="at">node=</span><span class="fu">list</span>(<span class="at">width=</span><span class="dv">15</span>,<span class="at">fontsize=</span><span class="dv">40</span>,<span class="at">fontcolor=</span><span class="dv">129</span>,<span class="at">color=</span><span class="st">"red"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating Corpus Histogram</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>sorted.frequencies <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.sparse)), <span class="at">decreasing=</span><span class="cn">TRUE</span>)   </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sorted.frequencies, <span class="dv">20</span>)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  percent inflation    policy  monetary    growth    sector   current   account 
+      733       719       511       443       429       318       310       272 
+     rate  expected  economic   decided 
+      248       243       189        66 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">word=</span><span class="fu">names</span>(sorted.frequencies), <span class="at">freq=</span>sorted.frequencies)   </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(word.frequencies.frame,<span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               word freq
+percent     percent  733
+inflation inflation  719
+policy       policy  511
+monetary   monetary  443
+growth       growth  429
+sector       sector  318
+current     current  310
+account     account  272
+rate           rate  248
+expected   expected  243</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame <span class="ot">&lt;-</span> word.frequencies.frame[<span class="fu">order</span>(<span class="sc">-</span>sorted.frequencies),]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting Frequencies</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Term appears at least 100 times in the corpus (can be customized)</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">subset</span>(word.frequencies.frame, freq<span class="sc">&gt;</span><span class="dv">100</span>), <span class="fu">aes</span>(<span class="fu">reorder</span>(word, <span class="sc">-</span>freq), freq))    </span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>)   </span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">18</span>)) </span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>), <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">16</span>,<span class="at">face=</span><span class="st">"bold"</span>))</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a><span class="co"># plotted.frequencies &lt;- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))</span></span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Corpus Terms"</span>) </span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Frequencies"</span>) </span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>plotted.frequencies  <span class="co"># Printing word frequencies</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting Frequencies (term appears at least 200 times in the corpus)</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">subset</span>(word.frequencies.frame, freq<span class="sc">&gt;</span><span class="dv">200</span>), <span class="fu">aes</span>(<span class="fu">reorder</span>(word, <span class="sc">-</span>freq), freq))    </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>)   </span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">18</span>)) </span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>), <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">16</span>,<span class="at">face=</span><span class="st">"bold"</span>))</span>
+<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a><span class="co">#plotted.frequencies &lt;- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))</span></span>
+<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Corpus Terms"</span>) </span>
+<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="ot">&lt;-</span> plotted.frequencies <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Frequencies"</span>) </span>
+<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a>plotted.frequencies <span class="co">#printing word frequencies</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dendogram Figure</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>dendogram <span class="ot">&lt;-</span> <span class="fu">dist</span>(<span class="fu">t</span>(dtm.sparse), <span class="at">method=</span><span class="st">"euclidian"</span>)   </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>dendogram.fit <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dendogram, <span class="at">method=</span><span class="st">"ward.D"</span>)   </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dendogram.fit, <span class="at">cex=</span><span class="fl">1.4</span>, <span class="at">main=</span><span class="st">""</span>, <span class="at">cex.main=</span><span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjacency Figure</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>dtm.sparse.matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dtm.sparse)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>tdm.sparse.matrix <span class="ot">&lt;-</span> <span class="fu">t</span>(dtm.sparse.matrix)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>tdm.sparse.matrix <span class="ot">&lt;-</span> tdm.sparse.matrix <span class="sc">%*%</span> dtm.sparse.matrix</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>graph.tdm.sparse <span class="ot">&lt;-</span> <span class="fu">graph.adjacency</span>(tdm.sparse.matrix, <span class="at">weighted=</span>T, <span class="at">mode=</span><span class="st">"undirected"</span>)</span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>graph.tdm.sparse <span class="ot">&lt;-</span> <span class="fu">simplify</span>(graph.tdm.sparse)</span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualizing the Adjacency Figure</span></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot.igraph</span>(graph.tdm.sparse, <span class="at">layout=</span><span class="fu">layout.fruchterman.reingold</span>(graph.tdm.sparse, <span class="at">niter=</span><span class="dv">10</span>, <span class="at">area=</span><span class="dv">120</span><span class="sc">*</span><span class="fu">vcount</span>(graph.tdm.sparse)<span class="sc">^</span><span class="dv">2</span>),</span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">vertex.color =</span> <span class="dv">169</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="word-cloud" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">5</span> Word Cloud</h2>
+<p>The <code>wordcloud</code> package is used to visualize the text data. The word cloud is a visual representation of the frequency of words in the text data. The size of the word in the word cloud is proportional to the frequency of the word in the text data. The <code>wordcloud</code> package is used to create the word cloud. The word cloud is created using the document term matrix. The word cloud is used to identify the most frequent words in the text data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wordclouds</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">142</span>) <span class="co"># This is just the design of the wordcloud picture, can be changed (use same seed)</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>pal2 <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">8</span>,<span class="st">"Dark2"</span>) <span class="co"># This is just the design of the wordcloud picture, can be changed</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">50</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>)) <span class="co"># Can be changed depending on the desired term frequency</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">100</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>)) <span class="co"># Can be changed depending on the desired term frequency</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">200</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>)) <span class="co"># Can be changed depending on the desired term frequency</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">300</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-15-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">400</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-15-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies), term.frequencies, <span class="at">min.freq=</span><span class="dv">500</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="fl">5.2</span>, .<span class="dv">7</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-15-6.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="weighting-scheme" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="weighting-scheme"><span class="header-section-number">5.1</span> Weighting Scheme</h3>
+<p>Another weighting scheme - term frequency/inverse document frequency is given here to create word clouds. The term frequency/inverse document frequency is a statistical measure used to evaluate the importance of a word in a document relative to a collection of documents.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Another weighting scheme - term frequency/inverse document frequency</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Wordclouds w. tf-idf</span></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating a new dtm with tf-idf weighting instead of term frequency weighting</span></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>dtm.tf.idf <span class="ot">&lt;-</span> <span class="fu">DocumentTermMatrix</span>(corpus, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">weighting =</span> weightTfIdf, <span class="at">wordLengths=</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">12</span>)))</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>dtm.tf.idf.sparse<span class="ot">&lt;-</span><span class="fu">removeSparseTerms</span>(dtm.tf.idf,<span class="fl">0.95</span>) </span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a><span class="fu">dim</span>(dtm.tf.idf.sparse) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]   65 1090</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>term.frequencies.tf.idf <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.tf.idf.sparse))</span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>sorted.frequencies.tf.idf <span class="ot">&lt;-</span> <span class="fu">sort</span>(<span class="fu">colSums</span>(<span class="fu">as.matrix</span>(dtm.tf.idf.sparse)), <span class="at">decreasing=</span><span class="cn">TRUE</span>)   </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sorted.frequencies.tf.idf, <span class="dv">20</span>)   </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>coronavirus         jul       noted       covid    recovery      global 
+  0.2235064   0.2145417   0.1898940   0.1620721   0.1614860   0.1592920 
+      views      floods     meeting      market      action      impact 
+  0.1510763   0.1483892   0.1393437   0.1382922   0.1375864   0.1358744 
+       half         yoy     earlier       money   continued     economy 
+  0.1355516   0.1345569   0.1344717   0.1327807   0.1322656   0.1320138 
+      month       risks 
+  0.1298995   0.1277581 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame.tf.idf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">word=</span><span class="fu">names</span>(sorted.frequencies.tf.idf), <span class="at">freq=</span>sorted.frequencies.tf.idf)   </span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(word.frequencies.frame.tf.idf) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   word      freq
+coronavirus coronavirus 0.2235064
+jul                 jul 0.2145417
+noted             noted 0.1898940
+covid             covid 0.1620721
+recovery       recovery 0.1614860
+global           global 0.1592920</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Barplot of tf-idf terms</span></span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">subset</span>(word.frequencies.frame.tf.idf, freq<span class="sc">&gt;</span><span class="fl">0.5</span>), <span class="fu">aes</span>(<span class="fu">reorder</span>(word, <span class="sc">-</span>freq), freq))    </span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>)   </span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">18</span>)) </span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>), <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>))</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a><span class="co"># plotted.frequencies &lt;- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))</span></span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Corpus Terms"</span>) </span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Frequencies"</span>) </span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf  <span class="co">#printing word frequencies</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Wordclouds with tf-idf</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">142</span>) <span class="co"># This is just the design of the wordcloud picture, can be changed (use same seed)</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>pal2 <span class="ot">&lt;-</span> <span class="fu">brewer.pal</span>(<span class="dv">8</span>,<span class="st">"Dark2"</span>)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies.tf.idf), term.frequencies.tf.idf, <span class="at">min.freq=</span><span class="fl">0.05</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="dv">6</span>, .<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies.tf.idf), term.frequencies.tf.idf, <span class="at">min.freq=</span><span class="fl">0.10</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="dv">6</span>, .<span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies.tf.idf), term.frequencies.tf.idf, <span class="at">min.freq=</span><span class="fl">0.30</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="dv">5</span>, .<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-18-3.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies.tf.idf), term.frequencies.tf.idf, <span class="at">min.freq=</span><span class="fl">0.40</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="dv">5</span>, .<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-18-4.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">wordcloud</span>(<span class="fu">names</span>(term.frequencies.tf.idf), term.frequencies.tf.idf, <span class="at">min.freq=</span><span class="fl">0.50</span>, <span class="at">random.order=</span><span class="cn">FALSE</span>, <span class="at">colors=</span>pal2, <span class="at">scale=</span><span class="fu">c</span>(<span class="dv">5</span>, .<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-18-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Document term matrix is a matrix that contains the frequency of words in the text data. The rows of the matrix represent the documents, and the columns represent the words. The matrix contains the frequency of each word in each document. The document term matrix is used to analyze the text data, and to identify patterns and trends in the text data. The <code>tm</code> package is used to create the document term matrix. After cleaning and preprocessing the text data, the text data is tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. The goal of dtm is two fold. The first is to present the topic of each document by the frequency of semantically significant and unique terms, and second, to position the corpus for future data analysis. The term frequency-inverse document frequency (tf-idf) is a numerical statistic that is intended to reflect how important a word is to a document in a collection or corpus. It is often used as a weighting factor in information retrieval and text mining. The tf-idf value increases proportionally to the number of times a word appears in the document and is offset by the number of documents in the corpus that contain the word, which helps to adjust for the fact that some words appear more frequently in general. The <code>tm</code> package is used to create the document term matrix.</p>
+<p>Why is frequency of each word is important? Simple frequency of each word is inappropiate because it can overstate the importance of small words that happen to be frequent. The term frequency-inverse document frequency (tf-idf) is a numerical statistic that is intended to reflect how important a word is to a document in a collection or corpus. It is often used as a weighting factor in information retrieval and text mining. The tf-idf value increases proportionally to the number of times a word appears in the document and is offset by the number of documents in the corpus that contain the word, which helps to adjust for the fact that some words appear more frequently in general. tf-idf is defined as follows:</p>
+<p>tf(t)= (Number of times term t appears in a document) / (Total number of terms in the document)</p>
+<p>A more appropriate way to calaculate word frequencies is to employ the tf-idf weighting scheme. The tf-idf value increases proportionally to the number of times a word appears in the document and is offset by the number of documents in the corpus that contain the word, which helps to adjust for the fact that some words appear more frequently in general.</p>
+<p>ifd(t)= log_e(Total number of documents / Number of documents with term t in it)</p>
+<p>Conjugating the two gives the tf-idf score for each word in each document. 𝚝𝚏−𝚒𝚍𝚏(𝑡)=𝚝𝚏(𝑡)×𝚒𝚍𝚏(𝑡)</p>
+</section>
+<section id="tidytext-data-table" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="tidytext-data-table"><span class="header-section-number">5.2</span> Tidytext data table</h3>
+<p>Now I shall use <code>tidytext</code> with the help of unnest_tokens to convert one word per row.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating Corpus Histogram w. Tf-Idf Weighting</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame.tf.idf <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">word=</span><span class="fu">names</span>(sorted.frequencies.tf.idf), <span class="at">freq=</span>sorted.frequencies.tf.idf)   </span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(word.frequencies.frame.tf.idf,<span class="dv">10</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   word      freq
+coronavirus coronavirus 0.2235064
+jul                 jul 0.2145417
+noted             noted 0.1898940
+covid             covid 0.1620721
+recovery       recovery 0.1614860
+global           global 0.1592920
+views             views 0.1510763
+floods           floods 0.1483892
+meeting         meeting 0.1393437
+market           market 0.1382922</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>word.frequencies.frame.tf.idf <span class="ot">&lt;-</span> word.frequencies.frame.tf.idf[<span class="fu">order</span>(<span class="sc">-</span>sorted.frequencies.tf.idf),]</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting Frequencies</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="fu">subset</span>(word.frequencies.frame.tf.idf, freq<span class="sc">&gt;</span><span class="fl">0.15</span>), <span class="fu">aes</span>(<span class="fu">reorder</span>(word, <span class="sc">-</span>freq), freq))    </span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>)   </span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text.x=</span><span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">45</span>, <span class="at">hjust=</span><span class="dv">1</span>, <span class="at">size=</span><span class="dv">18</span>)) </span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>), <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>))</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a><span class="co"># plotted.frequencies &lt;- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">xlab</span>(<span class="st">"Corpus Terms"</span>) </span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf <span class="ot">&lt;-</span> plotted.frequencies.tf.idf <span class="sc">+</span> <span class="fu">ylab</span>(<span class="st">"Frequencies w. tf-idf Weighting"</span>) </span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>plotted.frequencies.tf.idf  <span class="co"># printing word frequencies</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dendogram Figure</span></span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>tdm.tf.idf.sparse <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">t</span>(dtm.tf.idf.sparse))</span>
+<span id="cb58-3"><a href="#cb58-3" aria-hidden="true" tabindex="-1"></a>tdm.tf.idf.sparse <span class="ot">&lt;-</span> tdm.tf.idf.sparse <span class="sc">%*%</span> <span class="fu">t</span>(tdm.tf.idf.sparse)</span>
+<span id="cb58-4"><a href="#cb58-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb58-5"><a href="#cb58-5" aria-hidden="true" tabindex="-1"></a>dtm.tf.idf.sparse<span class="fl">.095</span> <span class="ot">&lt;-</span> <span class="fu">removeSparseTerms</span>(dtm.tf.idf, <span class="fl">0.05</span>)</span>
+<span id="cb58-6"><a href="#cb58-6" aria-hidden="true" tabindex="-1"></a>dendogram <span class="ot">&lt;-</span> <span class="fu">dist</span>(<span class="fu">t</span>(dtm.tf.idf.sparse<span class="fl">.095</span>), <span class="at">method=</span><span class="st">"euclidian"</span>)   </span>
+<span id="cb58-7"><a href="#cb58-7" aria-hidden="true" tabindex="-1"></a>dendogram.fit <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="at">d=</span>dendogram, <span class="at">method=</span><span class="st">"ward.D"</span>)    </span>
+<span id="cb58-8"><a href="#cb58-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(dendogram.fit, <span class="at">cex=</span><span class="fl">1.4</span>, <span class="at">main=</span><span class="st">""</span>, <span class="at">cex.main=</span><span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>null device 
+          1 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="co"># HeatMap w. Tf-Idf (change format)</span></span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>dtm.tf.idf.sparse.matrix <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(dtm.tf.idf.sparse)</span>
+<span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="co"># rownames(dtm.tf.idf.sparse.matrix) &lt;- document.corpus.names.df$date</span></span>
+<span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="co"># arrange(document.corpus.names.df, date)</span></span>
+<span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a>date.dtm.tf.idf.sparse.matrix <span class="ot">&lt;-</span> <span class="fu">cbind</span>(dtm.tf.idf.sparse.matrix,document.corpus.names.df<span class="sc">$</span>date)</span>
+<span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>my_palette <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"white"</span>, <span class="st">"pink"</span>, <span class="st">"red"</span>))(<span class="at">n =</span> <span class="dv">99</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmaps</span></span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">'D:/RepTemplates/mps/sbp/heatmaps.pdf'</span>)</span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap.2</span>(date.dtm.tf.idf.sparse.matrix[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>],</span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">""</span>, <span class="co"># heat map title</span></span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">keysize =</span> <span class="dv">1</span>,</span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>),  <span class="co"># Adjusted margin values</span></span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">density.info =</span> <span class="st">"none"</span>,  <span class="co"># turns off density plot inside color legend</span></span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">trace =</span> <span class="st">"none"</span>,         <span class="co"># turns off trace lines inside the heat map</span></span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> my_palette,       <span class="co"># use on color palette defined earlier</span></span>
+<span id="cb62-11"><a href="#cb62-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">srtCol =</span> <span class="dv">45</span>,</span>
+<span id="cb62-12"><a href="#cb62-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">cexCol =</span> <span class="fl">1.4</span>,</span>
+<span id="cb62-13"><a href="#cb62-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">Colv =</span> <span class="st">"NA"</span>)            <span class="co"># turn off column clustering</span></span>
+<span id="cb62-14"><a href="#cb62-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-15"><a href="#cb62-15" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap.2</span>(date.dtm.tf.idf.sparse.matrix[<span class="dv">13</span><span class="sc">:</span><span class="dv">24</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>],</span>
+<span id="cb62-16"><a href="#cb62-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">"Frequencies"</span>, <span class="co"># heat map title</span></span>
+<span id="cb62-17"><a href="#cb62-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
+<span id="cb62-18"><a href="#cb62-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">keysize =</span> <span class="dv">1</span>,</span>
+<span id="cb62-19"><a href="#cb62-19" aria-hidden="true" tabindex="-1"></a>          <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>),  <span class="co"># Adjusted margin values</span></span>
+<span id="cb62-20"><a href="#cb62-20" aria-hidden="true" tabindex="-1"></a>          <span class="at">density.info =</span> <span class="st">"none"</span>,  <span class="co"># turns off density plot inside color legend</span></span>
+<span id="cb62-21"><a href="#cb62-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">trace =</span> <span class="st">"none"</span>,         <span class="co"># turns off trace lines inside the heat map</span></span>
+<span id="cb62-22"><a href="#cb62-22" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> my_palette,       <span class="co"># use on color palette defined earlier</span></span>
+<span id="cb62-23"><a href="#cb62-23" aria-hidden="true" tabindex="-1"></a>          <span class="at">srtCol =</span> <span class="dv">45</span>,</span>
+<span id="cb62-24"><a href="#cb62-24" aria-hidden="true" tabindex="-1"></a>          <span class="at">cexCol =</span> <span class="fl">1.4</span>,</span>
+<span id="cb62-25"><a href="#cb62-25" aria-hidden="true" tabindex="-1"></a>          <span class="at">Colv =</span> <span class="st">"NA"</span>)            <span class="co"># turn off column clustering</span></span>
+<span id="cb62-26"><a href="#cb62-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-27"><a href="#cb62-27" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap.2</span>(date.dtm.tf.idf.sparse.matrix[<span class="dv">25</span><span class="sc">:</span><span class="dv">36</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">18</span>],</span>
+<span id="cb62-28"><a href="#cb62-28" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">"Frequencies"</span>, <span class="co"># heat map title</span></span>
+<span id="cb62-29"><a href="#cb62-29" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
+<span id="cb62-30"><a href="#cb62-30" aria-hidden="true" tabindex="-1"></a>          <span class="at">keysize =</span> <span class="dv">1</span>,</span>
+<span id="cb62-31"><a href="#cb62-31" aria-hidden="true" tabindex="-1"></a>          <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>),  <span class="co"># Adjusted margin values</span></span>
+<span id="cb62-32"><a href="#cb62-32" aria-hidden="true" tabindex="-1"></a>          <span class="at">density.info =</span> <span class="st">"none"</span>,  <span class="co"># turns off density plot inside color legend</span></span>
+<span id="cb62-33"><a href="#cb62-33" aria-hidden="true" tabindex="-1"></a>          <span class="at">trace =</span> <span class="st">"none"</span>,         <span class="co"># turns off trace lines inside the heat map</span></span>
+<span id="cb62-34"><a href="#cb62-34" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> my_palette,       <span class="co"># use on color palette defined earlier</span></span>
+<span id="cb62-35"><a href="#cb62-35" aria-hidden="true" tabindex="-1"></a>          <span class="at">srtCol =</span> <span class="dv">45</span>,</span>
+<span id="cb62-36"><a href="#cb62-36" aria-hidden="true" tabindex="-1"></a>          <span class="at">cexCol =</span> <span class="fl">1.4</span>,</span>
+<span id="cb62-37"><a href="#cb62-37" aria-hidden="true" tabindex="-1"></a>          <span class="at">Colv =</span> <span class="st">"NA"</span>)            <span class="co"># turn off column clustering</span></span>
+<span id="cb62-38"><a href="#cb62-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-39"><a href="#cb62-39" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>png 
+  2 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="exploratory-data-analysis" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">6</span> Exploratory Data Analysis</h2>
+<p>With conversion to dtm, exploratory data analysis is performed to identify patterns and trends in the text data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>order.frequencies<span class="ot">&lt;-</span><span class="fu">order</span>(term.frequencies)</span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a> <span class="fu">head</span>(order.frequencies,<span class="dv">6</span>)</span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a> <span class="fu">tail</span>(order.frequencies,<span class="dv">6</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="word-counting" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="word-counting"><span class="header-section-number">6.1</span> Word counting</h3>
+<p>Dictionary-based text analysis is popular approach mainly because its easy to implement and interpret. The dictionary-based approach is based on the idea that the frequency of certain words in a text can be used to infer the sentiment of the text. However, sentiment words from one discipline to another might be different. For example, words used in psychology to express positive sentiments might be different from words used in economics. Therefore, it is important to use a dictionary that is specific to the discipline. The <code>tidytext</code> package is used to count the frequency of words in the text data. The <code>get_sentiments</code> function is used to get the sentiment words from the dictionary. In this document, I am using Loughran and McDonald dictionary to count the frequency of positive and negative words in the text data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>dictionary.finance.negative <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">read.csv</span>(<span class="st">"negative.csv"</span>, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>)[,<span class="dv">1</span>]</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>dictionary.finance.positive <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">read.csv</span>(<span class="st">"positive.csv"</span>, <span class="at">stringsAsFactors=</span><span class="cn">FALSE</span>)[,<span class="dv">1</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>It is important to be careful in use of words to be positive or negative. For example, the word ‘increase’ is generally considered to be positive, but in the context of inflation, it is considered to be negative. Similarly the word ‘decrease’ is generally considered to be negative, but in the context of inflation, it is considered to be positive. Another example is <code>tight</code> and <code>loose</code> monetary policy. The word <code>tight</code> is generally considered to be positive, but in the context of monetary policy, it is considered to be negative. Similarly, the word <code>loose</code> is generally considered to be negative, but in the context of monetary policy, it is considered to be positive. Therefore, it is important to be careful in use of words to be positive or negative.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1" aria-hidden="true" tabindex="-1"></a>dictionary.negative <span class="sc">&lt;</span> <span class="sc">-</span><span class="fu">tolower</span>(dictionary.negative)dictionary.negative <span class="sc">&lt;</span> <span class="sc">-</span><span class="fu">stemDocument</span>(dictionary.negative)dictionary.negative <span class="sc">&lt;</span> <span class="sc">-</span><span class="fu">unique</span>(dictionary.negative)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Next we use the <code>match</code> function that compares the terms in both dictionary and the text data. The <code>match</code> function returns the position of the first match. If there is no match, the <code>match</code> function returns <code>NA</code>. The <code>match</code> function is used to count the frequency of positive and negative words in the text data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1" aria-hidden="true" tabindex="-1"></a>corpus.terms <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">colnames</span>(dtm)positive.matches <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">match</span>(corpus.terms, dictionary.positive, <span class="at">nomatch=</span><span class="dv">0</span>)negative.matches <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">match</span>(corpus.terms, dictionary.negative, <span class="at">nomatch=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We then assign a value of 1 to the positive and negative matches. The <code>ifelse</code> function is used to assign a value of 1 to the positive and negative, and measure the overall sentiment for each document <span class="math inline">\(i\)</span> by the following formula: <span class="math inline">\(Score_i = \frac{Positive_i - Negative_i}{Positive_i + Negative} \in [-1,1]\)</span></p>
+<p>A document is considered to be positive if the score is greater than 0, and negative if the score is less than 0.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1" aria-hidden="true" tabindex="-1"></a>document.score<span class="ot">=</span><span class="fu">sum</span>(positive.matches) <span class="sc">-</span> <span class="fu">sum</span>(negative.matches)</span>
+<span id="cb68-2"><a href="#cb68-2" aria-hidden="true" tabindex="-1"></a>scores.data.frame<span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">scores=</span> document.score) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="relative-frequency" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="relative-frequency"><span class="header-section-number">6.2</span> Relative frequency</h3>
+<p>The relative frequency of positive and negative words is calculated by dividing the frequency of positive and negative words by the total number of words in the text.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1" aria-hidden="true" tabindex="-1"></a>wordscore.estimation.results <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">wordfish</span>(corpus,dir </span>
+<span id="cb69-2"><a href="#cb69-2" aria-hidden="true" tabindex="-1"></a><span class="ot">=</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="semantic-analysis" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="semantic-analysis"><span class="header-section-number">6.3</span> Semantic analysis</h3>
+<p>The semantic analysis is performed to identify the semantic orientation of the text data. The semantic orientation is the degree to which a word is positive or negative. The semantic orientation is calculated by dividing the frequency of positive words by the frequency of negative words. The semantic orientation is calculated for each document in the text data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1" aria-hidden="true" tabindex="-1"></a>lsa_model <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">textmodel_lsa</span>(dtm)lsa_predict <span class="sc">&lt;</span> <span class="sc">-</span> <span class="fu">predict</span>(lsa_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="topic-models" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="topic-models"><span class="header-section-number">7</span> Topic models</h2>
+<p>Topic modeling is a type of statistical model for discovering the abstract “topics” that occur in a collection of documents. Topic modeling is a frequently used text-mining tool for discovery of hidden semantic structures in a text body. Intuitively, given that a document is about a particular topic, one would expect particular words to appear in the document more or less frequently: “dog” and “bone” will appear more often in documents about dogs, “cat” and “meow” will appear in documents about cats, and “the” and “is” will appear equally in both. A document typically concerns multiple topics in different proportions; thus, in a document that is 10% about cats and 90% about dogs, there would probably be about 9 times more dog words than cat words. The “topics” produced by topic modeling techniques are clusters of similar words. A topic model captures this intuition in a mathematical framework, which allows examining a set of documents and discovering, based on the statistics of the words in each, what the topics might be and what each document’s balance of topics is.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(topicmodels)</span>
+<span id="cb71-2"><a href="#cb71-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Gibbs Sampling Calibration</span></span>
+<span id="cb71-3"><a href="#cb71-3" aria-hidden="true" tabindex="-1"></a>burnin <span class="ot">&lt;-</span> <span class="dv">4000</span></span>
+<span id="cb71-4"><a href="#cb71-4" aria-hidden="true" tabindex="-1"></a>iter <span class="ot">&lt;-</span> <span class="dv">1500</span></span>
+<span id="cb71-5"><a href="#cb71-5" aria-hidden="true" tabindex="-1"></a>thin <span class="ot">&lt;-</span> <span class="dv">500</span></span>
+<span id="cb71-6"><a href="#cb71-6" aria-hidden="true" tabindex="-1"></a>seed <span class="ot">&lt;-</span><span class="fu">list</span>(<span class="dv">2003</span>,<span class="dv">5</span>,<span class="dv">63</span>,<span class="dv">100001</span>,<span class="dv">765</span>)</span>
+<span id="cb71-7"><a href="#cb71-7" aria-hidden="true" tabindex="-1"></a>nstart <span class="ot">&lt;-</span> <span class="dv">5</span></span>
+<span id="cb71-8"><a href="#cb71-8" aria-hidden="true" tabindex="-1"></a>best <span class="ot">&lt;-</span> <span class="cn">TRUE</span></span>
+<span id="cb71-9"><a href="#cb71-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-10"><a href="#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of topics</span></span>
+<span id="cb71-11"><a href="#cb71-11" aria-hidden="true" tabindex="-1"></a><span class="co"># This is arbitrary, need to make educated guess/play around with data</span></span>
+<span id="cb71-12"><a href="#cb71-12" aria-hidden="true" tabindex="-1"></a>k <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb71-13"><a href="#cb71-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-14"><a href="#cb71-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Run LDA using Gibbs sampling</span></span>
+<span id="cb71-15"><a href="#cb71-15" aria-hidden="true" tabindex="-1"></a>lda.results <span class="ot">&lt;-</span><span class="fu">LDA</span>(dtm.sparse, k, <span class="at">method=</span><span class="st">"Gibbs"</span>, <span class="at">control=</span><span class="fu">list</span>(<span class="at">nstart=</span>nstart, <span class="at">seed =</span> seed, <span class="at">best=</span>best, <span class="at">burnin =</span> burnin, <span class="at">iter =</span> iter, <span class="at">thin=</span>thin))</span>
+<span id="cb71-16"><a href="#cb71-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb71-17"><a href="#cb71-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Write out results</span></span>
+<span id="cb71-18"><a href="#cb71-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Docs to topics</span></span>
+<span id="cb71-19"><a href="#cb71-19" aria-hidden="true" tabindex="-1"></a>lda.topics <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">topics</span>(lda.results))</span>
+<span id="cb71-20"><a href="#cb71-20" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(ldaOut.topics,file=paste("LDAGibbs",k,"DocsToTopics.csv"))</span></span>
+<span id="cb71-21"><a href="#cb71-21" aria-hidden="true" tabindex="-1"></a>lda.topics</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             [,1]
+01012018.txt    3
+02032023.txt    3
+04042023.txt    1
+07072022.txt    3
+07082022.txt    2
+08032022.txt    4
+09042016.txt    4
+10102022.txt    3
+12062023.txt    3
+12092015.txt    3
+12122023.txt    3
+14072018.txt    3
+14092023.txt    1
+14122021.txt    2
+15032014.txt    1
+15052020.txt    1
+15112014.txt    4
+16042020.txt    2
+16072019.txt    2
+16092019.txt    1
+17032020.txt    3
+17052014.txt    3
+19032021.txt    3
+19112021.txt    3
+20052017.txt    1
+20052019.txt    1
+20092014.txt    1
+20092021.txt    4
+21032015.txt    4
+21052016.txt    4
+21092020.txt    2
+21112015.txt    3
+22012021.txt    2
+22072017.txt    4
+22082022.txt    2
+22112019.txt    1
+23012023.txt    3
+23052015.txt    2
+23052022.txt    3
+23112020.txt    1
+24012022.txt    4
+24032020.txt    1
+24092016.txt    2
+24112017.txt    2
+25032017.txt    1
+25052018.txt    3
+25062020.txt    2
+25112022.txt    3
+26062023.txt    2
+26112017.txt    2
+27072021.txt    4
+28012017.txt    1
+28012020.txt    2
+28052021.txt    1
+29012024.txt    2
+29032019.txt    3
+29092017.txt    4
+29092018.txt    2
+30012016.txt    4
+30032018.txt    4
+30072016.txt    1
+30102023.txt    3
+30112018.txt    1
+31012019.txt    3
+31072023.txt    1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Top 6 terms in each topic</span></span>
+<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a>lda.results.terms <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(<span class="fu">terms</span>(lda.results,<span class="dv">11</span>))</span>
+<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(ldaOut.terms,file=paste("LDAGibbs",k,"TopicsToTerms.csv"))</span></span>
+<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a>lda.results.terms</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Topic 1     Topic 2     Topic 3     Topic 4    
+ [1,] "monetary"  "inflation" "percent"   "growth"   
+ [2,] "policy"    "expected"  "inflation" "current"  
+ [3,] "sector"    "rate"      "growth"    "account"  
+ [4,] "economic"  "policy"    "current"   "policy"   
+ [5,] "decided"   "monetary"  "account"   "sector"   
+ [6,] "percent"   "decided"   "decided"   "rate"     
+ [7,] "account"   "account"   "economic"  "decided"  
+ [8,] "current"   "percent"   "expected"  "economic" 
+ [9,] "expected"  "current"   "monetary"  "expected" 
+[10,] "growth"    "sector"    "policy"    "inflation"
+[11,] "inflation" "economic"  "rate"      "monetary" </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probabilities associated with each topic assignment</span></span>
+<span id="cb75-2"><a href="#cb75-2" aria-hidden="true" tabindex="-1"></a>topic.probabilities <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(lda.results<span class="sc">@</span>gamma)</span>
+<span id="cb75-3"><a href="#cb75-3" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(topic.probabilities,<span class="at">file=</span><span class="fu">paste</span>(<span class="st">"LDAGibbs"</span>, k ,<span class="st">"TopicProbabilities.csv"</span>))</span>
+<span id="cb75-4"><a href="#cb75-4" aria-hidden="true" tabindex="-1"></a>topic.probabilities <span class="ot">&lt;-</span> <span class="fu">as.matrix</span>(topic.probabilities)</span>
+<span id="cb75-5"><a href="#cb75-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-6"><a href="#cb75-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Probabilities for each term in each topic.</span></span>
+<span id="cb75-7"><a href="#cb75-7" aria-hidden="true" tabindex="-1"></a>posterior.terms <span class="ot">&lt;-</span> <span class="fu">t</span>(<span class="fu">posterior</span>(lda.results)<span class="sc">$</span>terms)</span>
+<span id="cb75-8"><a href="#cb75-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-9"><a href="#cb75-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Heatmaps with topic modeling</span></span>
+<span id="cb75-10"><a href="#cb75-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-11"><a href="#cb75-11" aria-hidden="true" tabindex="-1"></a><span class="co"># This is set manually by considering the words appearing in each list</span></span>
+<span id="cb75-12"><a href="#cb75-12" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(topic.probabilities) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Policy Rate"</span>, <span class="st">"Inflation"</span>, <span class="st">"Monetary Policy"</span>, <span class="st">"Current Account"</span>)</span>
+<span id="cb75-13"><a href="#cb75-13" aria-hidden="true" tabindex="-1"></a><span class="co"># rownames(topic.probabilities) &lt;- document.corpus.names.df$date</span></span>
+<span id="cb75-14"><a href="#cb75-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb75-15"><a href="#cb75-15" aria-hidden="true" tabindex="-1"></a>date.topic.probabilities <span class="ot">&lt;-</span> <span class="fu">cbind</span>(document.corpus.names.df<span class="sc">$</span>date, topic.probabilities)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="heatmap" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="heatmap"><span class="header-section-number">7.1</span> Heatmap</h3>
+<p>The heatmap is used to visualize the frequency of positive and negative words in the text data. The <code>heatmap</code> function is used to create the heatmap. The <code>heatmap</code> function takes the frequency of positive and negative words as input and creates the heatmap. The <code>heatmap</code> function is used to create the heatmap. The <code>heatmap</code> function takes the frequency of positive and negative words as input and creates the heatmap.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">'D:/RepTemplates/mps/sbp/heatmaps_lda.pdf'</span>)</span>
+<span id="cb76-2"><a href="#cb76-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-3"><a href="#cb76-3" aria-hidden="true" tabindex="-1"></a><span class="fu">heatmap.2</span>(date.topic.probabilities[<span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>, ],</span>
+<span id="cb76-4"><a href="#cb76-4" aria-hidden="true" tabindex="-1"></a>          <span class="at">main =</span> <span class="st">""</span>,</span>
+<span id="cb76-5"><a href="#cb76-5" aria-hidden="true" tabindex="-1"></a>          <span class="at">dendrogram =</span> <span class="st">"none"</span>,</span>
+<span id="cb76-6"><a href="#cb76-6" aria-hidden="true" tabindex="-1"></a>          <span class="at">keysize =</span> <span class="dv">1</span>,</span>
+<span id="cb76-7"><a href="#cb76-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">margins =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">8</span>),</span>
+<span id="cb76-8"><a href="#cb76-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">density.info =</span> <span class="st">"none"</span>,</span>
+<span id="cb76-9"><a href="#cb76-9" aria-hidden="true" tabindex="-1"></a>          <span class="at">trace =</span> <span class="st">"none"</span>,</span>
+<span id="cb76-10"><a href="#cb76-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> my_palette,</span>
+<span id="cb76-11"><a href="#cb76-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">srtCol =</span> <span class="dv">45</span>,</span>
+<span id="cb76-12"><a href="#cb76-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">cexCol =</span> <span class="fl">1.4</span>,</span>
+<span id="cb76-13"><a href="#cb76-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">Colv =</span> <span class="st">"NA"</span>)</span>
+<span id="cb76-14"><a href="#cb76-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb76-15"><a href="#cb76-15" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>png 
+  2 </code></pre>
+</div>
+</div>
+</section>
+<section id="wordfish" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="wordfish"><span class="header-section-number">7.2</span> Wordfish</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Converting our corpus into another format</span></span>
+<span id="cb78-2"><a href="#cb78-2" aria-hidden="true" tabindex="-1"></a>quanteda.corpus <span class="ot">&lt;-</span> <span class="fu">corpus</span>(corpus)</span>
+<span id="cb78-3"><a href="#cb78-3" aria-hidden="true" tabindex="-1"></a>dfm.corpus <span class="ot">&lt;-</span> <span class="fu">dfm</span>(quanteda.corpus)</span>
+<span id="cb78-4"><a href="#cb78-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(dfm.corpus) <span class="ot">&lt;-</span> <span class="fu">rownames</span>(document.corpus.names.df)</span>
+<span id="cb78-5"><a href="#cb78-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-6"><a href="#cb78-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Defining which documents in the corpus represent the most dovish and the most hawkish positions</span></span>
+<span id="cb78-7"><a href="#cb78-7" aria-hidden="true" tabindex="-1"></a>dovish <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">rownames</span>(dfm.corpus) <span class="sc">%in%</span> <span class="st">"15032014"</span> <span class="sc">|</span> <span class="fu">rownames</span>(dfm.corpus) <span class="sc">%in%</span> <span class="st">"29012024"</span>)</span>
+<span id="cb78-8"><a href="#cb78-8" aria-hidden="true" tabindex="-1"></a>hawkish <span class="ot">&lt;-</span> <span class="fu">which</span>(<span class="fu">rownames</span>(dfm.corpus) <span class="sc">%in%</span> <span class="st">"17052014"</span> <span class="sc">|</span> <span class="fu">rownames</span>(dfm.corpus) <span class="sc">%in%</span> <span class="st">"15112014"</span>)</span>
+<span id="cb78-9"><a href="#cb78-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-10"><a href="#cb78-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Running the wordfish algorithm</span></span>
+<span id="cb78-11"><a href="#cb78-11" aria-hidden="true" tabindex="-1"></a>wordfish <span class="ot">&lt;-</span> <span class="fu">textmodel_wordfish</span>(dfm.corpus, <span class="at">dir =</span> <span class="fu">c</span>(dovish, hawkish))</span>
+<span id="cb78-12"><a href="#cb78-12" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(wordfish, n = 10)</span></span>
+<span id="cb78-13"><a href="#cb78-13" aria-hidden="true" tabindex="-1"></a><span class="co"># coef(wordfish) |&gt; head(10)</span></span>
+<span id="cb78-14"><a href="#cb78-14" aria-hidden="true" tabindex="-1"></a><span class="co"># str(wordfish) </span></span>
+<span id="cb78-15"><a href="#cb78-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-16"><a href="#cb78-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting estimated parameters</span></span>
+<span id="cb78-17"><a href="#cb78-17" aria-hidden="true" tabindex="-1"></a>documents <span class="ot">&lt;-</span> wordfish<span class="sc">$</span>docs</span>
+<span id="cb78-18"><a href="#cb78-18" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> wordfish<span class="sc">$</span>theta</span>
+<span id="cb78-19"><a href="#cb78-19" aria-hidden="true" tabindex="-1"></a>se.theta <span class="ot">&lt;-</span> wordfish<span class="sc">$</span>se.theta</span>
+<span id="cb78-20"><a href="#cb78-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-21"><a href="#cb78-21" aria-hidden="true" tabindex="-1"></a>predicted.wordfish <span class="ot">&lt;-</span> <span class="fu">predict</span>(wordfish, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span>
+<span id="cb78-22"><a href="#cb78-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-23"><a href="#cb78-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting sentiment score based on the algorithm</span></span>
+<span id="cb78-24"><a href="#cb78-24" aria-hidden="true" tabindex="-1"></a>wordfish.score <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(predicted.wordfish<span class="sc">$</span>fit)</span>
+<span id="cb78-25"><a href="#cb78-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-26"><a href="#cb78-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotting Wordfish Score</span></span>
+<span id="cb78-27"><a href="#cb78-27" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>day <span class="ot">&lt;-</span> <span class="fu">substr</span>(document.corpus.names, <span class="dv">1</span>, <span class="dv">2</span>)</span>
+<span id="cb78-28"><a href="#cb78-28" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>month <span class="ot">&lt;-</span> <span class="fu">substr</span>(document.corpus.names, <span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb78-29"><a href="#cb78-29" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">substr</span>(document.corpus.names, <span class="dv">5</span>, <span class="dv">8</span>)</span>
+<span id="cb78-30"><a href="#cb78-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-31"><a href="#cb78-31" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">paste</span>(wordfish.score<span class="sc">$</span>month, wordfish.score<span class="sc">$</span>day, wordfish.score<span class="sc">$</span>year, <span class="at">sep=</span><span class="st">"/"</span>)</span>
+<span id="cb78-32"><a href="#cb78-32" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(wordfish.score<span class="sc">$</span>date, <span class="st">"%m/%d/%Y"</span>)</span>
+<span id="cb78-33"><a href="#cb78-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-34"><a href="#cb78-34" aria-hidden="true" tabindex="-1"></a>wordfish.score <span class="ot">&lt;-</span> wordfish.score[ <span class="fu">order</span>(wordfish.score<span class="sc">$</span>date), ]</span>
+<span id="cb78-35"><a href="#cb78-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb78-36"><a href="#cb78-36" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>lag <span class="ot">&lt;-</span> <span class="fu">lag</span>(wordfish.score<span class="sc">$</span>fit)</span>
+<span id="cb78-37"><a href="#cb78-37" aria-hidden="true" tabindex="-1"></a>wordfish.score<span class="sc">$</span>change <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(wordfish.score<span class="sc">$</span>fit <span class="sc">-</span> wordfish.score<span class="sc">$</span>lag)<span class="sc">/</span>wordfish.score<span class="sc">$</span>fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plotting-wordfish-score" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="plotting-wordfish-score"><span class="header-section-number">7.3</span> Plotting Wordfish Score</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pdf</span>(<span class="st">'D:/RepTemplates/mps/sbp/wordfish.pdf'</span>)</span>
+<span id="cb79-2"><a href="#cb79-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wordfish.score, <span class="fu">aes</span>(date, fit, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb79-3"><a href="#cb79-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> wordfish.score<span class="sc">$</span>date, <span class="at">y =</span> fit)) <span class="sc">+</span> </span>
+<span id="cb79-4"><a href="#cb79-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb79-5"><a href="#cb79-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_hc</span>() <span class="sc">+</span></span>
+<span id="cb79-6"><a href="#cb79-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_hc</span>() <span class="sc">+</span></span>
+<span id="cb79-7"><a href="#cb79-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Date"</span>) <span class="sc">+</span> </span>
+<span id="cb79-8"><a href="#cb79-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sentiment"</span>) <span class="sc">+</span></span>
+<span id="cb79-9"><a href="#cb79-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb79-10"><a href="#cb79-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>)) </span>
+<span id="cb79-11"><a href="#cb79-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb79-12"><a href="#cb79-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Change in Wordfish Score over time</span></span>
+<span id="cb79-13"><a href="#cb79-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wordfish.score, <span class="fu">aes</span>(date, change, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb79-14"><a href="#cb79-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> change)) <span class="sc">+</span> </span>
+<span id="cb79-15"><a href="#cb79-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb79-16"><a href="#cb79-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_hc</span>() <span class="sc">+</span></span>
+<span id="cb79-17"><a href="#cb79-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_hc</span>() <span class="sc">+</span></span>
+<span id="cb79-18"><a href="#cb79-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Date"</span>) <span class="sc">+</span> </span>
+<span id="cb79-19"><a href="#cb79-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sentiment"</span>) <span class="sc">+</span></span>
+<span id="cb79-20"><a href="#cb79-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb79-21"><a href="#cb79-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>)) </span>
+<span id="cb79-22"><a href="#cb79-22" aria-hidden="true" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>png 
+  2 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assiging scores to documents that we think represent most dovish/hawkish positions</span></span>
+<span id="cb81-2"><a href="#cb81-2" aria-hidden="true" tabindex="-1"></a>reference.scores <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="cn">NA</span>, <span class="fu">nrow</span>(dfm.corpus))</span>
+<span id="cb81-3"><a href="#cb81-3" aria-hidden="true" tabindex="-1"></a>reference.scores[<span class="fu">str_detect</span>(<span class="fu">rownames</span>(dfm.corpus), <span class="st">"15032014"</span>)] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span>  </span>
+<span id="cb81-4"><a href="#cb81-4" aria-hidden="true" tabindex="-1"></a>reference.scores[<span class="fu">str_detect</span>(<span class="fu">rownames</span>(dfm.corpus), <span class="st">"29012024"</span>)] <span class="ot">&lt;-</span> <span class="sc">-</span><span class="dv">1</span>  </span>
+<span id="cb81-5"><a href="#cb81-5" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb81-6"><a href="#cb81-6" aria-hidden="true" tabindex="-1"></a>reference.scores[<span class="fu">str_detect</span>(<span class="fu">rownames</span>(dfm.corpus), <span class="st">"17052014"</span>)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb81-7"><a href="#cb81-7" aria-hidden="true" tabindex="-1"></a>reference.scores[<span class="fu">str_detect</span>(<span class="fu">rownames</span>(dfm.corpus), <span class="st">"15112014"</span>)] <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb81-8"><a href="#cb81-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-9"><a href="#cb81-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Running the Wordscores algorithm</span></span>
+<span id="cb81-10"><a href="#cb81-10" aria-hidden="true" tabindex="-1"></a>wordscores <span class="ot">&lt;-</span> <span class="fu">textmodel_wordscores</span>(dfm.corpus, reference.scores, <span class="at">scale=</span><span class="st">"linear"</span>, <span class="at">smooth=</span><span class="dv">1</span>) </span>
+<span id="cb81-11"><a href="#cb81-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb81-12"><a href="#cb81-12" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(wordscores, n = 10)</span></span>
+<span id="cb81-13"><a href="#cb81-13" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(wordscores) <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   monetary      policy   committee   statement   pakistans    economic 
+-0.31574582 -0.26634193 -0.70045196  0.02210561  0.01364468 -0.19070800 
+     growth       track     achieve     highest 
+ 0.01740596  0.02210561  0.01871610  0.01364468 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Extracting predicted wordscores</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a>predicted.wordscores <span class="ot">&lt;-</span> <span class="fu">predict</span>(wordscores)</span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a>wordscores.score <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(predicted.wordscores)</span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>wordscores.score<span class="sc">$</span>document.corpus.names <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plots</span></span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a><span class="co"># wordscores.score &lt;- wordscores.score[ order(wordscores.score$date), ]</span></span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a>wordscores.score<span class="sc">$</span>lag <span class="ot">&lt;-</span> <span class="fu">lag</span>(wordscores.score<span class="sc">$</span>predicted.wordscores)</span>
+<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a>wordscores.score<span class="sc">$</span>change <span class="ot">&lt;-</span> <span class="dv">100</span><span class="sc">*</span>(wordscores.score<span class="sc">$</span>predicted.wordscores <span class="sc">-</span> wordscores.score<span class="sc">$</span>lag)<span class="sc">/</span>wordscores.score<span class="sc">$</span>predicted.wordscores</span>
+<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a>wordscores.score<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">rownames</span>(wordscores.score)</span>
+<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a>wordscores.score<span class="sc">$</span>date <span class="ot">&lt;-</span> <span class="fu">as.Date</span>(wordscores.score<span class="sc">$</span>date, <span class="at">format =</span> <span class="st">"%d%m%Y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="plotting-wordscores-score" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="plotting-wordscores-score"><span class="header-section-number">7.4</span> Plotting Wordscores Score</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Wordscores Score over time</span></span>
+<span id="cb84-2"><a href="#cb84-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wordscores.score, <span class="fu">aes</span>(date, predicted.wordscores)) <span class="sc">+</span></span>
+<span id="cb84-3"><a href="#cb84-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> predicted.wordscores)) <span class="sc">+</span> </span>
+<span id="cb84-4"><a href="#cb84-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb84-5"><a href="#cb84-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_hc</span>() <span class="sc">+</span></span>
+<span id="cb84-6"><a href="#cb84-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_hc</span>() <span class="sc">+</span></span>
+<span id="cb84-7"><a href="#cb84-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Date"</span>) <span class="sc">+</span> </span>
+<span id="cb84-8"><a href="#cb84-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sentiment"</span>) <span class="sc">+</span></span>
+<span id="cb84-9"><a href="#cb84-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb84-10"><a href="#cb84-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot Change in Wordscores Score over time</span></span>
+<span id="cb85-2"><a href="#cb85-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(wordscores.score, <span class="fu">aes</span>(date, change)) <span class="sc">+</span></span>
+<span id="cb85-3"><a href="#cb85-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> change)) <span class="sc">+</span> </span>
+<span id="cb85-4"><a href="#cb85-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">""</span>) <span class="sc">+</span></span>
+<span id="cb85-5"><a href="#cb85-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_hc</span>() <span class="sc">+</span></span>
+<span id="cb85-6"><a href="#cb85-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_colour_hc</span>() <span class="sc">+</span></span>
+<span id="cb85-7"><a href="#cb85-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Date"</span>) <span class="sc">+</span> </span>
+<span id="cb85-8"><a href="#cb85-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Sentiment"</span>) <span class="sc">+</span></span>
+<span id="cb85-9"><a href="#cb85-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb85-10"><a href="#cb85-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-34-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8</span> Conclusion</h2>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
