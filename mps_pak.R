@@ -44,7 +44,7 @@ library(Rgraphviz)
 ##############################
 
 # Creating corpus 
-file.path <- file.path("D:/RepTemplates/UN-vote/data/mpd")
+file.path <- file.path("D:/RepTemplates/mps/data/mpd")
 corpus <- Corpus(DirSource(file.path)) # Creates a framework that holds a collection of documents (corpus)
  
 inspect(corpus[1]) # Checking that the document - here, its document #1 - was correctly read
@@ -79,11 +79,11 @@ corpus <- tm_map(corpus, toSpace, " - ")
 corpus <- tm_map(corpus, toSpace, "\n")
 corpus <- tm_map(corpus, toSpace, ",")
 #corpus <- tm_map(corpus, toSpace, ".")
-#corpus <- tm_map(corpus, function(x) iconv(x, to='latin1', sub='byte'))
+corpus <- tm_map(corpus, function(x) iconv(x, to='latin1', sub='byte'))
 corpus <- tm_map(corpus, removeNumbers) 
 corpus <- tm_map(corpus, stripWhitespace) 
 corpus <- tm_map(corpus, removePunctuation)
-#corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, stripWhitespace)
 
 inspect(corpus[1])
 
@@ -146,7 +146,7 @@ corlimit <- 0.4
 title <- ""
 freq.term.tdm <- findFreqTerms(dtm,lowfreq=150)  
 
-pdf('D:/RepTemplates/UN-vote/sbp/freq_term_corr.pdf')
+pdf('D:/RepTemplates/mps/sbp/freq_term_corr.pdf')
 plot(dtm,main=title,cex.main = 3, term=freq.term.tdm, corThreshold=corlimit,
      attrs=list(node=list(width=15,fontsize=40,fontcolor=129,color="red")))
 dev.off()
@@ -156,12 +156,12 @@ sorted.frequencies <- sort(colSums(as.matrix(dtm.sparse)), decreasing=TRUE)
 head(sorted.frequencies, 20)   
 
 word.frequencies.frame <- data.frame(word=names(sorted.frequencies), freq=sorted.frequencies)   
-head(word.frequencies.frame) 
+head(word.frequencies.frame,10) 
 word.frequencies.frame <- word.frequencies.frame[order(-sorted.frequencies),]
 
 # Plotting Frequencies
 # Term appears at least 100 times in the corpus (can be customized)
-pdf('D:/RepTemplates/UN-vote/sbp/plotted_frequencies.pdf')
+pdf('D:/RepTemplates/mps/sbp/plotted_frequencies.pdf')
 plotted.frequencies <- ggplot(subset(word.frequencies.frame, freq>100), aes(reorder(word, -freq), freq))    
 plotted.frequencies <- plotted.frequencies + geom_bar(stat="identity")   
 plotted.frequencies <- plotted.frequencies + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
@@ -173,7 +173,7 @@ plotted.frequencies  # Printing word frequencies
 dev.off()
 
 # Plotting Frequencies (term appears at least 200 times in the corpus)
-pdf('D:/RepTemplates/UN-vote/sbp/plotted_frequencies_200.pdf')
+pdf('D:/RepTemplates/mps/sbp/plotted_frequencies_200.pdf')
 plotted.frequencies <- ggplot(subset(word.frequencies.frame, freq>200), aes(reorder(word, -freq), freq))    
 plotted.frequencies <- plotted.frequencies + geom_bar(stat="identity")   
 plotted.frequencies <- plotted.frequencies + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
@@ -185,7 +185,7 @@ plotted.frequencies #printing word frequencies
 dev.off()
 
 # Dendogram Figure
-pdf('D:/RepTemplates/UN-vote/sbp/dendogram.pdf')
+pdf('D:/RepTemplates/mps/sbp/dendogram.pdf')
 dendogram <- dist(t(dtm.sparse), method="euclidian")   
 dendogram.fit <- hclust(d=dendogram, method="ward.D")   
 plot(dendogram.fit, cex=1.4, main="", cex.main=6)
@@ -200,7 +200,7 @@ graph.tdm.sparse <- graph.adjacency(tdm.sparse.matrix, weighted=T, mode="undirec
 graph.tdm.sparse <- simplify(graph.tdm.sparse)
 
 # Visualizing the Adjacency Figure
-pdf('D:/RepTemplates/UN-vote/sbp/igraph.pdf')
+pdf('D:/RepTemplates/mps/sbp/igraph.pdf')
 plot.igraph(graph.tdm.sparse, layout=layout.fruchterman.reingold(graph.tdm.sparse, niter=10, area=120*vcount(graph.tdm.sparse)^2),
             vertex.color = 169)
 dev.off()
@@ -209,7 +209,7 @@ dev.off()
 set.seed(142) # This is just the design of the wordcloud picture, can be changed (use same seed)
 pal2 <- brewer.pal(8,"Dark2") # This is just the design of the wordcloud picture, can be changed
 
-pdf('D:/RepTemplates/UN-vote/sbp/wordclouds.pdf')
+pdf('D:/RepTemplates/mps/sbp/wordclouds.pdf')
 wordcloud(names(term.frequencies), term.frequencies, min.freq=50, random.order=FALSE, colors=pal2, scale=c(5.2, .7)) # Can be changed depending on the desired term frequency
 wordcloud(names(term.frequencies), term.frequencies, min.freq=100, random.order=FALSE, colors=pal2, scale=c(5.2, .7)) # Can be changed depending on the desired term frequency
 wordcloud(names(term.frequencies), term.frequencies, min.freq=200, random.order=FALSE, colors=pal2, scale=c(5.2, .7)) # Can be changed depending on the desired term frequency
@@ -235,7 +235,7 @@ word.frequencies.frame.tf.idf <- data.frame(word=names(sorted.frequencies.tf.idf
 head(word.frequencies.frame.tf.idf) 
 
 # Barplot of tf-idf terms
-pdf('D:/RepTemplates/UN-vote/sbp/barplots.pdf')
+pdf('D:/RepTemplates/mps/sbp/barplots.pdf')
 plotted.frequencies.tf.idf <- ggplot(subset(word.frequencies.frame.tf.idf, freq>0.5), aes(reorder(word, -freq), freq))    
 plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + geom_bar(stat="identity")   
 plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
@@ -250,7 +250,7 @@ dev.off()
 set.seed(142) # This is just the design of the wordcloud picture, can be changed (use same seed)
 pal2 <- brewer.pal(8,"Dark2")
 
-pdf('D:/RepTemplates/UN-vote/sbp/wordclouds_tf_idf.pdf')
+pdf('D:/RepTemplates/mps/sbp/wordclouds_tf_idf.pdf')
 wordcloud(names(term.frequencies.tf.idf), term.frequencies.tf.idf, min.freq=0.05, random.order=FALSE, colors=pal2, scale=c(6, .4))
 wordcloud(names(term.frequencies.tf.idf), term.frequencies.tf.idf, min.freq=0.10, random.order=FALSE, colors=pal2, scale=c(6, .4))
 wordcloud(names(term.frequencies.tf.idf), term.frequencies.tf.idf, min.freq=0.30, random.order=FALSE, colors=pal2, scale=c(5, .6))
@@ -260,11 +260,11 @@ dev.off()
 
 # Creating Corpus Histogram w. Tf-Idf Weighting
 word.frequencies.frame.tf.idf <- data.frame(word=names(sorted.frequencies.tf.idf), freq=sorted.frequencies.tf.idf)   
-head(word.frequencies.frame.tf.idf) 
+head(word.frequencies.frame.tf.idf,10) 
 word.frequencies.frame.tf.idf <- word.frequencies.frame.tf.idf[order(-sorted.frequencies.tf.idf),]
 
 # Plotting Frequencies
-pdf('D:/RepTemplates/UN-vote/sbp/barplot_copurs_tf_idf.pdf')
+pdf('D:/RepTemplates/mps/sbp/barplot_copurs_tf_idf.pdf')
 plotted.frequencies.tf.idf <- ggplot(subset(word.frequencies.frame.tf.idf, freq>0.15), aes(reorder(word, -freq), freq))    
 plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + geom_bar(stat="identity")   
 plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
@@ -283,7 +283,7 @@ dtm.tf.idf.sparse.095 <- removeSparseTerms(dtm.tf.idf, 0.05)
 dendogram <- dist(t(dtm.tf.idf.sparse.095), method="euclidian")   
 dendogram.fit <- hclust(d=dendogram, method="ward.D")    
 
-pdf('D:/RepTemplates/UN-vote/sbp/dendogram_tf_idf.pdf')
+pdf('D:/RepTemplates/mps/sbp/dendogram_tf_idf.pdf')
 plot(dendogram.fit, cex=1.4, main="", cex.main=4)
 dev.off()
 
@@ -297,7 +297,7 @@ date.dtm.tf.idf.sparse.matrix <- cbind(dtm.tf.idf.sparse.matrix,document.corpus.
 my_palette <- colorRampPalette(c("white", "pink", "red"))(n = 99)
 
 # Heatmaps
-pdf('D:/RepTemplates/UN-vote/sbp/heatmaps.pdf')
+pdf('D:/RepTemplates/mps/sbp/heatmaps.pdf')
 heatmap.2(date.dtm.tf.idf.sparse.matrix[1:12,1:18],
           main = "", # heat map title
           dendrogram = "none",
@@ -380,7 +380,7 @@ colnames(topic.probabilities) <- c("Policy Rate", "Inflation", "Monetary Policy"
 
 date.topic.probabilities <- cbind(document.corpus.names.df$date, topic.probabilities)
 
-pdf('D:/RepTemplates/UN-vote/sbp/heatmaps_lda.pdf')
+pdf('D:/RepTemplates/mps/sbp/heatmaps_lda.pdf')
 heatmap.2(date.topic.probabilities[1:12, ],
           main = "",
           dendrogram = "none",
@@ -437,7 +437,7 @@ wordfish.score$lag <- lag(wordfish.score$fit)
 wordfish.score$change <- 100*(wordfish.score$fit - wordfish.score$lag)/wordfish.score$fit
 
 # Plot Wordfish Score over time
-pdf('D:/RepTemplates/UN-vote/sbp/wordfish.pdf')
+pdf('D:/RepTemplates/mps/sbp/wordfish.pdf')
 ggplot(wordfish.score, aes(date, fit, group = 1)) +
   geom_line(aes(x = wordfish.score$date, y = fit)) + 
   ggtitle("") +
@@ -494,7 +494,7 @@ wordscores.score$date <- rownames(wordscores.score)
 wordscores.score$date <- as.Date(wordscores.score$date, format = "%d%m%Y")
 
 # Plot Wordscores Score over time
-pdf('D:/RepTemplates/UN-vote/sbp/wordscore.pdf')
+pdf('D:/RepTemplates/mps/sbp/wordscore.pdf')
 ggplot(wordscores.score, aes(date, predicted.wordscores)) +
   geom_line(aes(x = date, y = predicted.wordscores)) + 
   ggtitle("") +

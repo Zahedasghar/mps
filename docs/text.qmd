@@ -1,0 +1,954 @@
+---
+title: "[Sentimental Analysis of Monetary Policy Statements: Natural Language Approach]{.flow}"
+#subtitle: "HSF Research Fellows"
+author: "[[Zahid Asghar, Professor, School of Economics, QAU](https://zahedasghar.netlify.app)]{style=color:blue;}"
+date: "today"
+date-format: "DD-MM-YYYY"
+
+format: 
+  revealjs:
+    theme: [default, custom.css,styles.scss]
+    chalkboard: true
+    slide-number: c/t
+  
+    title-slide-attributes:
+       data-background-image: images/uol_logo.png
+       data-background-size: 20%
+       data-background-position: 100% 100%
+execute:
+  echo: false
+  warning: false
+  freeze: auto
+css: title.css
+editor: visual
+---
+
+## SBP's monetary policy
+
+> In practice, SBP's monetary policy strives to strike a balance among multiple and often competing considerations. These include: controlling inflation, ensuring payment system and financial stability, preserving foreign exchange reserves, and supporting private investment.(SBP)
+
+
+## Unsupervised Machine Learning
+
+> Words matter as much as actions for central banks. Because changes in tone can presage shifts in monetary policy. Therefore, it matters to analyze the words of the SBP.
+
+What central banks say can influence prices on financial markets and the real economy.
+
+## 
+
+SBP reaches out to a broad spectrum of Pakistanis through different channels.
+These include monetary policy announcements, press conferences, business visits, testimonies to the Parliament, Governor’s speeches to the public, online platforms, and laying out monetary policy
+actions and the reasoning behind them in the quarterly Monetary Policy Statements.
+These statements aim to ‘educate and advise economic analysts and others who are providing advice to traders in the financial market on recent developments and expectations for future economic developments’. To determine whether the MPS are fit for purpose, we apply textual analysis to the MPS. 
+
+## Text data in economics {.scrollable} 
+
+New technologies have made available: 
+
+-   vast quantities of digital text, recording 
+an ever-increasing share of human interaction, communication, and culture.
+
+-   Social sciences and economics : Recent years have seen an explosion of 
+empirical economics research using text as 
+data.
+
+-   Text from financial news, social media, and company filings is used to predict asset price movements and study the causal impact of new information. 
+
+
+::: notes
+information encoded in text is 
+a rich complement to the more structured 
+kinds of data traditionally used 
+:::
+
+
+## 
+
+**Macroeconomics**: Text is used to forecast variation in inflation and unemployment, and estimate the effects of policy uncertainty.
+
+**Media economics**: Text from news and social media is used to study 
+the drivers and effects of political slant. 
+
+**Industrial organization and marketing**: Text from advertisements and product reviews is used to study the drivers of consumer decision making.
+
+**Political economy**: Text from politicians’ speeches is used to study the
+dynamics of political agendas and debate.
+
+**Development economics**: Text from administrative records and surveys is used to study the drivers of poverty and inequality.
+
+**Labor economics**: Text from job postings and resumes is used to study the drivers of labor market outcomes. Keywords used to sort resumes for screening
+
+Text is inherently  high dimensional. 
+
+## Analyzing MPS
+
+- topic modeling and  sentimental analysis to the Monetary Policy Statements (MPS) of the
+SBP from 2004: 2024 to capture the focus, tone, and clarity of monetary policy
+communications
+
+Understanding economy through words of SBP over the past two decades
+
+
+## Purpose
+-   To provide insights into the readability, structure, and tone of monetary policy communication in the case of the State Bank of Pakistan. 
+
+-   Nuetral tone
+-   Inflation at the top of the agenda
+-   Growth 
+-   Current Account Deficit
+-   Exchange Rate
+-   Borrowing
+The results indicate the SBP generally communicates with a neutral tone. The dominant topic is inflation and balance of payments, followed by growth but ivestment aspect seems missing, economic growth, and the foreign exchange market. Further, topic proportions and tone are analyzed in relation to key macroeconomic indicators.
+
+
+##
+
+The methods demonstrated in this chapter include:
+
+-   acquiring texts directly from the SBP website;
+-   creating a corpus from the texts, with associated document-level variables;
+-   segmenting the texts by sections found in each document;
+-   cleaning up the texts further;
+-   tokenizing the texts into words;
+-   summarizing the texts in terms of who spoke and how much;
+
+## 
+
+-   examining keywords-in-context from the texts, and identifying keywords using
+  -   statistical association measures;
+  -   transforming and selecting features using lower-casing, stemming, and removing -   punctuation and numbers;
+  -   removing selected features in the form of “stop words”;
+  -   creating a document-feature matrix from the tokens;
+  -   performing sentiment analysis on the texts;
+  -   fitting topic models on the texts. 
+
+
+
+## MPS Data
+
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+# Loading required R packages
+library(xts)
+# install.packages("igraph", type = "binary")
+library(igraph)
+library(plyr)
+library(tm) # Key library, documentation: https://cran.r-project.org/web/packages/tm/tm.pdf
+library(NLP)
+library(SnowballC)
+library(ggplot2) 
+library(cluster)  
+library(wordcloud)
+# library(qdap)
+library(quanteda)
+library(topicmodels)
+# library(XLConnect)
+library(lattice)
+library(gplots)
+library(data.table)
+# library(xlsx)
+library(stringi)
+library(pheatmap)
+library(readtext)
+library(quanteda.textmodels)
+library(stringr)    
+library(dplyr)    
+library(tidyr) 
+#library(rowr) 
+library(ggthemes)
+#install.packages("austin", repos="http://R-Forge.R-project.org")
+library(austin)
+library(gt)
+library(gtsummary)
+library(gtExtras)
+
+# install.packages("BiocManager")
+# BiocManager::install("Rgraphviz")
+library(Rgraphviz)
+
+```
+
+
+```{r}
+#| echo: false
+# Creating corpus 
+file.path <- file.path("D:/RepTemplates/mps/data/mpd")
+corpus <- Corpus(DirSource(file.path)) # Creates a framework that holds a collection of documents (corpus)
+ 
+inspect(corpus[[1]]) # Checking that the document - here, its document #1 - was correctly read
+```
+
+## List of files
+
+```{r}
+#| echo: false
+# Extracting document names, dates, and creating time series
+list.my.files <- list.files(file.path, full.names = FALSE)
+list.my.files
+
+```
+
+
+## Data Processing
+
+
+```{r}
+
+names(list.my.files) <- basename(list.my.files)
+document.corpus.names <- ldply(names(list.my.files))
+document.corpus.names <- gsub("_", "", document.corpus.names)
+document.corpus.names <- gsub(".txt", "", list.my.files)
+
+document.corpus.names.df <- data.frame(document.corpus.names, row.names = document.corpus.names)
+
+day <- substr(document.corpus.names, 1, 2)
+month <- substr(document.corpus.names, 3, 4)
+year <- substr(document.corpus.names, 5, 8)
+
+```
+
+
+
+```{r}
+#| echo: false
+# Using this function to remove idiosyncratic characters, numbers/punctuation, stop-words
+toSpace <- content_transformer(function(x, pattern){return (gsub(pattern, " ", x))})
+corpus <- tm_map(corpus, toSpace, "-")
+corpus <- tm_map(corpus, toSpace, ")")
+corpus <- tm_map(corpus, toSpace, ":")
+corpus <- tm_map(corpus, toSpace, "%")
+corpus <- tm_map(corpus, toSpace, "@")
+corpus <- tm_map(corpus, toSpace, " - ")
+corpus <- tm_map(corpus, toSpace, "\n")
+corpus <- tm_map(corpus, toSpace, ",")
+#corpus <- tm_map(corpus, toSpace, ".")
+corpus <- tm_map(corpus, function(x) iconv(x, to='latin1', sub='byte'))
+corpus <- tm_map(corpus, removeNumbers) 
+corpus <- tm_map(corpus, stripWhitespace) 
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, stripWhitespace)
+
+#inspect(corpus[[1]])
+
+corpus <- tm_map(corpus, tolower)
+corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
+corpus <- tm_map(corpus, stemDocument)
+
+corpus <- tm_map(corpus, removeWords, c( "end", "also", "age",
+                                        "analysis", "number", "two", "three",
+                                        "minut", "third", "fourth", "spokesperson",
+                                        "staff", "like", "five", "four", 
+                                        "topf", "governor", "six","state","bank","year","percent","however",
+                                       "page","pakistan", "sbp","mpc","november","october","june","july","may",
+                                       "august","september","december","january","february","march","april"))                                   
+inspect(corpus[[1]])
+
+
+```
+## Document-Term Matrix
+
+
+
+```{r}
+
+# Converting the corpsus into Document Term Matrix
+# Choosing words with length between 3 and 12 characters
+dtm <- DocumentTermMatrix(corpus, control=list(wordLengths=c(3, 12))) # https://en.wikipedia.org/wiki/Document-term_matrix
+```
+
+
+```{r}
+#| echo: false
+termFreq <- colSums(as.matrix(dtm))
+
+
+table1 <- as.data.frame(termFreq) 
+
+table1 |> head(10)
+```
+
+
+
+
+
+
+
+
+```{r}
+# Removing some of the most sparse terms
+dtm.sparse <- removeSparseTerms(dtm,0.05)
+dim(dtm.sparse)
+
+term.frequencies <- colSums(as.matrix(dtm.sparse))
+order.frequencies <- order(term.frequencies)
+
+term.frequencies[head(order.frequencies)] # View DTM by word frequency using head/tail functions
+term.frequencies[tail(order.frequencies)]
+```
+
+```{r}
+#| echo: true
+find.frequency.terms.100 <- findFreqTerms(dtm.sparse,lowfreq=100)
+find.frequency.terms.100
+
+find.frequency.terms.200 <- findFreqTerms(dtm.sparse,lowfreq=200)
+find.frequency.terms.200
+
+find.frequency.terms.300 <- findFreqTerms(dtm.sparse,lowfreq=300)
+find.frequency.terms.300
+
+ find.frequency.terms.500 <- findFreqTerms(dtm.sparse,lowfreq=500)
+ find.frequency.terms.500
+ find.frequency.terms.700 <- findFreqTerms(dtm.sparse,lowfreq=700)
+ find.frequency.terms.700
+
+
+```
+
+
+
+## Creating Corpus Bar Plot
+
+
+
+
+```{r}
+
+sorted.frequencies <- sort(colSums(as.matrix(dtm.sparse)), decreasing=TRUE)   
+head(sorted.frequencies, 20)   
+
+word.frequencies.frame <- data.frame(word=names(sorted.frequencies), freq=sorted.frequencies)   
+head(word.frequencies.frame,10) 
+word.frequencies.frame <- word.frequencies.frame[order(-sorted.frequencies),]
+```
+
+
+
+## Plotting frequencies (frequency > 100)
+
+```{r}
+# Term appears at least 100 times in the corpus (can be customized)
+plotted.frequencies <- ggplot(subset(word.frequencies.frame, freq>100), aes(reorder(word, -freq), freq))    
+plotted.frequencies <- plotted.frequencies + geom_bar(stat="identity")   
+plotted.frequencies <- plotted.frequencies + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
+plotted.frequencies <- plotted.frequencies + theme(axis.text=element_text(size=17), axis.title=element_text(size=16,face="bold"))
+# plotted.frequencies <- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))
+plotted.frequencies <- plotted.frequencies + xlab("Corpus Terms") 
+plotted.frequencies <- plotted.frequencies + ylab("Frequencies") 
+plotted.frequencies  # Printing word frequencies
+```
+
+
+## Plotting Frequencies (frequency > 200)
+
+```{r}
+
+plotted.frequencies <- ggplot(subset(word.frequencies.frame, freq>200), aes(reorder(word, -freq), freq))    
+plotted.frequencies <- plotted.frequencies + geom_bar(stat="identity")   
+plotted.frequencies <- plotted.frequencies + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
+plotted.frequencies <- plotted.frequencies + theme(axis.text=element_text(size=17), axis.title=element_text(size=16,face="bold"))
+#plotted.frequencies <- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))
+plotted.frequencies <- plotted.frequencies + xlab("Corpus Terms") 
+plotted.frequencies <- plotted.frequencies + ylab("Frequencies") 
+plotted.frequencies #printing word frequencies
+
+```
+
+
+## Dendogram Figure
+
+```{r}
+dendogram <- dist(t(dtm.sparse), method="euclidian")   
+dendogram.fit <- hclust(d=dendogram, method="ward.D")   
+plot(dendogram.fit, cex=1.4, main="", cex.main=6)
+
+```
+
+## Adjacency Figure
+
+```{r}
+dtm.sparse.matrix <- as.matrix(dtm.sparse)
+tdm.sparse.matrix <- t(dtm.sparse.matrix)
+tdm.sparse.matrix <- tdm.sparse.matrix %*% dtm.sparse.matrix
+
+graph.tdm.sparse <- graph.adjacency(tdm.sparse.matrix, weighted=T, mode="undirected")
+graph.tdm.sparse <- simplify(graph.tdm.sparse)
+```
+
+
+```{r}
+plot.igraph(graph.tdm.sparse, layout=layout.fruchterman.reingold(graph.tdm.sparse, niter=10, area=120*vcount(graph.tdm.sparse)^2),
+            vertex.color = 169)
+
+```
+
+
+## Word Cloud
+
+::: {.panel-tabset}
+
+## 50 min-freq
+
+
+```{r}
+#| echo: false
+dtm.sparse1 <- removeSparseTerms(dtm,0.2)
+dim(dtm.sparse1)
+
+term.frequencies1 <- colSums(as.matrix(dtm.sparse1))
+
+# Wordclouds
+set.seed(142) # This is just the design of the wordcloud picture, can be changed (use same seed)
+pal2 <- brewer.pal(8,"Dark2") # This is just the design of the wordcloud picture, can be changed
+
+par(mfrow=c(1,1), mar=c(5,5,5,5))
+
+wordcloud(
+  names(term.frequencies1), 
+  term.frequencies1, 
+  min.freq = 50,  # Reduce the minimum frequency further
+  random.order = FALSE, 
+  colors = pal2, 
+  scale = c(4, .5)  # Adjust scaling
+)
+```
+## 100 min-freq
+
+
+```{r}
+#| echo: false
+wordcloud(
+  names(term.frequencies1), 
+  term.frequencies1, 
+  min.freq = 100,  # Reduce the minimum frequency further
+  random.order = FALSE, 
+  colors = pal2, 
+  scale = c(4, .5)  # Adjust scaling
+)
+```
+:::
+
+#
+
+::: {.panel-tabset}
+
+### 200 min-freq
+
+
+
+```{r}
+#| echo: false
+wordcloud(names(term.frequencies1), term.frequencies1, min.freq=200, random.order=FALSE, colors=pal2, scale=c(4, .5)) # Can be changed depending on the desired term frequency
+```
+
+
+### 300 min-freq
+```{r}
+#| echo: false
+wordcloud(names(term.frequencies1), term.frequencies1, min.freq=300, random.order=FALSE, colors=pal2, scale=c(4, .5))
+```
+
+### 400 min-freq
+```{r}
+#| echo: false
+wordcloud(names(term.frequencies1), term.frequencies1, min.freq=400, random.order=FALSE, colors=pal2, scale=c(4, .5))
+```
+
+### 500 min-freq
+```{r}
+#| echo: false
+wordcloud(names(term.frequencies1), term.frequencies1, min.freq=500, random.order=FALSE, colors=pal2, scale=c(4, .5))
+```
+
+:::
+
+
+
+
+## Correlation Plot
+
+
+```{r}
+corlimit <- 0.4
+title <- ""
+freq.term.tdm <- findFreqTerms(dtm,lowfreq=150)  
+
+plot(dtm,main=title,cex.main = 3, term=freq.term.tdm, corThreshold=corlimit,
+     attrs=list(node=list(width=15,fontsize=40,fontcolor=129,color="red")))
+
+```
+
+## Another weighting scheme
+
+```{r}
+# Wordclouds w. tf-idf
+# Creating a new dtm with tf-idf weighting instead of term frequency weighting
+dtm.tf.idf <- DocumentTermMatrix(corpus, control = list(weighting = weightTfIdf, wordLengths=c(3, 12)))
+dtm.tf.idf.sparse<-removeSparseTerms(dtm.tf.idf,0.95) 
+
+
+term.frequencies.tf.idf <- colSums(as.matrix(dtm.tf.idf.sparse))
+
+sorted.frequencies.tf.idf <- sort(colSums(as.matrix(dtm.tf.idf.sparse)), decreasing=TRUE)   
+head(sorted.frequencies.tf.idf, 20)   
+
+word.frequencies.frame.tf.idf <- data.frame(word=names(sorted.frequencies.tf.idf), freq=sorted.frequencies.tf.idf)   
+head(word.frequencies.frame.tf.idf) 
+```
+
+
+## Barplot of tf-idf terms
+```{r}
+plotted.frequencies.tf.idf <- ggplot(subset(word.frequencies.frame.tf.idf, freq>0.15), aes(reorder(word, -freq), freq))    
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + geom_bar(stat="identity")   
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text=element_text(size=17), axis.title=element_text(size=17))
+# plotted.frequencies <- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + xlab("Corpus Terms") 
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + ylab("Frequencies") 
+plotted.frequencies.tf.idf  #printing word frequencies
+
+
+```
+
+## Wordclouds with tf-idf
+
+::: {.panel-tabset}
+
+#### tf-idf 0.05
+
+```{r}
+#| warniing: false
+set.seed(142) # This is just the design of the wordcloud picture, can be changed (use same seed)
+pal2 <- brewer.pal(8,"Dark2")
+# Increase the size of the plotting area
+par(mfrow=c(1,1), mar=c(5,5,5,5))
+
+wordcloud(names(term.frequencies.tf.idf), term.frequencies.tf.idf, min.freq=0.05, random.order=FALSE, colors=pal2, scale=c(3, .3))
+```
+
+#### tf-idf 0.10
+
+```{r}
+#| warniing: false
+wordcloud(names(term.frequencies.tf.idf), term.frequencies.tf.idf, min.freq=0.10, random.order=FALSE, colors=pal2, scale=c(4, .3))
+
+```
+:::
+
+##
+
+::: {.panel-tabset}
+
+
+#### tf-idf 0.30
+
+```{r}
+#| warniing: false
+wordcloud(names(term.frequencies.tf.idf), term.frequencies.tf.idf, min.freq=0.30, random.order=FALSE, colors=pal2, scale=c(3, .3))
+```
+
+#### tf-idf 0.40
+
+```{r}
+#| warniing: false
+wordcloud(names(term.frequencies.tf.idf), term.frequencies.tf.idf, min.freq=0.40, random.order=FALSE, colors=pal2, scale=c(5, .6))
+
+```
+:::
+
+## term frequency - inverse document frequency
+
+
+
+```{r}
+# Creating Corpus Histogram w. Tf-Idf Weighting
+word.frequencies.frame.tf.idf <- data.frame(word=names(sorted.frequencies.tf.idf), freq=sorted.frequencies.tf.idf)   
+head(word.frequencies.frame.tf.idf,10) 
+```
+
+## Histogram of tf-idf
+
+
+
+```{r}
+word.frequencies.frame.tf.idf <- word.frequencies.frame.tf.idf[order(-sorted.frequencies.tf.idf),]
+
+# Plotting Frequencies
+plotted.frequencies.tf.idf <- ggplot(subset(word.frequencies.frame.tf.idf, freq>0.15), aes(reorder(word, -freq), freq))    
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + geom_bar(stat="identity")   
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text=element_text(size=17), axis.title=element_text(size=17))
+# plotted.frequencies <- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + xlab("Corpus Terms") 
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + ylab("Frequencies w. tf-idf Weighting") 
+plotted.frequencies.tf.idf  # printing word frequencies
+
+```
+
+
+## 
+
+To reduce dimensionality, we use sparse term-document matrix. 
+
+
+```{r}
+
+# Dendogram Figure
+tdm.tf.idf.sparse <- as.matrix(t(dtm.tf.idf.sparse))
+tdm.tf.idf.sparse <- tdm.tf.idf.sparse %*% t(tdm.tf.idf.sparse)
+
+dtm.tf.idf.sparse.095 <- removeSparseTerms(dtm.tf.idf, 0.05)
+dendogram <- dist(t(dtm.tf.idf.sparse.095), method="euclidian")   
+dendogram.fit <- hclust(d=dendogram, method="ward.D")    
+plot(dendogram.fit, cex=1.4, main="", cex.main=8)
+#dev.off()
+
+# HeatMap w. Tf-Idf (change format)
+dtm.tf.idf.sparse.matrix <- as.matrix(dtm.tf.idf.sparse)
+# rownames(dtm.tf.idf.sparse.matrix) <- document.corpus.names.df$date
+
+# arrange(document.corpus.names.df, date)
+date.dtm.tf.idf.sparse.matrix <- cbind(dtm.tf.idf.sparse.matrix,document.corpus.names.df$date)
+
+my_palette <- colorRampPalette(c("white", "pink", "red"))(n = 99) 
+
+```
+
+
+
+
+```{r}
+
+# Heatmaps
+pdf('D:/RepTemplates/mps/sbp/heatmaps.pdf')
+heatmap.2(date.dtm.tf.idf.sparse.matrix[1:12,1:18],
+          main = "", # heat map title
+          dendrogram = "none",
+          keysize = 1,
+          margins = c(5, 5),  # Adjusted margin values
+          density.info = "none",  # turns off density plot inside color legend
+          trace = "none",         # turns off trace lines inside the heat map
+          col = my_palette,       # use on color palette defined earlier
+          srtCol = 45,
+          cexCol = 1.4,
+          Colv = "NA")            # turn off column clustering
+
+heatmap.2(date.dtm.tf.idf.sparse.matrix[13:24,1:18],
+          main = "Frequencies", # heat map title
+          dendrogram = "none",
+          keysize = 1,
+          margins = c(5, 5),  # Adjusted margin values
+          density.info = "none",  # turns off density plot inside color legend
+          trace = "none",         # turns off trace lines inside the heat map
+          col = my_palette,       # use on color palette defined earlier
+          srtCol = 45,
+          cexCol = 1.4,
+          Colv = "NA")            # turn off column clustering
+
+heatmap.2(date.dtm.tf.idf.sparse.matrix[25:36,1:18],
+          main = "Frequencies", # heat map title
+          dendrogram = "none",
+          keysize = 1,
+          margins = c(5, 5),  # Adjusted margin values
+          density.info = "none",  # turns off density plot inside color legend
+          trace = "none",         # turns off trace lines inside the heat map
+          col = my_palette,       # use on color palette defined earlier
+          srtCol = 45,
+          cexCol = 1.4,
+          Colv = "NA")            # turn off column clustering
+
+dev.off()
+
+```
+
+![Heatmap](images/heatmaps.png){align="center"}
+
+
+With conversion to dtm, exploratory data analysis is performed to identify patterns and trends in the text data.
+
+```{r}
+#| eval: false
+order.frequencies<-order(term.frequencies)
+ head(order.frequencies,6)
+ tail(order.frequencies,6)
+```
+
+## Word counting
+
+
+```{r}
+#| eval: false
+dictionary.finance.negative < - read.csv("negative.csv", stringsAsFactors=FALSE)[,1]
+dictionary.finance.positive < - read.csv("positive.csv", stringsAsFactors=FALSE)[,1]
+```
+
+
+```{r}
+#| eval: false
+dictionary.negative < -tolower(dictionary.negative)dictionary.negative < -stemDocument(dictionary.negative)dictionary.negative < -unique(dictionary.negative)
+```
+
+Next we use the `match` function that compares the terms in both dictionary and the text data. The `match` function returns the position of the first match. If there is no match, the `match` function returns `NA`. The `match` function is used to count the frequency of positive and negative words in the text data.
+
+```{r}
+#| eval: false
+corpus.terms < - colnames(dtm)positive.matches < - match(corpus.terms, dictionary.positive, nomatch=0)negative.matches < - match(corpus.terms, dictionary.negative, nomatch=0)
+```
+
+We then assign a value of 1 to the positive and negative matches. The `ifelse` function is used to assign a value of 1 to the positive and negative, and measure the overall sentiment for each document $i$ by the following formula: $Score_i = \frac{Positive_i - Negative_i}{Positive_i + Negative} \in [-1,1]$
+
+A document is considered to be positive if the score is greater than 0, and negative if the score is less than 0.
+
+```{r}
+#| eval: false
+document.score=sum(positive.matches) - sum(negative.matches)
+scores.data.frame= data.frame(scores= document.score) 
+
+```
+
+## Relative frequency
+
+The relative frequency of positive and negative words is calculated by dividing the frequency of positive and negative words by the total number of words in the text.
+
+```{r}
+#| eval: false
+wordscore.estimation.results < - wordfish(corpus,dir 
+= c(1,5))
+
+```
+
+## Semantic analysis
+
+The semantic analysis is performed to identify the semantic orientation of the text data. The semantic orientation is the degree to which a word is positive or negative. The semantic orientation is calculated by dividing the frequency of positive words by the frequency of negative words. The semantic orientation is calculated for each document in the text data.
+
+```{r}
+#| eval: false
+lsa_model < - textmodel_lsa(dtm)
+lsa_predict < - predict(lsa_model)
+
+```
+
+## Topic models
+
+
+```{r}
+
+library(topicmodels)
+#Gibbs Sampling Calibration
+burnin <- 4000
+iter <- 1500
+thin <- 500
+seed <-list(2003,5,63,100001,765)
+nstart <- 5
+best <- TRUE
+
+# Number of topics
+# This is arbitrary, need to make educated guess/play around with data
+k <- 3
+
+# Run LDA using Gibbs sampling
+lda.results <-LDA(dtm.sparse, k, method="Gibbs", control=list(nstart=nstart, seed = seed, best=best, burnin = burnin, iter = iter, thin=thin))
+
+# Write out results
+# Docs to topics
+lda.topics <- as.matrix(topics(lda.results))
+# write.csv(ldaOut.topics,file=paste("LDAGibbs",k,"DocsToTopics.csv"))
+lda.topics |> head(10)
+# Top 6 terms in each topic
+lda.results.terms <- as.matrix(terms(lda.results,11))
+# write.csv(ldaOut.terms,file=paste("LDAGibbs",k,"TopicsToTerms.csv"))
+lda.results.terms
+# Probabilities associated with each topic assignment
+topic.probabilities <- as.data.frame(lda.results@gamma)
+write.csv(topic.probabilities,file=paste("LDAGibbs", k ,"TopicProbabilities.csv"))
+topic.probabilities <- as.matrix(topic.probabilities)
+
+# Probabilities for each term in each topic.
+posterior.terms <- t(posterior(lda.results)$terms)
+
+# Heatmaps with topic modeling
+
+# This is set manually by considering the words appearing in each list
+colnames(topic.probabilities) <- c("Policy Rate", "Inflation",  "Current Account")
+# rownames(topic.probabilities) <- document.corpus.names.df$date
+
+date.topic.probabilities <- cbind(document.corpus.names.df$date, topic.probabilities)
+
+```
+
+## Heatmap
+
+
+```{r}
+pdf('D:/RepTemplates/mps/sbp/heatmaps_lda.pdf')
+
+heatmap.2(date.topic.probabilities[1:12, ],
+          main = "",
+          dendrogram = "none",
+          keysize = 1,
+          margins = c(10, 8),
+          density.info = "none",
+          trace = "none",
+          col = my_palette,
+          srtCol = 45,
+          cexCol = 1.4,
+          Colv = "NA")
+
+dev.off()
+```
+
+![](images/heatmaps_lda.png){.r-stretch fig-align="center"}
+
+## Wordfish
+
+```{r}
+# Converting our corpus into another format
+quanteda.corpus <- corpus(corpus)
+dfm.corpus <- dfm(quanteda.corpus)
+rownames(dfm.corpus) <- rownames(document.corpus.names.df)
+
+# Defining which documents in the corpus represent the most dovish and the most hawkish positions
+dovish <- which(rownames(dfm.corpus) %in% "15032014" | rownames(dfm.corpus) %in% "29012024")
+hawkish <- which(rownames(dfm.corpus) %in% "17052014" | rownames(dfm.corpus) %in% "15112014")
+
+# Running the wordfish algorithm
+wordfish <- textmodel_wordfish(dfm.corpus, dir = c(dovish, hawkish))
+#summary(wordfish, n = 10)
+# coef(wordfish) |> head(10)
+# str(wordfish) 
+
+# Extracting estimated parameters
+documents <- wordfish$docs
+theta <- wordfish$theta
+se.theta <- wordfish$se.theta
+
+predicted.wordfish <- predict(wordfish, interval = "confidence")
+
+# Extracting sentiment score based on the algorithm
+wordfish.score <- as.data.frame(predicted.wordfish$fit)
+
+# Plotting Wordfish Score
+wordfish.score$day <- substr(document.corpus.names, 1, 2)
+wordfish.score$month <- substr(document.corpus.names, 3, 4)
+wordfish.score$year <- substr(document.corpus.names, 5, 8)
+
+wordfish.score$date <- paste(wordfish.score$month, wordfish.score$day, wordfish.score$year, sep="/")
+wordfish.score$date <- as.Date(wordfish.score$date, "%m/%d/%Y")
+
+wordfish.score <- wordfish.score[ order(wordfish.score$date), ]
+
+wordfish.score$lag <- lag(wordfish.score$fit)
+wordfish.score$change <- 100*(wordfish.score$fit - wordfish.score$lag)/wordfish.score$fit
+```
+
+## Plotting Wordfish Score
+
+```{r}
+pdf('D:/RepTemplates/mps/sbp/wordfish.pdf')
+ggplot(wordfish.score, aes(date, fit, group = 1)) +
+  geom_line(aes(x = wordfish.score$date, y = fit)) + 
+  ggtitle("") +
+  theme_hc() +
+  scale_colour_hc() +
+  xlab("Date") + 
+  ylab("Sentiment") +
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=15)) 
+
+# Plot Change in Wordfish Score over time
+ggplot(wordfish.score, aes(date, change, group = 1)) +
+  geom_line(aes(x = date, y = change)) + 
+  ggtitle("") +
+  theme_hc() +
+  scale_colour_hc() +
+  xlab("Date") + 
+  ylab("Sentiment") +
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=15)) 
+dev.off()
+```
+
+![](images/wordfish.png){.r-stretch fig-align="center" width="688" height="454"}
+
+```{r}
+# Assiging scores to documents that we think represent most dovish/hawkish positions
+reference.scores <- rep(NA, nrow(dfm.corpus))
+reference.scores[str_detect(rownames(dfm.corpus), "15032014")] <- -1  
+reference.scores[str_detect(rownames(dfm.corpus), "29012024")] <- -1  
+ 
+reference.scores[str_detect(rownames(dfm.corpus), "17052014")] <- 1
+reference.scores[str_detect(rownames(dfm.corpus), "15112014")] <- 1
+
+# Running the Wordscores algorithm
+wordscores <- textmodel_wordscores(dfm.corpus, reference.scores, scale="linear", smooth=1) 
+
+#summary(wordscores, n = 10)
+coef(wordscores) |> head(10)
+
+
+# Extracting predicted wordscores
+predicted.wordscores <- predict(wordscores)
+
+wordscores.score <- as.data.frame(predicted.wordscores)
+wordscores.score$document.corpus.names <- NULL
+
+# Plots
+# wordscores.score <- wordscores.score[ order(wordscores.score$date), ]
+
+wordscores.score$lag <- lag(wordscores.score$predicted.wordscores)
+wordscores.score$change <- 100*(wordscores.score$predicted.wordscores - wordscores.score$lag)/wordscores.score$predicted.wordscores
+wordscores.score$date <- rownames(wordscores.score)
+wordscores.score$date <- as.Date(wordscores.score$date, format = "%d%m%Y")
+```
+
+## Plotting predicted Wordscores
+
+```{r}
+# Plot Wordscores Score over time
+ggplot(wordscores.score, aes(date, predicted.wordscores)) +
+  geom_line(aes(x = date, y = predicted.wordscores)) + 
+  ggtitle("") +
+  theme_hc() +
+  scale_colour_hc() +
+  xlab("Date") + 
+  ylab("Sentiment") +
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=15)) 
+```
+
+## Sentiment Change Over Time
+
+```{r}
+# Plot Change in Wordscores Score over time
+ggplot(wordscores.score, aes(date, change)) +
+  geom_line(aes(x = date, y = change)) + 
+  ggtitle("") +
+  theme_hc() +
+  scale_colour_hc() +
+  xlab("Date") + 
+  ylab("Sentiment") +
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=15)) 
+
+
+
+
+```
+
+
+## Conclusion
+
+-   Inflation is the most important 
+-   Growth comes second
+-   Unemployment is the least important
+-   Investment is the least important
+-   Current account deficit is important
+-   Not forward looking
+-   No demand growth moderation
+
+No causal statements but it seems SBP MPS are more concentrated on managing inflation and dealing with current account deficits and less concerned about private sector investment and other macroeconomic indicators which lead to growth on sustainable basis.

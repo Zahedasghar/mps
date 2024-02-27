@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.528">
+<meta name="generator" content="quarto-1.5.9">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -96,30 +96,33 @@ window.Quarto = {
    
   <ul>
   <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
-  <li><a href="#theoretical-background" id="toc-theoretical-background" class="nav-link" data-scroll-target="#theoretical-background"><span class="header-section-number">2</span> Theoretical Background</a></li>
-  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">3</span> Data</a>
+  <li><a href="#mps-data" id="toc-mps-data" class="nav-link" data-scroll-target="#mps-data"><span class="header-section-number">2</span> MPS Data</a>
   <ul class="collapse">
-  <li><a href="#cleaning-and-preprocessing" id="toc-cleaning-and-preprocessing" class="nav-link" data-scroll-target="#cleaning-and-preprocessing"><span class="header-section-number">3.1</span> Cleaning and Preprocessing</a></li>
+  <li><a href="#cleaning-and-preprocessing" id="toc-cleaning-and-preprocessing" class="nav-link" data-scroll-target="#cleaning-and-preprocessing"><span class="header-section-number">2.1</span> Cleaning and Preprocessing</a></li>
   </ul></li>
-  <li><a href="#plotting-data" id="toc-plotting-data" class="nav-link" data-scroll-target="#plotting-data"><span class="header-section-number">4</span> Plotting data</a></li>
-  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">5</span> Word Cloud</a>
+  <li><a href="#document-term-matrix" id="toc-document-term-matrix" class="nav-link" data-scroll-target="#document-term-matrix"><span class="header-section-number">3</span> Document Term Matrix</a></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">4</span> Exploratory Data Analysis</a></li>
+  <li><a href="#plotting-data" id="toc-plotting-data" class="nav-link" data-scroll-target="#plotting-data"><span class="header-section-number">5</span> Plotting data</a></li>
+  <li><a href="#correlation-plot" id="toc-correlation-plot" class="nav-link" data-scroll-target="#correlation-plot"><span class="header-section-number">6</span> Correlation plot</a>
   <ul class="collapse">
-  <li><a href="#weighting-scheme" id="toc-weighting-scheme" class="nav-link" data-scroll-target="#weighting-scheme"><span class="header-section-number">5.1</span> Weighting Scheme</a></li>
-  <li><a href="#tidytext-data-table" id="toc-tidytext-data-table" class="nav-link" data-scroll-target="#tidytext-data-table"><span class="header-section-number">5.2</span> Tidytext data table</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">6.1</span> Word Cloud</a></li>
+  <li><a href="#weighting-scheme" id="toc-weighting-scheme" class="nav-link" data-scroll-target="#weighting-scheme"><span class="header-section-number">6.2</span> Weighting Scheme</a></li>
+  <li><a href="#tidytext-data-table" id="toc-tidytext-data-table" class="nav-link" data-scroll-target="#tidytext-data-table"><span class="header-section-number">6.3</span> Tidytext data table</a></li>
   </ul></li>
-  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">6</span> Exploratory Data Analysis</a>
+  <li><a href="#exploratory-data-analysis-1" id="toc-exploratory-data-analysis-1" class="nav-link" data-scroll-target="#exploratory-data-analysis-1"><span class="header-section-number">7</span> Exploratory Data Analysis</a>
   <ul class="collapse">
-  <li><a href="#word-counting" id="toc-word-counting" class="nav-link" data-scroll-target="#word-counting"><span class="header-section-number">6.1</span> Word counting</a></li>
-  <li><a href="#relative-frequency" id="toc-relative-frequency" class="nav-link" data-scroll-target="#relative-frequency"><span class="header-section-number">6.2</span> Relative frequency</a></li>
-  <li><a href="#semantic-analysis" id="toc-semantic-analysis" class="nav-link" data-scroll-target="#semantic-analysis"><span class="header-section-number">6.3</span> Semantic analysis</a></li>
+  <li><a href="#word-counting" id="toc-word-counting" class="nav-link" data-scroll-target="#word-counting"><span class="header-section-number">7.1</span> Word counting</a></li>
+  <li><a href="#relative-frequency" id="toc-relative-frequency" class="nav-link" data-scroll-target="#relative-frequency"><span class="header-section-number">7.2</span> Relative frequency</a></li>
+  <li><a href="#semantic-analysis" id="toc-semantic-analysis" class="nav-link" data-scroll-target="#semantic-analysis"><span class="header-section-number">7.3</span> Semantic analysis</a></li>
   </ul></li>
-  <li><a href="#topic-models" id="toc-topic-models" class="nav-link" data-scroll-target="#topic-models"><span class="header-section-number">7</span> Topic models</a>
+  <li><a href="#topic-models" id="toc-topic-models" class="nav-link" data-scroll-target="#topic-models"><span class="header-section-number">8</span> Topic models</a>
   <ul class="collapse">
-  <li><a href="#heatmap" id="toc-heatmap" class="nav-link" data-scroll-target="#heatmap"><span class="header-section-number">7.1</span> Heatmap</a></li>
-  <li><a href="#wordfish" id="toc-wordfish" class="nav-link" data-scroll-target="#wordfish"><span class="header-section-number">7.2</span> Wordfish</a></li>
-  <li><a href="#plotting-wordfish-score" id="toc-plotting-wordfish-score" class="nav-link" data-scroll-target="#plotting-wordfish-score"><span class="header-section-number">7.3</span> Plotting Wordfish Score</a></li>
-  <li><a href="#plotting-wordscores-score" id="toc-plotting-wordscores-score" class="nav-link" data-scroll-target="#plotting-wordscores-score"><span class="header-section-number">7.4</span> Plotting Wordscores Score</a></li>
+  <li><a href="#heatmap" id="toc-heatmap" class="nav-link" data-scroll-target="#heatmap"><span class="header-section-number">8.1</span> Heatmap</a></li>
+  <li><a href="#wordfish" id="toc-wordfish" class="nav-link" data-scroll-target="#wordfish"><span class="header-section-number">8.2</span> Wordfish</a></li>
+  <li><a href="#plotting-wordfish-score" id="toc-plotting-wordfish-score" class="nav-link" data-scroll-target="#plotting-wordfish-score"><span class="header-section-number">8.3</span> Plotting Wordfish Score</a></li>
+  <li><a href="#plotting-wordscores-score" id="toc-plotting-wordscores-score" class="nav-link" data-scroll-target="#plotting-wordscores-score"><span class="header-section-number">8.4</span> Plotting Wordscores Score</a></li>
   </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">9</span> Conclusion</a></li>
   </ul>
 </nav>
 </div>
@@ -153,29 +156,97 @@ window.Quarto = {
 
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
-<p>Dealing with text is typically not considered as important in training of economics and social sciences training for data analysis. This is in direct contrast with how often it has to be dealt with prior to more common analysis, or how interesting it might be to have text be the focus of analysis <a href="https://m-clark.github.io/text-analysis-with-R/intro.html#overview">Text Analysis in R</a>. This document and corresponding workshop will aim to provide a sense of the things one can do with text, and the sorts of analyses that might be useful. Moreover, in era of ML, AI and NLP, text analysis is becoming more and more important as human may miss some important information and computer-based approaches can process and summarise text more efficiently than humans. Also, textual analysis may extract meaning from text missed by human readers, who may overlook certain patterns because they do not conform to prior beliefs and expectations (Herasymova, 2022). There are many studies which have done in detail textual analysis of central bank statements <span class="citation" data-cites="shapiro2021">Shapiro and Wilson (<a href="#ref-shapiro2021" role="doc-biblioref">2021</a>)</span>. I have mainly followed</p>
-<p><span class="citation" data-cites="benchimol2022">Benchimol, Kazinnik, and Saadon (<a href="#ref-benchimol2022" role="doc-biblioref">2022</a>)</span> guidelines in this paper.</p>
-<p>With this motivation, we apply textual analysis to monetary policy statements by the State Bank of Pakistan (SBP) which is aimed at understanding the monetary policy stance of the central bank. The monetary policy statement (MPS) is a document that is released by the central bank to communicate its monetary policy stance to the public. The MPS is released after the Monetary Policy Committee (MPC) meeting, which is usually held every two months. The MPS contains information on the current state of the economy, the central bank’s assessment of the economy, and the central bank’s monetary policy stance. The MPS is an important document for the public, as it provides information on the central bank’s monetary policy stance, which can have implications for the economy.</p>
+<p>This study explores text data analysis of monetary policy statements issued by State Bank of Pakistan over past 18 to 20 years. Dealing with text is typically not considered as important in training of economics and social sciences for data analysis. This is in direct contrast with how often it has to be dealt with prior to more common analysis, or how interesting it might be to have text be the focus of analysis <a href="https://m-clark.github.io/text-analysis-with-R/intro.html#overview">Text Analysis in R</a>. This paper/tutorial aims at providing a sense of the things one can do with text, and the sorts of analyses that might be useful. In era of ML, AI and NLP, text analysis is becoming more and more important as human may miss some important information and computer-based approaches can process and summarise text more efficiently than humans. Also, textual analysis may extract meaning from text missed by human readers, who may overlook certain patterns because they do not conform to prior beliefs and expectations (Herasymova, 2022). There are many studies which have done in detail textual analysis of central bank statements <span class="citation" data-cites="shapiro2021">Shapiro and Wilson (<a href="#ref-shapiro2021" role="doc-biblioref">2021</a>)</span>. I have mainly followed <span class="citation" data-cites="benchimol2022">Benchimol, Kazinnik, and Saadon (<a href="#ref-benchimol2022" role="doc-biblioref">2022</a>)</span> guidelines in this paper.</p>
+<p>With this motivation, I do textual analysis to monetary policy statements by the State Bank of Pakistan (SBP) which is aimed at understanding the monetary policy stance of the central bank. The monetary policy statement (MPS) is a document that is released by the central bank to communicate its monetary policy stance to the public. The MPS is released after the Monetary Policy Committee (MPC) meeting, which is usually held every two months. The MPS contains information on the current state of the economy, the central bank’s assessment of the economy, and the central bank’s monetary policy stance. Monetary policy statements are an important source of information for researchers, as they provide information on the central bank’s monetary policy stance, which can have implications for the economy. I have extracted monetary policy statements from the State Bank of Pakistan (SBP) website, and used text mining techniques to extract information from these statements.</p>
 <p>The primary objective of these statements is to inform and guide economic analysts and other stakeholders involved in advising traders within the financial markets. They provide insights into recent economic developments and anticipate future trends, thereby facilitating informed decision-making. Therefore, it becomes all the important to analyse how effectively SBP communicates through its policy statements. In assessing the effectiveness of these MPS, we employ textual analysis techniques. Unstructured data, often rich in textual content, encompasses a wide array of sources such as news articles, social media posts, Twitter feeds, transcriptions from videos, and formal documents. Its abundance offers fresh opportunities and simultaneous challenges for researchers and research institutions alike. In this paper, I explore various methodologies for text analysis and propose a systematic approach to leverage text mining techniques. Furthermore, I examine potential empirical applications of these methods.</p>
-<p>This paper focuses on the primer of extracting information from unstructured data, and the potential applications of text mining in the context of monetary policy statements. Quantitative analysis of text data is a rapidly growing field, and the methods and techniques used in this paper are not exhaustive. These methods are in extensive use in political science, sociology, linguistics and information security but are not in wide use in economics and finance in Pakistan. Nevertheless, there is a growing interest in the use of text mining in economics and finance, and this paper aims to provide a starting point for researchers interested in text mining and its applications in economics and finance. Recent advances in open source software and the availability of large text datasets have made it easier for researchers to apply text mining techniques to their research. As text data is usually unstructured, therefore, it is important that a reproducible and systematic approach is used to extract information from text data. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements. Monetary policy and fiscal policy are two of the most important tools that governments and central banks use to manage the economy. Monetary policy refers to the actions taken by the central bank to influence the money supply and interest rates in the economy. The central bank uses monetary policy to achieve its objectives, such as price stability, full employment, and economic growth. The central bank uses a variety of tools to implement monetary policy, such as open market operations, discount rate changes, and reserve requirement changes. The central bank communicates its monetary policy stance to the public through monetary policy statements. Therefore, it is important to analyze these statements to understand the central bank’s monetary policy stance. Text mining techniques can be used to extract information from monetary policy statements, and to analyze the central bank’s monetary policy stance. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements.</p>
-<p>Monetary policy statements are an important source of information for researchers, as they provide information on the central bank’s monetary policy stance, which can have implications for the economy. I have extracted monetary policy statements from the State Bank of Pakistan (SBP) website, and used text mining techniques to extract information from these statements.</p>
+<p>This paper focuses on the primer of extracting information from unstructured data, and the potential applications of text mining in the context of monetary policy statements. Quantitative analysis of text data is a rapidly growing field, and the methods and techniques used in this paper are not exhaustive. These methods are in extensive use in political science, sociology, linguistics and information security but are not in wide use in economics and finance in Pakistan. Nevertheless, there is a growing interest in the use of text mining in economics and finance, and this paper aims to provide a starting point for researchers interested in text mining and its applications in economics and finance. Recent advances in open source software and the availability of large text datasets have made it easier for researchers to apply text mining techniques to their research. As text data is usually unstructured, therefore, it is important that a reproducible and systematic approach is used to extract information from text data. The principal goal of text mining is to capture and analyze all possible meanings embeded in text. Text mining transform unstructured data into structured data, and to extract information from text data. Text mining is a rapidly growing field, and has applications in a wide range of fields, such as information retrieval, natural language processing, and data mining. Moreover, it analyzes- patterns and trends in the text data,the sentiment of text data, classify text data, to categorize the text data among many other functions.</p>
+<p>This study aims at providing a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements. Monetary policy and fiscal policy are two of the most important tools that governments and central banks use to manage the economy. Monetary policy refers to the actions taken by the central bank to influence the money supply and interest rates in the economy. The central bank uses monetary policy to achieve its objectives, such as price stability, full employment, and economic growth. The central bank uses a variety of tools to implement monetary policy, such as open market operations, discount rate changes, and reserve requirement changes. The central bank communicates its monetary policy stance to the public through monetary policy statements. Therefore, it is important to analyze these statements to understand the central bank’s monetary policy stance. Text mining techniques can be used to extract information from monetary policy statements, and to analyze the central bank’s monetary policy stance. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements.</p>
 <p>The paper is organized as follows. Section 2 provides an overview of text mining and its applications in economics and finance. Section 3 provides a systematic approach to text mining, and Section 4 provides an overview of the potential applications of text mining in the context of monetary policy statements. Section 5 concludes the paper.</p>
 </section>
-<section id="theoretical-background" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="theoretical-background"><span class="header-section-number">2</span> Theoretical Background</h2>
-<p>The principal goal of text mining is to capture and analyze all possible meanings embeded in text. Text mining transform unstructured data into structured data, and to extract information from text data. Text mining is a rapidly growing field, and has applications in a wide range of fields, such as information retrieval, natural language processing, and data mining. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data. Text mining techniques can be used to extract information from text data, and to analyze the text data. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can also be used to summarize the content of text data, and to extract information from the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data. Text mining techniques can be used to extract information from text data, and to analyze the text data. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can also be used to summarize the content of text data, and to extract information from the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data. Text mining techniques can be used to extract information from text data, and to analyze the text data. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can also be used to summarize the content of text data, and to extract information from the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data.</p>
-</section>
-<section id="data" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="data"><span class="header-section-number">3</span> Data</h2>
-<p>I apply topic, sentiment, and linguistic analysis to the Monetary Policy Statements (MPS) of the State Bank of Pakistan from 2005-2024 to capture the focus, tone, and clarity of monetary policy communications. Almost 19 years data of monetary policy statements is extracted from the SBP website. There are total 81 MPS documents from 2005 to 2024 I have used in this analysis. There are few statements which have very different structures, therefore are not included. Reason for excluding these statement is usually MPS is 2 to 3 pages but these occasional statements spread over 30 pages, so not included to have 95% documents of same structure. Couple of statements are missing from the website. The data is in PDF format and I have used the <code>pdftools</code> package to extract the text from the PDF files. The text is then cleaned and pre-processed to remove any unwanted characters and symbols. The text is then tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. <code>tm</code> package is used to clean and preprocess the text data, and to create the document term matrix. <code>tidyverse</code> and <code>tidytext</code> packages are used to analyze and visualize the text data. I have used <code>tm</code> package to store data as corpus. There are other forms of data storage in R such as <code>tibble</code> and <code>dataframe</code> but I have used <code>tm</code> package to store data as corpus.<code>tm</code> package is used to clean and preprocess the text data, and to create the document term matrix.</p>
+<section id="mps-data" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="mps-data"><span class="header-section-number">2</span> MPS Data</h2>
+<p>I do text analysis using topic modeling, sentiment, and linguistic analysis to the Monetary Policy Statements (MPS) of the State Bank of Pakistan from 2005-2024 to capture the focus, tone, and clarity of monetary policy communications. Overall I have total 81 MPS documents from 2005 to 2024 used in this analysis. I have included all MPS shown on <a href="https://www.sbp.org.pk/m_policy/mon.asp">SBP website link</a>. The data is in PDF format and I have used the <code>pdftools</code> package to extract the text from the PDF files. All these statements are stored as corpus. There are other forms of data storage in R such as <code>tibble</code> and <code>dataframe</code> but I have used <code>tm</code> package to store data as corpus. The text is then cleaned and pre-processed to remove any unwanted characters and symbols. The text is then tokenized and converted to a document term matrix to analyze the text data. <code>tm</code> package is used to clean and preprocess the text data, and to create the document term matrix. <code>tidyverse</code> and <code>tidytext</code> packages are used to analyze and visualize the text data.</p>
+<p>Following is an example of one of the statment from the corpus.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;&lt;SimpleCorpus&gt;&gt;
-Metadata:  corpus specific: 1, document level (indexed): 0
-Content:  documents: 1
+<pre><code>&lt;&lt;PlainTextDocument&gt;&gt;
+Metadata:  7
+Content:  chars: 5711
 
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                01012018.txt 
-                               MONETARY POLICY COMMITTEE\n                                STATE BANK OF PAKISTAN\nMonetary Policy Statement\nJanuary 2018\n\nPakistan’s economic growth is on track to achieve its highest level in the last eleven years. Average\nheadline inflation remains within the forecast range of SBP, but core inflation has continued to\nincrease. Fiscal deficit for H1-FY18 is expected to fall close to the last year’s 2.5 percent. There has\nbeen visible improvement in export growth and remittances are marginally higher. However, largely\ndue to high level of imports the current account deficit remains under pressure. The exchange rate\nadjustment in December 2017 is expected to help ease the pressure on the external front.\n\nThe progress in the real sector indicates that agriculture sector is set to perform better for the\nsecond year in a row. Production of all major Kharif crops, except maize, has surpassed the level of\nFY17. Similarly, large scale manufacturing (LSM) recorded a healthy broad-based growth of 7.2\npercent during Jul-Nov FY18 as compared to 3.2 percent during the same period last year. While\nthere could be some deceleration in LSM growth due to sector specific issues such as sugar, POL\nand fertilizer, overall industrial activity is likely to remain strong. Benefiting from both infrastructure\nand CPEC related investments, construction and its allied industries are expected to maintain their\nhigher growth momentum. After incorporating the impact of commodity sector dynamics on the\nservices sector, the real GDP growth is projected to be around 5.8 percent, significantly higher than\nFY17, but marginally lower than the annual target of 6 percent for FY18. This is largely due to\nexpectations of a below-target wheat crop because of a reduction in area under cultivation.\n\nAverage headline inflation for H1-FY18 stands at 3.8 percent. Meanwhile, core inflation (non-food-\nnon-energy) continued to maintain its higher trajectory, and clocked in at 5.5 percent during the first\nhalf of the year as compared to 4.9 percent last year. This together with a lagged impact of PKR\ndepreciation and rising international oil prices are likely to increase inflation in the coming months.\nTaking into account the impact of all these developments, while the average inflation for FY18 is\nstill projected to fall in the range of 4.5 to 5.5 percent, end of fiscal year YoY inflation is likely to\ninch towards the annual target of 6 percent.\n\nBroad money supply grew marginally by 1.9 percent during 1st Jul-12th Jan FY18.. This is a reflection\nof the decline in NFA and government efforts to contain expenditures. Higher tax collection and\nproceeds from the issuance of Sukuk and Eurobond have led to reduction in net budgetary\nborrowing which stood at Rs. 401.9 billion during 1st Jul-12th Jan FY18 as compared to Rs. 470.4\nbillion in the corresponding period of the previous year. Moreover, the delay in the sugar crushing\nseason also contributed to a moderation of demand in private sector credit.\n\nOn the external front, export receipts posted the highest growth in the last seven years of 10.8\npercent in H1-FY18 against a reduction of 1.4 percent in H1-FY17. Worker’s remittances also\nrecorded growth (2.5 percent) during the first half of the year as compared to a decline in the same\nperiod last year. However, favorable impact of these positives was overshadowed by the\ncontinuation of strong growth in imports of goods and services. The current account deficit\nwidened to US$ 7.4 billion during the first half of the year, which was 1.6 times of the deficit during\nthe same period last year. Developments in financial accounts show that one-fifth of this deficit was\nfinanced by healthy foreign direct investments inflows, and the rest was managed by the official\nflows and the country’s own resources. As a result, SBP’s liquid foreign exchange reserves\n\n                                                                                                     Page 1\n\n                               MONETARY POLICY COMMITTEE\n                               STATE BANK OF PAKISTAN\nwitnessed a decline of US$ 2.6 billion since end June 2017 to reach US$ 13.5 billion as of 19th\nJanuary 2018. Going forward, the PKR depreciation in December 2017, the export package, the\nlagged impact of adjustments in regulatory duties, favorable external environment, and expected\nincrease in workers’ remittances, will contribute to a gradual reduction in the country’s current\naccount deficit. While increase in international oil prices pose a major risk to this assessment,\nmanaging overall balance of payments in near term depends on the realization of official financial\nflows.\n\nFour key factors of Pakistan’s economy have witnessed important changes since November 2017\nimpinging upon the policy rate decision. Firstly, PKR has depreciated by around 5 percent.\nSecondly, oil prices are hovering near USD 70 per barrel. Thirdly, a number of central banks have\nstarted to adjust their policy rates upwards adversely affecting PKR interest-rate differentials vis-à-\nvis their currencies. Fourthly, multiple indicators show that the output gap has significantly\nnarrowed indicating a buildup of demand pressures.\n\nBased on these developments, MPC is of the view that in order to preempt overheating of the\neconomy and inflation breaching its target rate, this is the right time to make a policy decision that\nwould balance growth and stability in the medium to long term. Accordingly, the Monetary Policy\nCommittee has decided to raise the policy rate by 25 bps to 6.00 percent.\n\n\n\n\n                                                                                                    Page 2\n </code></pre>
+                               MONETARY POLICY COMMITTEE
+                                STATE BANK OF PAKISTAN
+Monetary Policy Statement
+January 2018
+
+Pakistan’s economic growth is on track to achieve its highest level in the last eleven years. Average
+headline inflation remains within the forecast range of SBP, but core inflation has continued to
+increase. Fiscal deficit for H1-FY18 is expected to fall close to the last year’s 2.5 percent. There has
+been visible improvement in export growth and remittances are marginally higher. However, largely
+due to high level of imports the current account deficit remains under pressure. The exchange rate
+adjustment in December 2017 is expected to help ease the pressure on the external front.
+
+The progress in the real sector indicates that agriculture sector is set to perform better for the
+second year in a row. Production of all major Kharif crops, except maize, has surpassed the level of
+FY17. Similarly, large scale manufacturing (LSM) recorded a healthy broad-based growth of 7.2
+percent during Jul-Nov FY18 as compared to 3.2 percent during the same period last year. While
+there could be some deceleration in LSM growth due to sector specific issues such as sugar, POL
+and fertilizer, overall industrial activity is likely to remain strong. Benefiting from both infrastructure
+and CPEC related investments, construction and its allied industries are expected to maintain their
+higher growth momentum. After incorporating the impact of commodity sector dynamics on the
+services sector, the real GDP growth is projected to be around 5.8 percent, significantly higher than
+FY17, but marginally lower than the annual target of 6 percent for FY18. This is largely due to
+expectations of a below-target wheat crop because of a reduction in area under cultivation.
+
+Average headline inflation for H1-FY18 stands at 3.8 percent. Meanwhile, core inflation (non-food-
+non-energy) continued to maintain its higher trajectory, and clocked in at 5.5 percent during the first
+half of the year as compared to 4.9 percent last year. This together with a lagged impact of PKR
+depreciation and rising international oil prices are likely to increase inflation in the coming months.
+Taking into account the impact of all these developments, while the average inflation for FY18 is
+still projected to fall in the range of 4.5 to 5.5 percent, end of fiscal year YoY inflation is likely to
+inch towards the annual target of 6 percent.
+
+Broad money supply grew marginally by 1.9 percent during 1st Jul-12th Jan FY18.. This is a reflection
+of the decline in NFA and government efforts to contain expenditures. Higher tax collection and
+proceeds from the issuance of Sukuk and Eurobond have led to reduction in net budgetary
+borrowing which stood at Rs. 401.9 billion during 1st Jul-12th Jan FY18 as compared to Rs. 470.4
+billion in the corresponding period of the previous year. Moreover, the delay in the sugar crushing
+season also contributed to a moderation of demand in private sector credit.
+
+On the external front, export receipts posted the highest growth in the last seven years of 10.8
+percent in H1-FY18 against a reduction of 1.4 percent in H1-FY17. Worker’s remittances also
+recorded growth (2.5 percent) during the first half of the year as compared to a decline in the same
+period last year. However, favorable impact of these positives was overshadowed by the
+continuation of strong growth in imports of goods and services. The current account deficit
+widened to US$ 7.4 billion during the first half of the year, which was 1.6 times of the deficit during
+the same period last year. Developments in financial accounts show that one-fifth of this deficit was
+financed by healthy foreign direct investments inflows, and the rest was managed by the official
+flows and the country’s own resources. As a result, SBP’s liquid foreign exchange reserves
+
+                                                                                                     Page 1
+
+                               MONETARY POLICY COMMITTEE
+                               STATE BANK OF PAKISTAN
+witnessed a decline of US$ 2.6 billion since end June 2017 to reach US$ 13.5 billion as of 19th
+January 2018. Going forward, the PKR depreciation in December 2017, the export package, the
+lagged impact of adjustments in regulatory duties, favorable external environment, and expected
+increase in workers’ remittances, will contribute to a gradual reduction in the country’s current
+account deficit. While increase in international oil prices pose a major risk to this assessment,
+managing overall balance of payments in near term depends on the realization of official financial
+flows.
+
+Four key factors of Pakistan’s economy have witnessed important changes since November 2017
+impinging upon the policy rate decision. Firstly, PKR has depreciated by around 5 percent.
+Secondly, oil prices are hovering near USD 70 per barrel. Thirdly, a number of central banks have
+started to adjust their policy rates upwards adversely affecting PKR interest-rate differentials vis-à-
+vis their currencies. Fourthly, multiple indicators show that the output gap has significantly
+narrowed indicating a buildup of demand pressures.
+
+Based on these developments, MPC is of the view that in order to preempt overheating of the
+economy and inflation breaching its target rate, this is the right time to make a policy decision that
+would balance growth and stability in the medium to long term. Accordingly, the Monetary Policy
+Committee has decided to raise the policy rate by 25 bps to 6.00 percent.
+
+                                                                                                    Page 2</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -199,36 +270,30 @@ Content:  documents: 1
 [81] "31072023.txt"</code></pre>
 </div>
 </div>
-<section id="cleaning-and-preprocessing" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="cleaning-and-preprocessing"><span class="header-section-number">3.1</span> Cleaning and Preprocessing</h3>
-<p>The text data is cleaned and preprocessed to remove any unwanted characters and symbols. The text data is then tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. ‘tm’ package is used to clean and preprocess the text data, and to create the document term matrix. All the tokens not necessarily carry meaningful information. Text cleaning (or text preprocessing) makes an unstructured set of texts uniform across and within and eliminates idiosyncratic characters or meaningless terms.6 Text cleaning can be loosely divided into a set of steps as shown below. Numbers can also be removed from the text data using <code>tm_map(corpus, removeNumbers)</code>. Therefore, it is important to remove the stop words from the text data. Stop words are the most common words in a language, such as ‘the’, ‘is’, ‘at’, ‘which’, and ‘on’. These words do not carry much meaning, and can be removed from the text data. The <code>tm</code> package is used to remove the stop words from the text data. However, before removing stopwords, all words are converted to <code>lowercase</code> to make the text uniform. <code>corpus &lt;- tm_map(corpus, tolower</code></p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>&lt;&lt;SimpleCorpus&gt;&gt;
-Metadata:  corpus specific: 1, document level (indexed): 0
-Content:  documents: 1
-
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             01012018.txt 
- MONETARY POLICY COMMITTEE STATE BANK OF PAKISTAN Monetary Policy Statement January Pakistans economic growth is on track to achieve its highest level in the last eleven years Average headline inflation remains within the forecast range of SBP but core inflation has continued to increase Fiscal deficit for H FY is expected to fall close to the last years percent There has been visible improvement in export growth and remittances are marginally higher However largely due to high level of imports the current account deficit remains under pressure The exchange rate adjustment in December is expected to help ease the pressure on the external front The progress in the real sector indicates that agriculture sector is set to perform better for the second year in a row Production of all major Kharif crops except maize has surpassed the level of FY Similarly large scale manufacturing LSM recorded a healthy broad based growth of percent during Jul Nov FY as compared to percent during the same period last year While there could be some deceleration in LSM growth due to sector specific issues such as sugar POL and fertilizer overall industrial activity is likely to remain strong Benefiting from both infrastructure and CPEC related investments construction and its allied industries are expected to maintain their higher growth momentum After incorporating the impact of commodity sector dynamics on the services sector the real GDP growth is projected to be around percent significantly higher than FY but marginally lower than the annual target of percent for FY This is largely due to expectations of a below target wheat crop because of a reduction in area under cultivation Average headline inflation for H FY stands at percent Meanwhile core inflation non food non energy continued to maintain its higher trajectory and clocked in at percent during the first half of the year as compared to percent last year This together with a lagged impact of PKR depreciation and rising international oil prices are likely to increase inflation in the coming months Taking into account the impact of all these developments while the average inflation for FY is still projected to fall in the range of to percent end of fiscal year YoY inflation is likely to inch towards the annual target of percent Broad money supply grew marginally by percent during st Jul th Jan FY This is a reflection of the decline in NFA and government efforts to contain expenditures Higher tax collection and proceeds from the issuance of Sukuk and Eurobond have led to reduction in net budgetary borrowing which stood at Rs billion during st Jul th Jan FY as compared to Rs billion in the corresponding period of the previous year Moreover the delay in the sugar crushing season also contributed to a moderation of demand in private sector credit On the external front export receipts posted the highest growth in the last seven years of percent in H FY against a reduction of percent in H FY Workers remittances also recorded growth percent during the first half of the year as compared to a decline in the same period last year However favorable impact of these positives was overshadowed by the continuation of strong growth in imports of goods and services The current account deficit widened to US billion during the first half of the year which was times of the deficit during the same period last year Developments in financial accounts show that one fifth of this deficit was financed by healthy foreign direct investments inflows and the rest was managed by the official flows and the countrys own resources As a result SBPs liquid foreign exchange reserves Page MONETARY POLICY COMMITTEE STATE BANK OF PAKISTAN witnessed a decline of US billion since end June to reach US billion as of th January Going forward the PKR depreciation in December the export package the lagged impact of adjustments in regulatory duties favorable external environment and expected increase in workers remittances will contribute to a gradual reduction in the countrys current account deficit While increase in international oil prices pose a major risk to this assessment managing overall balance of payments in near term depends on the realization of official financial flows Four key factors of Pakistans economy have witnessed important changes since November impinging upon the policy rate decision Firstly PKR has depreciated by around percent Secondly oil prices are hovering near USD per barrel Thirdly a number of central banks have started to adjust their policy rates upwards adversely affecting PKR interest rate differentials vis à vis their currencies Fourthly multiple indicators show that the output gap has significantly narrowed indicating a buildup of demand pressures Based on these developments MPC is of the view that in order to preempt overheating of the economy and inflation breaching its target rate this is the right time to make a policy decision that would balance growth and stability in the medium to long term Accordingly the Monetary Policy Committee has decided to raise the policy rate by bps to percent Page  </code></pre>
-</div>
-</div>
+<section id="cleaning-and-preprocessing" class="level3" data-number="2.1">
+<h3 data-number="2.1" class="anchored" data-anchor-id="cleaning-and-preprocessing"><span class="header-section-number">2.1</span> Cleaning and Preprocessing</h3>
+<p>The text data is cleaned and prepossessed to remove any unwanted characters and symbols. Text cleaning (or text processing) makes an unstructured set of texts uniform across and within and eliminates idiosyncratic characters or meaningless terms. Text cleaning can be loosely divided into a set of steps as shown below. Stop words are the most common words in a language, such as ‘the’, ‘is’, ‘at’, ‘which’, and ‘on’. However, before removing stop words, all words are converted to <code>lowercase</code> to make the text uniform using the command <code>corpus &lt;- tm_map(corpus, tolower</code>. These words are often removed from the text data because they do not carry much meaning. Numbers are also removed from the text data using <code>tm_map(corpus, removeNumbers)</code> in most of the cases. One final step in data cleaning is to stem the words. Stemming is the process of reducing words to their root form. For example, the words ‘running’, ‘runs’, and ‘ran’ are all reduced to the root form ‘run’.</p>
 <p>Below is the text left from corpus after removing the stop words.</p>
 <blockquote class="blockquote">
-<p>monetary policy committee monetary policy statement ’s economic growth track achieve highest level last eleven years average headline inflation remains within forecast range core inflation continued increase fiscal deficit h fy expected fall close last ’s percent visible improvement export growth remittances marginally higher however largely due high level imports current account deficit remains pressure exchange rate adjustment expected help ease pressure external front progress real sector indicates agriculture sector set perform better second row production major kharif crops except maize surpassed level fy similarly large scale manufacturing lsm recorded healthy broad based growth percent.</p>
+<p>monetary policy committee monetary policy statement’s economic growth track achieve highest level last eleven years average headline inflation remains within forecast range core inflation continued increase fiscal deficit h fy expected fall close last ’s percent visible improvement export growth remittances marginally higher however largely due high level imports current account deficit remains pressure exchange rate adjustment expected help ease pressure external front progress real sector indicates agriculture sector set perform better second row production major kharif crops except maize surpassed level fy similarly large scale manufacturing lsm recorded healthy broad based growth percent.</p>
 </blockquote>
-<p>One final step is to stem the words. Stemming is the process of reducing words to their root form. For example, the words ‘running’, ‘runs’, and ‘ran’ are all reduced to the root form ‘run’. The <code>tm</code> package is used to stem the words in the text data.</p>
-<p>Once we have cleaned and preprocessed the text data, we can convert the text data to a document term matrix (dtm)</p>
-<p>Now we create a matrix with term frequencies</p>
+</section>
+</section>
+<section id="document-term-matrix" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="document-term-matrix"><span class="header-section-number">3</span> Document Term Matrix</h2>
+<p>The <code>tm</code> package is used to stem the words in the text data. Once we have cleaned and preprocessed the text data, we can convert the text data to a document term matrix (dtm).</p>
+<p>The goals of mapping corpus onto a dtm is twofold: the first is present the topic of each document by the frequency of semantically significant and unique terms, and second is to use it for future data analysis.</p>
+<p>Now we create a matrix with term frequencies. First six observations of the document term matrix are shown below.The value in each cell of this matrix is typically the word frequency of each term in each document.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>accordingly     account    accounts     achieve    activity      adjust 
          12         331          26          35         137           4 </code></pre>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>     twelve     defense     emerged    notified recalibrate       serve 
-          1           1           1           1           1           1 </code></pre>
 </div>
-</div>
+</section>
+<section id="exploratory-data-analysis" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">4</span> Exploratory Data Analysis</h2>
+<p>Given a dtm with reduced sparsity, we can now perform some exploratory data analysis. The first step is to find the most frequent terms in the dtm.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 81 12</code></pre>
@@ -263,18 +328,8 @@ Content:  documents: 1
 </div>
 </div>
 </section>
-</section>
-<section id="plotting-data" class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="plotting-data"><span class="header-section-number">4</span> Plotting data</h2>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
+<section id="plotting-data" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="plotting-data"><span class="header-section-number">5</span> Plotting data</h2>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>  percent inflation    policy    growth  monetary    sector   current   account 
@@ -294,6 +349,15 @@ current     current  387
 account     account  331
 deficit     deficit  330
 rate           rate  306</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -323,6 +387,9 @@ rate           rate  306</code></pre>
 </div>
 </div>
 </div>
+</section>
+<section id="correlation-plot" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="correlation-plot"><span class="header-section-number">6</span> Correlation plot</h2>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -332,9 +399,8 @@ rate           rate  306</code></pre>
 </div>
 </div>
 </div>
-</section>
-<section id="word-cloud" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">5</span> Word Cloud</h2>
+<section id="word-cloud" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">6.1</span> Word Cloud</h3>
 <p>The <code>wordcloud</code> package is used to visualize the text data. The word cloud is a visual representation of the frequency of words in the text data. The size of the word in the word cloud is proportional to the frequency of the word in the text data. The <code>wordcloud</code> package is used to create the word cloud. The word cloud is created using the document term matrix. The word cloud is used to identify the most frequent words in the text data.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -380,8 +446,9 @@ rate           rate  306</code></pre>
 </div>
 </div>
 </div>
-<section id="weighting-scheme" class="level3" data-number="5.1">
-<h3 data-number="5.1" class="anchored" data-anchor-id="weighting-scheme"><span class="header-section-number">5.1</span> Weighting Scheme</h3>
+</section>
+<section id="weighting-scheme" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="weighting-scheme"><span class="header-section-number">6.2</span> Weighting Scheme</h3>
 <p>Another weighting scheme - term frequency/inverse document frequency is given here to create word clouds. The term frequency/inverse document frequency is a statistical measure used to evaluate the importance of a word in a document relative to a collection of documents.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -460,8 +527,8 @@ global           global 0.2025230</code></pre>
 <p>ifd(t)= log_e(Total number of documents / Number of documents with term t in it)</p>
 <p>Conjugating the two gives the tf-idf score for each word in each document. 𝚝𝚏−𝚒𝚍𝚏(𝑡)=𝚝𝚏(𝑡)×𝚒𝚍𝚏(𝑡)</p>
 </section>
-<section id="tidytext-data-table" class="level3" data-number="5.2">
-<h3 data-number="5.2" class="anchored" data-anchor-id="tidytext-data-table"><span class="header-section-number">5.2</span> Tidytext data table</h3>
+<section id="tidytext-data-table" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="tidytext-data-table"><span class="header-section-number">6.3</span> Tidytext data table</h3>
 <p>Now I shall use <code>tidytext</code> with the help of unnest_tokens to convert one word per row.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -477,13 +544,6 @@ recovery       recovery 0.1942000
 covid             covid 0.1863952
 floods           floods 0.1823993</code></pre>
 </div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
@@ -493,9 +553,15 @@ floods           floods 0.1823993</code></pre>
 </figure>
 </div>
 </div>
-<div class="cell-output cell-output-stdout">
-<pre><code>null device 
-          1 </code></pre>
+</div>
+<p>To reduce dimensionality, we use sparse term-document matrix.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -506,28 +572,28 @@ floods           floods 0.1823993</code></pre>
 </div>
 </section>
 </section>
-<section id="exploratory-data-analysis" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">6</span> Exploratory Data Analysis</h2>
+<section id="exploratory-data-analysis-1" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="exploratory-data-analysis-1"><span class="header-section-number">7</span> Exploratory Data Analysis</h2>
 <p>With conversion to dtm, exploratory data analysis is performed to identify patterns and trends in the text data.</p>
-<section id="word-counting" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="word-counting"><span class="header-section-number">6.1</span> Word counting</h3>
+<section id="word-counting" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="word-counting"><span class="header-section-number">7.1</span> Word counting</h3>
 <p>Dictionary-based text analysis is popular approach mainly because its easy to implement and interpret. The dictionary-based approach is based on the idea that the frequency of certain words in a text can be used to infer the sentiment of the text. However, sentiment words from one discipline to another might be different. For example, words used in psychology to express positive sentiments might be different from words used in economics. Therefore, it is important to use a dictionary that is specific to the discipline. The <code>tidytext</code> package is used to count the frequency of words in the text data. The <code>get_sentiments</code> function is used to get the sentiment words from the dictionary. In this document, I am using Loughran and McDonald dictionary to count the frequency of positive and negative words in the text data.</p>
 <p>It is important to be careful in use of words to be positive or negative. For example, the word ‘increase’ is generally considered to be positive, but in the context of inflation, it is considered to be negative. Similarly the word ‘decrease’ is generally considered to be negative, but in the context of inflation, it is considered to be positive. Another example is <code>tight</code> and <code>loose</code> monetary policy. The word <code>tight</code> is generally considered to be positive, but in the context of monetary policy, it is considered to be negative. Similarly, the word <code>loose</code> is generally considered to be negative, but in the context of monetary policy, it is considered to be positive. Therefore, it is important to be careful in use of words to be positive or negative.</p>
 <p>Next we use the <code>match</code> function that compares the terms in both dictionary and the text data. The <code>match</code> function returns the position of the first match. If there is no match, the <code>match</code> function returns <code>NA</code>. The <code>match</code> function is used to count the frequency of positive and negative words in the text data.</p>
 <p>We then assign a value of 1 to the positive and negative matches. The <code>ifelse</code> function is used to assign a value of 1 to the positive and negative, and measure the overall sentiment for each document <span class="math inline">\(i\)</span> by the following formula: <span class="math inline">\(Score_i = \frac{Positive_i - Negative_i}{Positive_i + Negative} \in [-1,1]\)</span></p>
 <p>A document is considered to be positive if the score is greater than 0, and negative if the score is less than 0.</p>
 </section>
-<section id="relative-frequency" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="relative-frequency"><span class="header-section-number">6.2</span> Relative frequency</h3>
+<section id="relative-frequency" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="relative-frequency"><span class="header-section-number">7.2</span> Relative frequency</h3>
 <p>The relative frequency of positive and negative words is calculated by dividing the frequency of positive and negative words by the total number of words in the text.</p>
 </section>
-<section id="semantic-analysis" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="semantic-analysis"><span class="header-section-number">6.3</span> Semantic analysis</h3>
+<section id="semantic-analysis" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="semantic-analysis"><span class="header-section-number">7.3</span> Semantic analysis</h3>
 <p>The semantic analysis is performed to identify the semantic orientation of the text data. The semantic orientation is the degree to which a word is positive or negative. The semantic orientation is calculated by dividing the frequency of positive words by the frequency of negative words. The semantic orientation is calculated for each document in the text data.</p>
 </section>
 </section>
-<section id="topic-models" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="topic-models"><span class="header-section-number">7</span> Topic models</h2>
+<section id="topic-models" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="topic-models"><span class="header-section-number">8</span> Topic models</h2>
 <p>Topic modeling is a type of statistical model for discovering the abstract “topics” that occur in a collection of documents. Topic modeling is a frequently used text-mining tool for discovery of hidden semantic structures in a text body. Intuitively, given that a document is about a particular topic, one would expect particular words to appear in the document more or less frequently: “dog” and “bone” will appear more often in documents about dogs, “cat” and “meow” will appear in documents about cats, and “the” and “is” will appear equally in both. A document typically concerns multiple topics in different proportions; thus, in a document that is 10% about cats and 90% about dogs, there would probably be about 9 times more dog words than cat words. The “topics” produced by topic modeling techniques are clusters of similar words. A topic model captures this intuition in a mathematical framework, which allows examining a set of documents and discovering, based on the statistics of the words in each, what the topics might be and what each document’s balance of topics is.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -541,78 +607,7 @@ floods           floods 0.1823993</code></pre>
 08032022.txt    3
 08062012.txt    3
 08102011.txt    1
-09042016.txt    2
-10102022.txt    3
-12042013.txt    2
-12062023.txt    3
-12092015.txt    3
-12122023.txt    1
-13042012.txt    3
-13112013.txt    3
-14072018.txt    3
-14092023.txt    4
-14122012.txt    3
-14122021.txt    3
-15032014.txt    4
-15052020.txt    2
-15112014.txt    3
-16042020.txt    2
-16072019.txt    2
-16092019.txt    1
-17032020.txt    4
-17052014.txt    3
-19032021.txt    4
-19112021.txt    3
-20052017.txt    1
-20052019.txt    2
-20092014.txt    1
-20092021.txt    1
-21032015.txt    1
-21052011.txt    3
-21052016.txt    3
-21062013.txt    2
-21092020.txt    1
-21112015.txt    1
-22012021.txt    4
-22072017.txt    1
-22082022.txt    2
-22112019.txt    3
-23012023.txt    1
-23052015.txt    2
-23052022.txt    4
-23112020.txt    1
-24012022.txt    3
-24032020.txt    2
-24052010.txt    3
-24092016.txt    2
-24112009.txt    1
-24112017.txt    1
-25032017.txt    3
-25052018.txt    1
-25062020.txt    4
-25112022.txt    1
-26032011.txt    1
-26062023.txt    2
-26112017.txt    4
-27032010.txt    1
-27072021.txt    3
-28012017.txt    2
-28012020.txt    4
-28052021.txt    4
-29012024.txt    1
-29032019.txt    3
-29092010.txt    1
-29092017.txt    1
-29092018.txt    2
-29112010.txt    4
-30012016.txt    3
-30032018.txt    1
-30072016.txt    2
-30102023.txt    4
-30112011.txt    3
-30112018.txt    2
-31012019.txt    3
-31072023.txt    1</code></pre>
+09042016.txt    2</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      Topic 1     Topic 2    Topic 3     Topic 4    
@@ -629,8 +624,8 @@ floods           floods 0.1823993</code></pre>
 [11,] "monetary"  "growth"   "rate"      "growth"   </code></pre>
 </div>
 </div>
-<section id="heatmap" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="heatmap"><span class="header-section-number">7.1</span> Heatmap</h3>
+<section id="heatmap" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="heatmap"><span class="header-section-number">8.1</span> Heatmap</h3>
 <p>The heatmap is used to visualize the frequency of positive and negative words in the text data. The <code>heatmap</code> function is used to create the heatmap. The <code>heatmap</code> function takes the frequency of positive and negative words as input and creates the heatmap. The <code>heatmap</code> function is used to create the heatmap. The <code>heatmap</code> function takes the frequency of positive and negative words as input and creates the heatmap.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -638,17 +633,27 @@ floods           floods 0.1823993</code></pre>
   2 </code></pre>
 </div>
 </div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/heatmaps_lda.png" class="r-stretch img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
 </section>
-<section id="wordfish" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="wordfish"><span class="header-section-number">7.2</span> Wordfish</h3>
+<section id="wordfish" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="wordfish"><span class="header-section-number">8.2</span> Wordfish</h3>
 </section>
-<section id="plotting-wordfish-score" class="level3" data-number="7.3">
-<h3 data-number="7.3" class="anchored" data-anchor-id="plotting-wordfish-score"><span class="header-section-number">7.3</span> Plotting Wordfish Score</h3>
+<section id="plotting-wordfish-score" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="plotting-wordfish-score"><span class="header-section-number">8.3</span> Plotting Wordfish Score</h3>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>png 
   2 </code></pre>
 </div>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/wordfish.png" class="r-stretch quarto-figure quarto-figure-center figure-img" width="688" height="454"></p>
+</figure>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -659,26 +664,30 @@ floods           floods 0.1823993</code></pre>
 </div>
 </div>
 </section>
-<section id="plotting-wordscores-score" class="level3" data-number="7.4">
-<h3 data-number="7.4" class="anchored" data-anchor-id="plotting-wordscores-score"><span class="header-section-number">7.4</span> Plotting Wordscores Score</h3>
+<section id="plotting-wordscores-score" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="plotting-wordscores-score"><span class="header-section-number">8.4</span> Plotting Wordscores Score</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-34-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-35-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-
 </section>
+</section>
+<section id="conclusion" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9</span> Conclusion</h2>
+<p>I hope that this document will be useful for researchers and practitioners who are interested in text mining and sentiment analysis. I have demonstrated how to use the R programming language to perform text data analysis based on monetary policy statements. The code provided in this document can be used as a starting point for further research and analysis. The R programming language is a powerful tool for text mining and sentiment analysis, and it is widely used in the academic and business communities. I hope that this document will help to promote the use of R in the field of text mining and sentiment analysis. This reproducible document will also serve the purpose of how to automate the process of text data analysis and sentiment analysis. I also demonstrate that R langugage has made it easy to perform text data analysis and sentiment analysis and has become a powerful tool for text mining and sentiment analysis, and it is widely used in the academic and business communities. My initial findings suggest that SBP policy has nuetral tone and it is not biased towards hawkish or dovish. However, the sentiment analysis is based on the text data and it is important to consider the context and the content of the text data.</p>
+
 </section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
@@ -851,7 +860,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {

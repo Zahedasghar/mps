@@ -20,25 +20,22 @@ bibliography: references.bib
 
 ## Introduction
 
-Dealing with text is typically not considered as important in training of economics and social sciences training for data analysis. This is in direct contrast with how often it has to be dealt with prior to more common analysis, or how interesting it might be to have text be the focus of analysis [Text Analysis in R](https://m-clark.github.io/text-analysis-with-R/intro.html#overview). This document and corresponding workshop will aim to provide a sense of the things one can do with text, and the sorts of analyses that might be useful. Moreover, in era of ML, AI and NLP, text analysis is becoming more and more important as human may miss some important information and computer-based approaches can process and summarise text more efficiently than humans. Also, textual analysis may extract meaning from text missed by human readers, who may overlook certain patterns because they do not conform to prior beliefs and expectations (Herasymova, 2022). There are many studies which have done in detail textual analysis of central bank statements @shapiro2021. I have mainly followed
+This study explores text data analysis of monetary policy statements issued by State Bank of Pakistan over past 18 to 20 years. Dealing with text is typically not considered as important in training of economics and social sciences for data analysis. This is in direct contrast with how often it has to be dealt with prior to more common analysis, or how interesting it might be to have text be the focus of analysis [Text Analysis in R](https://m-clark.github.io/text-analysis-with-R/intro.html#overview). This paper/tutorial aims at providing a sense of the things one can do with text, and the sorts of analyses that might be useful. In era of ML, AI and NLP, text analysis is becoming more and more important as human may miss some important information and computer-based approaches can process and summarise text more efficiently than humans. Also, textual analysis may extract meaning from text missed by human readers, who may overlook certain patterns because they do not conform to prior beliefs and expectations (Herasymova, 2022). There are many studies which have done in detail textual analysis of central bank statements @shapiro2021. I have mainly followed @benchimol2022 guidelines in this paper.
 
-@benchimol2022 guidelines in this paper.
+With this motivation, I do textual analysis to monetary policy statements by the State Bank of Pakistan (SBP) which is aimed at understanding the monetary policy stance of the central bank. The monetary policy statement (MPS) is a document that is released by the central bank to communicate its monetary policy stance to the public. The MPS is released after the Monetary Policy Committee (MPC) meeting, which is usually held every two months. The MPS contains information on the current state of the economy, the central bank’s assessment of the economy, and the central bank’s monetary policy stance. Monetary policy statements are an important source of information for researchers, as they provide information on the central bank’s monetary policy stance, which can have implications for the economy. I have extracted monetary policy statements from the State Bank of Pakistan (SBP) website, and used text mining techniques to extract information from these statements.
 
-With this motivation, we apply textual analysis to monetary policy statements by the State Bank of Pakistan (SBP) which is aimed at understanding the monetary policy stance of the central bank. The monetary policy statement (MPS) is a document that is released by the central bank to communicate its monetary policy stance to the public. The MPS is released after the Monetary Policy Committee (MPC) meeting, which is usually held every two months. The MPS contains information on the current state of the economy, the central bank’s assessment of the economy, and the central bank’s monetary policy stance. The MPS is an important document for the public, as it provides information on the central bank’s monetary policy stance, which can have implications for the economy.
 
 The primary objective of these statements is to inform and guide economic analysts and other stakeholders involved in advising traders within the financial markets. They provide insights into recent economic developments and anticipate future trends, thereby facilitating informed decision-making. Therefore, it becomes all the important to analyse how effectively SBP communicates through its policy statements. In assessing the effectiveness of these MPS, we employ textual analysis techniques. Unstructured data, often rich in textual content, encompasses a wide array of sources such as news articles, social media posts, Twitter feeds, transcriptions from videos, and formal documents. Its abundance offers fresh opportunities and simultaneous challenges for researchers and research institutions alike. In this paper, I explore various methodologies for text analysis and propose a systematic approach to leverage text mining techniques. Furthermore, I examine potential empirical applications of these methods.
 
-This paper focuses on the primer of extracting information from unstructured data, and the potential applications of text mining in the context of monetary policy statements. Quantitative analysis of text data is a rapidly growing field, and the methods and techniques used in this paper are not exhaustive. These methods are in extensive use in political science, sociology, linguistics and information security but are not in wide use in economics and finance in Pakistan. Nevertheless, there is a growing interest in the use of text mining in economics and finance, and this paper aims to provide a starting point for researchers interested in text mining and its applications in economics and finance. Recent advances in open source software and the availability of large text datasets have made it easier for researchers to apply text mining techniques to their research. As text data is usually unstructured, therefore, it is important that a reproducible and systematic approach is used to extract information from text data. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements. Monetary policy and fiscal policy are two of the most important tools that governments and central banks use to manage the economy. Monetary policy refers to the actions taken by the central bank to influence the money supply and interest rates in the economy. The central bank uses monetary policy to achieve its objectives, such as price stability, full employment, and economic growth. The central bank uses a variety of tools to implement monetary policy, such as open market operations, discount rate changes, and reserve requirement changes. The central bank communicates its monetary policy stance to the public through monetary policy statements. Therefore, it is important to analyze these statements to understand the central bank’s monetary policy stance. Text mining techniques can be used to extract information from monetary policy statements, and to analyze the central bank’s monetary policy stance. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements.
+This paper focuses on the primer of extracting information from unstructured data, and the potential applications of text mining in the context of monetary policy statements. Quantitative analysis of text data is a rapidly growing field, and the methods and techniques used in this paper are not exhaustive. These methods are in extensive use in political science, sociology, linguistics and information security but are not in wide use in economics and finance in Pakistan. Nevertheless, there is a growing interest in the use of text mining in economics and finance, and this paper aims to provide a starting point for researchers interested in text mining and its applications in economics and finance. Recent advances in open source software and the availability of large text datasets have made it easier for researchers to apply text mining techniques to their research. As text data is usually unstructured, therefore, it is important that a reproducible and systematic approach is used to extract information from text data. The principal goal of text mining is to capture and analyze all possible meanings embeded in text. Text mining transform unstructured data into structured data, and to extract information from text data. Text mining is a rapidly growing field, and has applications in a wide range of fields, such as information retrieval, natural language processing, and data mining. Moreover, it analyzes- patterns and trends in the text data,the sentiment of text data, classify text data, to categorize the text data among many other functions.  
 
-Monetary policy statements are an important source of information for researchers, as they provide information on the central bank’s monetary policy stance, which can have implications for the economy. I have extracted monetary policy statements from the State Bank of Pakistan (SBP) website, and used text mining techniques to extract information from these statements.
+This study aims at providing a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements. Monetary policy and fiscal policy are two of the most important tools that governments and central banks use to manage the economy. Monetary policy refers to the actions taken by the central bank to influence the money supply and interest rates in the economy. The central bank uses monetary policy to achieve its objectives, such as price stability, full employment, and economic growth. The central bank uses a variety of tools to implement monetary policy, such as open market operations, discount rate changes, and reserve requirement changes. The central bank communicates its monetary policy stance to the public through monetary policy statements. Therefore, it is important to analyze these statements to understand the central bank’s monetary policy stance. Text mining techniques can be used to extract information from monetary policy statements, and to analyze the central bank’s monetary policy stance. This paper/tutorial aims to provide a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements.
+
 
 The paper is organized as follows. Section 2 provides an overview of text mining and its applications in economics and finance. Section 3 provides a systematic approach to text mining, and Section 4 provides an overview of the potential applications of text mining in the context of monetary policy statements. Section 5 concludes the paper.
 
-## Theoretical Background
+## MPS Data
 
-The principal goal of text mining is to capture and analyze all possible meanings embeded in text. Text mining transform unstructured data into structured data, and to extract information from text data. Text mining is a rapidly growing field, and has applications in a wide range of fields, such as information retrieval, natural language processing, and data mining. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data. Text mining techniques can be used to extract information from text data, and to analyze the text data. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can also be used to summarize the content of text data, and to extract information from the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data. Text mining techniques can be used to extract information from text data, and to analyze the text data. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can also be used to summarize the content of text data, and to extract information from the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data. Text mining techniques can be used to extract information from text data, and to analyze the text data. Text mining techniques can be used to analyze the content of text data, and to identify patterns and trends in the text data. Text mining techniques can also be used to summarize the content of text data, and to extract information from the text data. Text mining techniques can be used to analyze the sentiment of text data, and to identify the sentiment of the text data. Text mining techniques can also be used to classify text data, and to categorize the text data.
-
-## Data
 
 ```{r}
 #| echo: false
@@ -72,6 +69,10 @@ library(tidyr)
 library(ggthemes)
 #install.packages("austin", repos="http://R-Forge.R-project.org")
 library(austin)
+library(igraph)
+library(gt)
+library(gtsummary)
+library(gtExtras)
 
 # install.packages("BiocManager")
 # BiocManager::install("Rgraphviz")
@@ -79,10 +80,10 @@ library(Rgraphviz)
 
 ```
 
+I do text analysis using topic modeling, sentiment, and linguistic analysis to the Monetary Policy Statements (MPS) of the State Bank of Pakistan from 2005-2024 to capture the focus, tone, and clarity of monetary policy communications. Overall I have total 81 MPS documents from 2005 to 2024 used in this analysis. I have included all MPS shown on [SBP website link](https://www.sbp.org.pk/m_policy/mon.asp). The data is in PDF format and I have used the `pdftools` package to extract the text from the PDF files. All these statements are stored as corpus. There are other forms of data storage in R such as `tibble` and `dataframe` but I have used `tm` package to store data as corpus. The text is then cleaned and pre-processed to remove any unwanted characters and symbols. The text is then tokenized and converted to a document term matrix to analyze the text data. `tm` package is used to clean and preprocess the text data, and to create the document term matrix. `tidyverse` and `tidytext` packages are used to analyze and visualize the text data. 
 
-I apply topic, sentiment, and linguistic analysis to the Monetary Policy Statements (MPS) of the
-State Bank of Pakistan from 2005-2024 to capture the focus, tone, and clarity of monetary policy
-communications. Almost 19 years data of monetary policy statements is extracted from the SBP website. There are total 81 MPS documents from 2005 to 2024 I have used in this analysis. There are few statements which have very different structures, therefore are not included. Reason for excluding these statement is usually MPS is 2 to 3 pages but these occasional statements spread over 30 pages, so not included to have 95% documents of same structure. Couple of statements are missing from the website. The data is in PDF format and I have used the `pdftools` package to extract the text from the PDF files. The text is then cleaned and pre-processed to remove any unwanted characters and symbols. The text is then tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. `tm` package is used to clean and preprocess the text data, and to create the document term matrix. `tidyverse` and `tidytext` packages are used to analyze and visualize the text data. I have used `tm` package to store data as corpus. There are other forms of data storage in R such as `tibble` and `dataframe` but I have used `tm` package to store data as corpus.`tm` package is used to clean and preprocess the text data, and to create the document term matrix.
+Following is an example of one of the statment from the corpus. 
+
 
 ```{r}
 #| echo: false
@@ -90,7 +91,7 @@ communications. Almost 19 years data of monetary policy statements is extracted 
 file.path <- file.path("D:/RepTemplates/mps/data/mpd")
 corpus <- Corpus(DirSource(file.path)) # Creates a framework that holds a collection of documents (corpus)
  
-inspect(corpus[1]) # Checking that the document - here, its document #1 - was correctly read
+inspect(corpus[[1]]) # Checking that the document - here, its document #1 - was correctly read
 ```
 
 ```{r}
@@ -113,7 +114,9 @@ year <- substr(document.corpus.names, 5, 8)
 
 ### Cleaning and Preprocessing
 
-The text data is cleaned and preprocessed to remove any unwanted characters and symbols. The text data is then tokenized and converted to a document term matrix. The document term matrix is then used to analyze the text data. 'tm' package is used to clean and preprocess the text data, and to create the document term matrix. All the tokens not necessarily carry meaningful information. Text cleaning (or text preprocessing) makes an unstructured set of texts uniform across and within and eliminates idiosyncratic characters or meaningless terms.6 Text cleaning can be loosely divided into a set of steps as shown below. Numbers can also be removed from the text data using `tm_map(corpus, removeNumbers)`. Therefore, it is important to remove the stop words from the text data. Stop words are the most common words in a language, such as 'the', 'is', 'at', 'which', and 'on'. These words do not carry much meaning, and can be removed from the text data. The `tm` package is used to remove the stop words from the text data. However, before removing stopwords, all words are converted to `lowercase` to make the text uniform. `corpus <- tm_map(corpus, tolower`
+The text data is cleaned and prepossessed to remove any unwanted characters and symbols. Text cleaning (or text processing) makes an unstructured set of texts uniform across and within and eliminates idiosyncratic characters or meaningless terms. 
+Text cleaning can be loosely divided into a set of steps as shown below. 
+Stop words are the most common words in a language, such as 'the', 'is', 'at', 'which', and 'on'. However, before removing stop words, all words are converted to `lowercase` to make the text uniform using the command `corpus <- tm_map(corpus, tolower`. These words are often removed from the text data because they do not carry much meaning. Numbers are also removed from the text data using `tm_map(corpus, removeNumbers)` in most of the cases. One final step in data cleaning is to stem the words. Stemming is the process of reducing words to their root form. For example, the words 'running', 'runs', and 'ran' are all reduced to the root form 'run'.
 
 ```{r}
 #| echo: false
@@ -134,7 +137,7 @@ corpus <- tm_map(corpus, stripWhitespace)
 corpus <- tm_map(corpus, removePunctuation)
 corpus <- tm_map(corpus, stripWhitespace)
 
-inspect(corpus[1])
+#inspect(corpus[[1]])
 
 corpus <- tm_map(corpus, tolower)
 #corpus <- tm_map(corpus, stripWhitespace)
@@ -154,11 +157,15 @@ corpus <- tm_map(corpus, stripWhitespace)
 
 Below is the text left from corpus after removing the stop words.
 
-> monetary policy committee monetary policy statement ’s economic growth track achieve highest level last eleven years average headline inflation remains within forecast range core inflation continued increase fiscal deficit h fy expected fall close last ’s percent visible improvement export growth remittances marginally higher however largely due high level imports current account deficit remains pressure exchange rate adjustment expected help ease pressure external front progress real sector indicates agriculture sector set perform better second row production major kharif crops except maize surpassed level fy similarly large scale manufacturing lsm recorded healthy broad based growth percent.
+> monetary policy committee monetary policy statement’s economic growth track achieve highest level last eleven years average headline inflation remains within forecast range core inflation continued increase fiscal deficit h fy expected fall close last ’s percent visible improvement export growth remittances marginally higher however largely due high level imports current account deficit remains pressure exchange rate adjustment expected help ease pressure external front progress real sector indicates agriculture sector set perform better second row production major kharif crops except maize surpassed level fy similarly large scale manufacturing lsm recorded healthy broad based growth percent.
 
-One final step is to stem the words. Stemming is the process of reducing words to their root form. For example, the words 'running', 'runs', and 'ran' are all reduced to the root form 'run'. The `tm` package is used to stem the words in the text data.
 
-Once we have cleaned and preprocessed the text data, we can convert the text data to a document term matrix (dtm)
+
+## Document Term Matrix
+
+
+The `tm` package is used to stem the words in the text data. Once we have cleaned and preprocessed the text data, we can convert the text data to a document term matrix (dtm).
+The goals of mapping corpus onto a dtm is twofold: the first is present the topic of each document by the frequency of semantically significant and unique terms, and second is to use it for future data analysis.
 
 ```{r}
 #| echo: false
@@ -167,15 +174,27 @@ Once we have cleaned and preprocessed the text data, we can convert the text dat
 dtm <- DocumentTermMatrix(corpus, control=list(wordLengths=c(3, 12))) # https://en.wikipedia.org/wiki/Document-term_matrix
 ```
 
-Now we create a matrix with term frequencies
+Now we create a matrix with term frequencies.
+First six observations of the document term matrix are shown below.The value in each cell of this matrix is typically the word frequency of each term in each document. 
+
+
 
 ```{r}
 #| echo: false
 termFreq <- colSums(as.matrix(dtm))
 head(termFreq)
-tail(termFreq)
+
 
 ```
+
+## Exploratory Data Analysis
+
+Given a dtm with reduced sparsity, we can now perform some exploratory data analysis. The first step is to find the most frequent terms in the dtm. 
+
+There are `r dim(dtm.sparse)` documents and columns . The most frequent terms top 6 and bottom 6 are shown below. 
+
+ 
+
 
 ```{r}
 
@@ -186,36 +205,63 @@ dim(dtm.sparse)
 term.frequencies <- colSums(as.matrix(dtm.sparse))
 order.frequencies <- order(term.frequencies)
 
-term.frequencies[head(order.frequencies)] # View DTM by word frequency using head/tail functions
-term.frequencies[tail(order.frequencies)]
+
+# Convert term frequencies to a data frame
+term_freq_df <- data.frame(term = names(term.frequencies), frequency = term.frequencies)
+
+# Sort the data frame by frequency in descending order
+term_freq_df <- term_freq_df[order(-term_freq_df$frequency), ]
+
+# Print the top terms
+head(term_freq_df)
+
+tail(term_freq_df)
+
+
 ```
+
+### Terms appearing in more than 100, 200, 300, 500 and 700 documents
+
+The terms appearing in more than 100 are as follows.
 
 ```{r}
 find.frequency.terms.100 <- findFreqTerms(dtm.sparse,lowfreq=100)
-find.frequency.terms.100
+data.frame(find.frequency.terms.100) |> head(10)
+```
+
+Terms appearing in more than 200, 300, 500 and 700 documents are as follows.
+
+```{r}
 
 find.frequency.terms.200 <- findFreqTerms(dtm.sparse,lowfreq=200)
-find.frequency.terms.200
+data.frame(find.frequency.terms.200) |> head(10)
+
+```
+
+```{r}
 
 find.frequency.terms.300 <- findFreqTerms(dtm.sparse,lowfreq=300)
-find.frequency.terms.300
+data.frame(find.frequency.terms.300) |> head(10)
+
+
+```
+
+```{r}
 
  find.frequency.terms.500 <- findFreqTerms(dtm.sparse,lowfreq=500)
- find.frequency.terms.500
+
+data.frame(find.frequency.terms.500) |> head(10)
+
+```
+ 
+ 
+```{r}
  find.frequency.terms.700 <- findFreqTerms(dtm.sparse,lowfreq=700)
- find.frequency.terms.700
+ data.frame(find.frequency.terms.700) |> head(10)
 ```
 
 ## Plotting data
 
-```{r}
-corlimit <- 0.4
-title <- ""
-freq.term.tdm <- findFreqTerms(dtm,lowfreq=150)  
-
-plot(dtm,main=title,cex.main = 3, term=freq.term.tdm, corThreshold=corlimit,
-     attrs=list(node=list(width=15,fontsize=40,fontcolor=129,color="red")))
-```
 
 ```{r}
 # Creating Corpus Histogram
@@ -280,21 +326,60 @@ plot.igraph(graph.tdm.sparse, layout=layout.fruchterman.reingold(graph.tdm.spars
 
 ```
 
-## Word Cloud
+## Correlation plot
+
+
+```{r}
+corlimit <- 0.4
+title <- ""
+freq.term.tdm <- findFreqTerms(dtm,lowfreq=150)  
+
+plot(dtm,main=title,cex.main = 3, term=freq.term.tdm, corThreshold=corlimit,
+     attrs=list(node=list(width=15,fontsize=40,fontcolor=129,color="red")))
+```
+
+
+
+
+
+### Word Cloud
 
 The `wordcloud` package is used to visualize the text data. The word cloud is a visual representation of the frequency of words in the text data. The size of the word in the word cloud is proportional to the frequency of the word in the text data. The `wordcloud` package is used to create the word cloud. The word cloud is created using the document term matrix. The word cloud is used to identify the most frequent words in the text data.
 
 ```{r}
+# Removing some of the most sparse terms
+dtm.sparse1 <- removeSparseTerms(dtm,0.2)
+dim(dtm.sparse1)
+
+term.frequencies1 <- colSums(as.matrix(dtm.sparse1))
+
 # Wordclouds
 set.seed(142) # This is just the design of the wordcloud picture, can be changed (use same seed)
 pal2 <- brewer.pal(8,"Dark2") # This is just the design of the wordcloud picture, can be changed
 
-wordcloud(names(term.frequencies), term.frequencies, min.freq=50, random.order=FALSE, colors=pal2, scale=c(5.2, .7)) # Can be changed depending on the desired term frequency
-wordcloud(names(term.frequencies), term.frequencies, min.freq=100, random.order=FALSE, colors=pal2, scale=c(5.2, .7)) # Can be changed depending on the desired term frequency
-wordcloud(names(term.frequencies), term.frequencies, min.freq=200, random.order=FALSE, colors=pal2, scale=c(5.2, .7)) # Can be changed depending on the desired term frequency
-wordcloud(names(term.frequencies), term.frequencies, min.freq=300, random.order=FALSE, colors=pal2, scale=c(5.2, .7))
-wordcloud(names(term.frequencies), term.frequencies, min.freq=400, random.order=FALSE, colors=pal2, scale=c(5.2, .7))
-wordcloud(names(term.frequencies), term.frequencies, min.freq=500, random.order=FALSE, colors=pal2, scale=c(5.2, .7))
+par(mfrow=c(1,1), mar=c(5,5,5,5))
+
+wordcloud(
+  names(term.frequencies1), 
+  term.frequencies1, 
+  min.freq = 50,  # Reduce the minimum frequency further
+  random.order = FALSE, 
+  colors = pal2, 
+  scale = c(4, .5)  # Adjust scaling
+)
+wordcloud(
+  names(term.frequencies1), 
+  term.frequencies1, 
+  min.freq = 100,  # Reduce the minimum frequency further
+  random.order = FALSE, 
+  colors = pal2, 
+  scale = c(4, .5)  # Adjust scaling
+)
+
+wordcloud(names(term.frequencies1), term.frequencies1, min.freq=200, random.order=FALSE, colors=pal2, scale=c(4, .5)) # Can be changed depending on the desired term frequency
+wordcloud(names(term.frequencies1), term.frequencies1, min.freq=300, random.order=FALSE, colors=pal2, scale=c(4, .5))
+wordcloud(names(term.frequencies1), term.frequencies1, min.freq=400, random.order=FALSE, colors=pal2, scale=c(4, .5))
+wordcloud(names(term.frequencies1), term.frequencies1, min.freq=500, random.order=FALSE, colors=pal2, scale=c(4, .5))
 
 ```
 
@@ -322,7 +407,7 @@ head(word.frequencies.frame.tf.idf)
 
 ```{r}
 # Barplot of tf-idf terms
-plotted.frequencies.tf.idf <- ggplot(subset(word.frequencies.frame.tf.idf, freq>0.5), aes(reorder(word, -freq), freq))    
+plotted.frequencies.tf.idf <- ggplot(subset(word.frequencies.frame.tf.idf, freq>0.15), aes(reorder(word, -freq), freq))    
 plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + geom_bar(stat="identity")   
 plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
 plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text=element_text(size=17), axis.title=element_text(size=17))
@@ -369,6 +454,11 @@ Now I shall use `tidytext` with the help of unnest_tokens to convert one word pe
 # Creating Corpus Histogram w. Tf-Idf Weighting
 word.frequencies.frame.tf.idf <- data.frame(word=names(sorted.frequencies.tf.idf), freq=sorted.frequencies.tf.idf)   
 head(word.frequencies.frame.tf.idf,10) 
+```
+
+
+
+```{r}
 word.frequencies.frame.tf.idf <- word.frequencies.frame.tf.idf[order(-sorted.frequencies.tf.idf),]
 
 # Plotting Frequencies
@@ -383,6 +473,9 @@ plotted.frequencies.tf.idf  # printing word frequencies
 
 ```
 
+To reduce dimensionality, we use sparse term-document matrix. 
+
+
 ```{r}
 
 # Dendogram Figure
@@ -393,7 +486,7 @@ dtm.tf.idf.sparse.095 <- removeSparseTerms(dtm.tf.idf, 0.05)
 dendogram <- dist(t(dtm.tf.idf.sparse.095), method="euclidian")   
 dendogram.fit <- hclust(d=dendogram, method="ward.D")    
 plot(dendogram.fit, cex=1.4, main="", cex.main=4)
-dev.off()
+#dev.off()
 
 # HeatMap w. Tf-Idf (change format)
 dtm.tf.idf.sparse.matrix <- as.matrix(dtm.tf.idf.sparse)
@@ -405,6 +498,9 @@ date.dtm.tf.idf.sparse.matrix <- cbind(dtm.tf.idf.sparse.matrix,document.corpus.
 my_palette <- colorRampPalette(c("white", "pink", "red"))(n = 99) 
 
 ```
+
+
+
 
 ```{r}
 
@@ -543,7 +639,7 @@ lda.results <-LDA(dtm.sparse, k, method="Gibbs", control=list(nstart=nstart, see
 # Docs to topics
 lda.topics <- as.matrix(topics(lda.results))
 # write.csv(ldaOut.topics,file=paste("LDAGibbs",k,"DocsToTopics.csv"))
-lda.topics
+lda.topics |> head(10)
 # Top 6 terms in each topic
 lda.results.terms <- as.matrix(terms(lda.results,11))
 # write.csv(ldaOut.terms,file=paste("LDAGibbs",k,"TopicsToTerms.csv"))
@@ -587,6 +683,8 @@ heatmap.2(date.topic.probabilities[1:12, ],
 
 dev.off()
 ```
+
+![](images/heatmaps_lda.png){.r-stretch fig-align="center"}
 
 ### Wordfish
 
@@ -657,6 +755,8 @@ ggplot(wordfish.score, aes(date, change, group = 1)) +
 dev.off()
 ```
 
+![](images/wordfish.png){.r-stretch fig-align="center" width="688" height="454"}
+
 ```{r}
 # Assiging scores to documents that we think represent most dovish/hawkish positions
 reference.scores <- rep(NA, nrow(dfm.corpus))
@@ -719,3 +819,8 @@ ggplot(wordscores.score, aes(date, change)) +
 ```
 
 
+## Conclusion
+
+ I hope that this document will be useful for researchers and practitioners who are interested in text mining and sentiment analysis. I have demonstrated how to use the R programming language to perform text data analysis based on monetary policy statements. The code provided in this document can be used as a starting point for further research and analysis. The R programming language is a powerful tool for text mining and sentiment analysis, and it is widely used in the academic and business communities. I hope that this document will help to promote the use of R in the field of text mining and sentiment analysis. This reproducible document will also serve the purpose of how to automate the process of text data analysis and sentiment analysis. 
+ I also demonstrate that R langugage has made it easy to perform text data analysis and sentiment analysis and has become a powerful tool for text mining and sentiment analysis, and it is widely used in the academic and business communities. 
+ My initial findings suggest that SBP policy has nuetral tone and it is not biased towards hawkish or dovish. However, the sentiment analysis is based on the text data and it is important to consider the context and the content of the text data. 
