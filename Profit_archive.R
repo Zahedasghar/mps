@@ -1,51 +1,16 @@
 library(rvest)
-library(dplyr)
+# Specify the URL of the Tribune Pakistan website
+url <- "https://profit.pakistantoday.com.pk/category/headlines/"
 
+# Read the HTML content of the webpage
+page <- read_html(url)
 
-library(tidyverse)
-library(tidytext)
-library(dplyr)
-library(wordcloud)
-library(tm)
-library(SnowballC)
+story_titles_profit <- page %>%
+  html_nodes("h3") %>%  # Try a different CSS selector
+  html_text()
 
-# Initialize an empty list to store story titles
-all_story_titles <- list()
-
-# Specify the base URL of the Tribune Pakistan website
-base_url <- "https://profit.pakistantoday.com.pk/category/headlines/"
-
-# Loop through each day for which you want to scrape data (February 23 and 24)
-for (day in c(15, 24)) {
-  # Construct the URL for the specific day
-  url <- paste0(base_url, "?paged=", day)  # Adjust URL parameters based on website pagination
-  
-  # Read the HTML content of the webpage
-  page <- read_html(url)
-  
-  # Scrape the story titles using a CSS selector (update if necessary)
-  story_titles <- page %>%
-    html_nodes("h3") %>%  # Update CSS selector here
-    html_text()
-  
-  # Store the story titles for the current day in the list
-  all_story_titles[[day]] <- story_titles
-}
-
-# Combine the story titles into a single data frame
-all_story_titles_df <- bind_rows(lapply(seq_along(all_story_titles), function(day) {
-  data.frame(
-    Date = rep(day, length(all_story_titles[[day]])),
-    Story_Title = all_story_titles[[day]],
-    stringsAsFactors = FALSE
-  )
-}))
-
-# Print the scraped story titles
-print(all_story_titles_df)
-
-
-
+# Print the extracted story titles
+print(story_titles_profit)
 
 # Keywords related to economy
 economy_keywords <- c("economy", "economic", "GDP", "inflation", "unemployment", "fiscal policy", "monetary policy", 
@@ -54,18 +19,22 @@ economy_keywords <- c("economy", "economic", "GDP", "inflation", "unemployment",
 
 
 # Filter story titles containing economy-related keywords
-econ_pr <- grep(paste(economy_keywords, collapse = "|"), all_story_titles_df, value = TRUE, ignore.case = TRUE)
+economy_related_titles <- grep(paste(economy_keywords, collapse = "|"), story_titles_profit, value = TRUE, ignore.case = TRUE)
 
 # Print the economy-related titles
-print(econ_pr)
+print(economy_related_titles)
 
 
-economy_tibble_profit <- data.frame(headline = econ_pr) %>%
+
+economy_tibble <- data.frame(headline = economy_related_titles) %>%
   unnest_tokens(word, headline)
 
-economy_tibble_profit |> dim()
-economy_tibble <- economy_tibble_profit %>%
+economy_tibble |> dim()
+economy_tibble <- economy_tibble %>%
   anti_join(stop_words)
+
+
+
 
 
 
@@ -77,7 +46,7 @@ word_freq <- count(sentiment_analysis, word)
 
 # Create a word cloud
 wordcloud(words = word_freq$word, freq = word_freq$n,
-          min.freq = 1, max.words = 300, random.order = FALSE, 
+          min.freq = 1, max.words = 10, random.order = FALSE, 
           colors = brewer.pal(8, "Dark2"))
 
 # Create a bar graph of word frequency
@@ -98,9 +67,11 @@ sentiment_scores <- sentiment_analysis %>%
   summarise(sentiment_score = sum(value, na.rm = TRUE))  # Use `value` instead of `afinn_score`
 # Plot sentiment scores
 ggplot(sentiment_scores, aes(x = sentiment_score)) +
-  geom_histogram(fill = "skyblue", bins = 20) +
-  labs(x = "Sentiment Score", y = "Frequency", title = "Distribution of Sentiment Scores for last 5 days of Economy-related Headlines",subtitle = "The Profit AFINN Lexicon",
-       caption = "By Zahid Source: The Profit")
+  geom_histogram(fill = "skyblue", bins = 15) +
+  labs(x = "Sentiment Score", y = "Frequency", title = "Distribution of Sentiment Scores")
+
+
+
 
 
 

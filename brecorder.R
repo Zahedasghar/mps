@@ -32,8 +32,8 @@ css_selectors <- c(
 )
 
 # Range of dates to scrape (in YYYY-MM-DD format)
-start_date <- "2024-02-17"
-end_date <- "2024-02-26"  # Today's date
+start_date <- "2024-03-01"
+end_date <- "2024-03-04"  # Today's date
 
 dates <- seq(as.Date(start_date), as.Date(end_date), by = "day")
 dates <- format(dates, "%Y-%m-%d")
@@ -46,15 +46,17 @@ all_headlines <- lapply(seq_along(urls), function(i) {
 })
 
 # Flatten the list structure
-#all_headlines <- unlist(all_headlines, recursive = FALSE)
+all_headlines <- unlist(all_headlines, recursive = FALSE)
 
-all_headlines
+# Remove stop word "gold"
+all_headlines <- gsub("\\bgold\\b", "", all_headlines)
 
-
+# Display the updated headlines
+head(all_headlines)
 
 # Keywords related to economy
 economy_keywords <- c("economy", "economic", "GDP", "inflation", "unemployment", "fiscal policy", "monetary policy", 
-                      "circular debt","prices","inflation", "trade", "exports", "imports", "tariffs", "budget", "deficit", "surplus", "investment", 
+                     "IMF", "circular debt","prices","inflation", "trade", "exports", "imports", "tariffs", "budget", "deficit", "surplus", "investment", 
                       "stock market", "recession", "growth")
 
 

@@ -27,7 +27,7 @@ tribune_headlines <- scrape_headlines(tribune_url, "h3")
 
 # Scrape headlines from The Nation
 nation_url <- "https://nation.com.pk/"
-nation_headlines <- scrape_headlines(nation_url, "h3")
+nation_headlines <- scrape_headlines(nation_url, "h2")
 
 # Combine all headlines into one vector
 all_headlines <- c(dawn_headlines, news_headlines, tribune_headlines, nation_headlines)
@@ -65,8 +65,13 @@ word_freq <- count(sentiment_analysis, word)
 
 # Create a word cloud
 wordcloud(words = word_freq$word, freq = word_freq$n,
-          min.freq = 1, max.words = 100, random.order = FALSE, 
+          min.freq = 1, max.words = 200, random.order = FALSE, 
           colors = brewer.pal(8, "Dark2"))
+
+# Save the word cloud as an image
+png("wordcloud.png", width = 800, height = 600)
+wordcloud(words = word_freq$word, freq = word_freq$n, min.freq = 1, max.words = 150, random.order = FALSE, colors = brewer.pal(8, "Dark2"))
+dev.off()
 
 # Create a bar graph of word frequency
 word_freq_top20 <- head(word_freq[order(-word_freq$n),], 20)  # Select top 20 words
@@ -87,9 +92,9 @@ sentiment_scores <- sentiment_analysis %>%
 # Plot sentiment scores
 ggplot(sentiment_scores, aes(x = sentiment_score)) +
   geom_histogram(fill = "steelblue", bins = 15) +
-  labs(x = "Sentiment Score", y = "Frequency", title = "Distribution of Sentiment Scores from Headlines",
+  labs(x = "Sentiment Score", y = "Frequency", title = "Sentiment Scores from Newspaper Headlines",
        subtitle = "Dawn, The News, Tribune, The Nation",
-       caption = "By: Zahid Asghar, dated: 2024-02-26") +
+       caption = "By: Zahid Asghar, dated: 2024-03-04") +
   theme_minimal(base_size = 15)
 
 
@@ -100,7 +105,7 @@ gg <- ggplot(sentiment_scores, aes(x = sentiment_score)) +
   geom_histogram(fill = "steelblue", bins = 15) +
   labs(x = "Sentiment Score", y = "Frequency", title = "Distribution of Sentiment Scores from Headlines",
        subtitle = "Dawn, The News, Tribune, The Nation",
-       caption = "By: Zahid Asghar, dated: 2024-02-26") +
+       caption = "By: Zahid Asghar, dated: 2024-02-28") +
   theme_minimal(base_size = 15) +
   theme(plot.background = element_rect(fill = "white"))  # Set background color to white
 

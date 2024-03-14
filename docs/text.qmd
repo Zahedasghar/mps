@@ -28,7 +28,6 @@ editor: visual
 > In practice, SBP's monetary policy strives to strike a balance among multiple and often competing considerations. These include: controlling inflation, ensuring payment system and financial stability, preserving foreign exchange reserves, and supporting private investment.(SBP)
 
 
-## Unsupervised Machine Learning
 
 > Words matter as much as actions for central banks. Because changes in tone can presage shifts in monetary policy. Therefore, it matters to analyze the words of the SBP.
 

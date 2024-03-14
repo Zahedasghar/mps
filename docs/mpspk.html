@@ -101,7 +101,10 @@ window.Quarto = {
   <li><a href="#cleaning-and-preprocessing" id="toc-cleaning-and-preprocessing" class="nav-link" data-scroll-target="#cleaning-and-preprocessing"><span class="header-section-number">2.1</span> Cleaning and Preprocessing</a></li>
   </ul></li>
   <li><a href="#document-term-matrix" id="toc-document-term-matrix" class="nav-link" data-scroll-target="#document-term-matrix"><span class="header-section-number">3</span> Document Term Matrix</a></li>
-  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">4</span> Exploratory Data Analysis</a></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">4</span> Exploratory Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#terms-appearing-in-more-than-100-200-300-500-and-700-documents" id="toc-terms-appearing-in-more-than-100-200-300-500-and-700-documents" class="nav-link" data-scroll-target="#terms-appearing-in-more-than-100-200-300-500-and-700-documents"><span class="header-section-number">4.1</span> Terms appearing in more than 100, 200, 300, 500 and 700 documents</a></li>
+  </ul></li>
   <li><a href="#plotting-data" id="toc-plotting-data" class="nav-link" data-scroll-target="#plotting-data"><span class="header-section-number">5</span> Plotting data</a></li>
   <li><a href="#correlation-plot" id="toc-correlation-plot" class="nav-link" data-scroll-target="#correlation-plot"><span class="header-section-number">6</span> Correlation plot</a>
   <ul class="collapse">
@@ -118,11 +121,14 @@ window.Quarto = {
   <li><a href="#topic-models" id="toc-topic-models" class="nav-link" data-scroll-target="#topic-models"><span class="header-section-number">8</span> Topic models</a>
   <ul class="collapse">
   <li><a href="#heatmap" id="toc-heatmap" class="nav-link" data-scroll-target="#heatmap"><span class="header-section-number">8.1</span> Heatmap</a></li>
-  <li><a href="#wordfish" id="toc-wordfish" class="nav-link" data-scroll-target="#wordfish"><span class="header-section-number">8.2</span> Wordfish</a></li>
-  <li><a href="#plotting-wordfish-score" id="toc-plotting-wordfish-score" class="nav-link" data-scroll-target="#plotting-wordfish-score"><span class="header-section-number">8.3</span> Plotting Wordfish Score</a></li>
-  <li><a href="#plotting-wordscores-score" id="toc-plotting-wordscores-score" class="nav-link" data-scroll-target="#plotting-wordscores-score"><span class="header-section-number">8.4</span> Plotting Wordscores Score</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">9</span> Conclusion</a></li>
+  <li><a href="#topic-comparison-2018-vs-2023" id="toc-topic-comparison-2018-vs-2023" class="nav-link" data-scroll-target="#topic-comparison-2018-vs-2023"><span class="header-section-number">9</span> Topic comparison 2018 vs 2023</a></li>
+  <li><a href="#wordfish" id="toc-wordfish" class="nav-link" data-scroll-target="#wordfish"><span class="header-section-number">10</span> Wordfish</a>
+  <ul class="collapse">
+  <li><a href="#plotting-wordfish-score" id="toc-plotting-wordfish-score" class="nav-link" data-scroll-target="#plotting-wordfish-score"><span class="header-section-number">10.1</span> Plotting Wordfish Score</a></li>
+  <li><a href="#plotting-wordscores-score" id="toc-plotting-wordscores-score" class="nav-link" data-scroll-target="#plotting-wordscores-score"><span class="header-section-number">10.2</span> Plotting Wordscores Score</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">11</span> Conclusion</a></li>
   </ul>
 </nav>
 </div>
@@ -281,8 +287,7 @@ Committee has decided to raise the policy rate by 25 bps to 6.00 percent.
 </section>
 <section id="document-term-matrix" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="document-term-matrix"><span class="header-section-number">3</span> Document Term Matrix</h2>
-<p>The <code>tm</code> package is used to stem the words in the text data. Once we have cleaned and preprocessed the text data, we can convert the text data to a document term matrix (dtm).</p>
-<p>The goals of mapping corpus onto a dtm is twofold: the first is present the topic of each document by the frequency of semantically significant and unique terms, and second is to use it for future data analysis.</p>
+<p>The <code>tm</code> package is used to stem the words in the text data. Once we have cleaned and preprocessed the text data, we can convert the text data to a document term matrix (dtm). The goals of mapping corpus onto a dtm is twofold: the first is present the topic of each document by the frequency of semantically significant and unique terms, and second is to use it for future data analysis.</p>
 <p>Now we create a matrix with term frequencies. First six observations of the document term matrix are shown below.The value in each cell of this matrix is typically the word frequency of each term in each document.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -294,39 +299,97 @@ Committee has decided to raise the policy rate by 25 bps to 6.00 percent.
 <section id="exploratory-data-analysis" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">4</span> Exploratory Data Analysis</h2>
 <p>Given a dtm with reduced sparsity, we can now perform some exploratory data analysis. The first step is to find the most frequent terms in the dtm.</p>
+<p>There are 81 documents and 3266 columns. The most frequent top 6 and bottom 6 terms are shown below.</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 81 12</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code> decided expected     rate  deficit  account  current 
-      85      286      306      330      331      387 </code></pre>
+<pre><code>               term frequency
+percent     percent       905
+inflation inflation       897
+policy       policy       604
+growth       growth       520
+monetary   monetary       511
+sector       sector       415</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>   sector  monetary    growth    policy inflation   percent 
-      415       511       520       604       897       905 </code></pre>
+<pre><code>             term frequency
+current   current       387
+account   account       331
+deficit   deficit       330
+rate         rate       306
+expected expected       286
+decided   decided        85</code></pre>
+</div>
+</div>
+<section id="terms-appearing-in-more-than-100-200-300-500-and-700-documents" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="terms-appearing-in-more-than-100-200-300-500-and-700-documents"><span class="header-section-number">4.1</span> Terms appearing in more than 100, 200, 300, 500 and 700 documents</h3>
+<p>The terms appearing in more than 100 are as follows.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   find.frequency.terms.100
+1                   account
+2                   current
+3                   deficit
+4                  expected
+5                    growth
+6                 inflation
+7                  monetary
+8                   percent
+9                    policy
+10                     rate</code></pre>
+</div>
+</div>
+<p>Terms appearing in more than 200, 300, 500 and 700 documents are as follows.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   find.frequency.terms.200
+1                   account
+2                   current
+3                   deficit
+4                  expected
+5                    growth
+6                 inflation
+7                  monetary
+8                   percent
+9                    policy
+10                     rate</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "account"   "current"   "deficit"   "expected"  "growth"    "inflation"
- [7] "monetary"  "percent"   "policy"    "rate"      "sector"   </code></pre>
+<pre><code>   find.frequency.terms.300
+1                   account
+2                   current
+3                   deficit
+4                    growth
+5                 inflation
+6                  monetary
+7                   percent
+8                    policy
+9                      rate
+10                   sector</code></pre>
 </div>
+</div>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "account"   "current"   "deficit"   "expected"  "growth"    "inflation"
- [7] "monetary"  "percent"   "policy"    "rate"      "sector"   </code></pre>
+<pre><code>  find.frequency.terms.500
+1                   growth
+2                inflation
+3                 monetary
+4                  percent
+5                   policy</code></pre>
 </div>
+</div>
+<div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] "account"   "current"   "deficit"   "growth"    "inflation" "monetary" 
- [7] "percent"   "policy"    "rate"      "sector"   </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "growth"    "inflation" "monetary"  "percent"   "policy"   </code></pre>
-</div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] "inflation" "percent"  </code></pre>
+<pre><code>  find.frequency.terms.700
+1                inflation
+2                  percent</code></pre>
 </div>
 </div>
+</section>
 </section>
 <section id="plotting-data" class="level2" data-number="5">
 <h2 data-number="5" class="anchored" data-anchor-id="plotting-data"><span class="header-section-number">5</span> Plotting data</h2>
@@ -355,53 +418,11 @@ rate           rate  306</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="correlation-plot" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="correlation-plot"><span class="header-section-number">6</span> Correlation plot</h2>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
 <p><img src="mpspk_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<section id="word-cloud" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">6.1</span> Word Cloud</h3>
-<p>The <code>wordcloud</code> package is used to visualize the text data. The word cloud is a visual representation of the frequency of words in the text data. The size of the word in the word cloud is proportional to the frequency of the word in the text data. The <code>wordcloud</code> package is used to create the word cloud. The word cloud is created using the document term matrix. The word cloud is used to identify the most frequent words in the text data.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -410,38 +431,85 @@ rate           rate  306</code></pre>
 </figure>
 </div>
 </div>
+</div>
+<p>Dendrogram is another way to visualize the data. The dendrogram is a tree diagram frequently used to illustrate the arrangement of the clusters produced by hierarchical clustering. Hierarchical clustering is a method of cluster analysis which seeks to build a hierarchy of clusters without specifying the number of clusters beforehand.</p>
+<div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-15-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="correlation-plot" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="correlation-plot"><span class="header-section-number">6</span> Correlation plot</h2>
+<p>One of the most intuitive way to visualize relationships between terms is to with correlation maps. Based on a certain <em>ad-hoc</em> criteria, correlation maps show how some certain terms relate to each other.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="word-cloud" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">6.1</span> Word Cloud</h3>
+<p>The <code>wordcloud</code> package is used to visualize the text data. The word cloud is a visual representation of the frequency of words in the text data. The size of the word in the word cloud is proportional to the frequency of the word in the text data. The <code>wordcloud</code> package is used to create the word cloud. The word cloud is created using the document term matrix. The word cloud is used to identify the most frequent words in the text data.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 81 34</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-15-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-20-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-15-4.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-20-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-15-5.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-20-4.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-15-6.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-20-5.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="mpspk_files/figure-html/unnamed-chunk-20-6.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -478,7 +546,7 @@ global           global 0.2025230</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -487,35 +555,35 @@ global           global 0.2025230</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-18-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-23-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-18-3.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-23-3.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-18-4.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-23-4.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-18-5.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-23-5.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -549,7 +617,7 @@ floods           floods 0.1823993</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -559,7 +627,7 @@ floods           floods 0.1823993</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -626,7 +694,19 @@ floods           floods 0.1823993</code></pre>
 </div>
 <section id="heatmap" class="level3" data-number="8.1">
 <h3 data-number="8.1" class="anchored" data-anchor-id="heatmap"><span class="header-section-number">8.1</span> Heatmap</h3>
-<p>The heatmap is used to visualize the frequency of positive and negative words in the text data. The <code>heatmap</code> function is used to create the heatmap. The <code>heatmap</code> function takes the frequency of positive and negative words as input and creates the heatmap. The <code>heatmap</code> function is used to create the heatmap. The <code>heatmap</code> function takes the frequency of positive and negative words as input and creates the heatmap.</p>
+<p>The heatmap is used to visualize the frequency of positive and negative words in the text data. The <code>heatmap</code> function takes the frequency of positive and negative words as input and creates the heatmap. Heatmaps can be used to compare the content of each document, side by side, with other documents in the corpus. The word are at the bottom and color intensity shows how frequent the word is in the document. One observes that current account is in document 2 and 5 but not in document 6 and 4 while inflation is in document 6 but not in document 7.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>png 
+  2 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>png 
+  2 </code></pre>
+</div>
+</div>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>png 
@@ -639,11 +719,31 @@ floods           floods 0.1823993</code></pre>
 </figure>
 </div>
 </section>
-<section id="wordfish" class="level3" data-number="8.2">
-<h3 data-number="8.2" class="anchored" data-anchor-id="wordfish"><span class="header-section-number">8.2</span> Wordfish</h3>
 </section>
-<section id="plotting-wordfish-score" class="level3" data-number="8.3">
-<h3 data-number="8.3" class="anchored" data-anchor-id="plotting-wordfish-score"><span class="header-section-number">8.3</span> Plotting Wordfish Score</h3>
+<section id="topic-comparison-2018-vs-2023" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="topic-comparison-2018-vs-2023"><span class="header-section-number">9</span> Topic comparison 2018 vs 2023</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/heatmaps_lda_18-1.png" class="r-stretch img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<figcaption>Heatmap for 2018</figcaption>
+</figure>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/heatmaps_lda_23-1.png" class="r-stretch img-fluid quarto-figure quarto-figure-center figure-img"></p>
+<figcaption>Heatmap for 2023</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="wordfish" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="wordfish"><span class="header-section-number">10</span> Wordfish</h2>
+<section id="plotting-wordfish-score" class="level3" data-number="10.1">
+<h3 data-number="10.1" class="anchored" data-anchor-id="plotting-wordfish-score"><span class="header-section-number">10.1</span> Plotting Wordfish Score</h3>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>png 
@@ -664,28 +764,28 @@ floods           floods 0.1823993</code></pre>
 </div>
 </div>
 </section>
-<section id="plotting-wordscores-score" class="level3" data-number="8.4">
-<h3 data-number="8.4" class="anchored" data-anchor-id="plotting-wordscores-score"><span class="header-section-number">8.4</span> Plotting Wordscores Score</h3>
+<section id="plotting-wordscores-score" class="level3" data-number="10.2">
+<h3 data-number="10.2" class="anchored" data-anchor-id="plotting-wordscores-score"><span class="header-section-number">10.2</span> Plotting Wordscores Score</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="mpspk_files/figure-html/unnamed-chunk-35-2.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="mpspk_files/figure-html/unnamed-chunk-42-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">11</span> Conclusion</h2>
 <p>I hope that this document will be useful for researchers and practitioners who are interested in text mining and sentiment analysis. I have demonstrated how to use the R programming language to perform text data analysis based on monetary policy statements. The code provided in this document can be used as a starting point for further research and analysis. The R programming language is a powerful tool for text mining and sentiment analysis, and it is widely used in the academic and business communities. I hope that this document will help to promote the use of R in the field of text mining and sentiment analysis. This reproducible document will also serve the purpose of how to automate the process of text data analysis and sentiment analysis. I also demonstrate that R langugage has made it easy to perform text data analysis and sentiment analysis and has become a powerful tool for text mining and sentiment analysis, and it is widely used in the academic and business communities. My initial findings suggest that SBP policy has nuetral tone and it is not biased towards hawkish or dovish. However, the sentiment analysis is based on the text data and it is important to consider the context and the content of the text data.</p>
 
 </section>

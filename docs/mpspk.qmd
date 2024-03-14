@@ -38,7 +38,7 @@ The paper is organized as follows. Section 2 provides an overview of text mining
 
 
 ```{r}
-#| echo: false
+
 # Loading required R packages
 library(xts)
 # install.packages("igraph", type = "binary")
@@ -95,7 +95,7 @@ inspect(corpus[[1]]) # Checking that the document - here, its document #1 - was 
 ```
 
 ```{r}
-#| echo: false
+
 # Extracting document names, dates, and creating time series
 list.my.files <- list.files(file.path, full.names = FALSE)
 list.my.files
@@ -112,6 +112,8 @@ year <- substr(document.corpus.names, 5, 8)
 
 ```
 
+
+
 ### Cleaning and Preprocessing
 
 The text data is cleaned and prepossessed to remove any unwanted characters and symbols. Text cleaning (or text processing) makes an unstructured set of texts uniform across and within and eliminates idiosyncratic characters or meaningless terms. 
@@ -119,7 +121,7 @@ Text cleaning can be loosely divided into a set of steps as shown below.
 Stop words are the most common words in a language, such as 'the', 'is', 'at', 'which', and 'on'. However, before removing stop words, all words are converted to `lowercase` to make the text uniform using the command `corpus <- tm_map(corpus, tolower`. These words are often removed from the text data because they do not carry much meaning. Numbers are also removed from the text data using `tm_map(corpus, removeNumbers)` in most of the cases. One final step in data cleaning is to stem the words. Stemming is the process of reducing words to their root form. For example, the words 'running', 'runs', and 'ran' are all reduced to the root form 'run'.
 
 ```{r}
-#| echo: false
+
 # Using this function to remove idiosyncratic characters, numbers/punctuation, stop-words
 toSpace <- content_transformer(function(x, pattern){return (gsub(pattern, " ", x))})
 corpus <- tm_map(corpus, toSpace, "-")
@@ -168,7 +170,7 @@ The `tm` package is used to stem the words in the text data. Once we have cleane
 The goals of mapping corpus onto a dtm is twofold: the first is present the topic of each document by the frequency of semantically significant and unique terms, and second is to use it for future data analysis.
 
 ```{r}
-#| echo: false
+
 # Converting the corpsus into Document Term Matrix
 # Choosing words with length between 3 and 12 characters
 dtm <- DocumentTermMatrix(corpus, control=list(wordLengths=c(3, 12))) # https://en.wikipedia.org/wiki/Document-term_matrix
@@ -180,7 +182,7 @@ First six observations of the document term matrix are shown below.The value in 
 
 
 ```{r}
-#| echo: false
+
 termFreq <- colSums(as.matrix(dtm))
 head(termFreq)
 
@@ -191,10 +193,7 @@ head(termFreq)
 
 Given a dtm with reduced sparsity, we can now perform some exploratory data analysis. The first step is to find the most frequent terms in the dtm. 
 
-There are `r dim(dtm.sparse)` documents and columns . The most frequent terms top 6 and bottom 6 are shown below. 
-
- 
-
+There are `r dim(dtm)[1]` documents and `r dim(dtm)[2]` columns. The most frequent top 6 and bottom 6 terms are shown below. 
 
 ```{r}
 
@@ -301,6 +300,12 @@ plotted.frequencies #printing word frequencies
 
 ```
 
+
+Dendrogram is another way to visualize the data. The dendrogram is a tree diagram frequently used to illustrate the arrangement of the clusters produced by hierarchical clustering. Hierarchical clustering is a method of cluster analysis which seeks to build a hierarchy of clusters without specifying the number of clusters beforehand.
+
+```{r}
+
+
 ```{r}
 
 # Dendogram Figure
@@ -328,6 +333,7 @@ plot.igraph(graph.tdm.sparse, layout=layout.fruchterman.reingold(graph.tdm.spars
 
 ## Correlation plot
 
+One of the most intuitive way to visualize relationships between terms is to with correlation maps. Based on a certain *ad-hoc* criteria, correlation maps show how some certain terms relate to each other. 
 
 ```{r}
 corlimit <- 0.4
@@ -664,7 +670,8 @@ date.topic.probabilities <- cbind(document.corpus.names.df$date, topic.probabili
 
 ### Heatmap
 
-The heatmap is used to visualize the frequency of positive and negative words in the text data. The `heatmap` function is used to create the heatmap. The `heatmap` function takes the frequency of positive and negative words as input and creates the heatmap. The `heatmap` function is used to create the heatmap. The `heatmap` function takes the frequency of positive and negative words as input and creates the heatmap.
+The heatmap is used to visualize the frequency of positive and negative words in the text data. The `heatmap` function takes the frequency of positive and negative words as input and creates the heatmap. Heatmaps can be used to compare the content of each document, side by side, with other documents in the corpus. The word are at the bottom and color intensity shows how frequent the word is in the document. One observes that current account is in document 2 and 5 but not in document 6 and 4 while inflation is in document 6 but not in document 7. 
+
 
 ```{r}
 pdf('D:/RepTemplates/mps/sbp/heatmaps_lda.pdf')
@@ -684,9 +691,72 @@ heatmap.2(date.topic.probabilities[1:12, ],
 dev.off()
 ```
 
+
+```{r}
+pdf('D:/RepTemplates/mps/sbp/heatmaps_lda_18.pdf')
+doc_numbers <- c(1, 18, 72, 75, 79)
+# Specify the margins
+margins <- c(5, 4)
+
+# Generate heatmap using adjusted margins
+heatmap.2(date.topic.probabilities[doc_numbers, ],
+          main = "",
+          dendrogram = "none",
+          keysize = 1,
+          margins = margins,
+          density.info = "none",
+          trace = "none",
+          col = my_palette,
+          srtCol = 45,
+          cexCol = 1.4,
+          Colv = "NA")
+
+dev.off()
+```
+
+```{r}
+pdf('D:/RepTemplates/mps/sbp/heatmaps_lda_23.pdf')
+doc_numbers <- c(2,3,13,15,46,61,77,81)
+# Specify the margins
+margins <- c(5, 4)
+
+# Generate heatmap using adjusted margins
+heatmap.2(date.topic.probabilities[doc_numbers, ],
+          main = "",
+          dendrogram = "none",
+          keysize = 1,
+          margins = margins,
+          density.info = "none",
+          trace = "none",
+          col = my_palette,
+          srtCol = 45,
+          cexCol = 1.4,
+          Colv = "NA")
+
+dev.off()
+```
+
 ![](images/heatmaps_lda.png){.r-stretch fig-align="center"}
 
-### Wordfish
+## Topic comparison 2018 vs 2023
+
+::: {.columns}
+:::{.column width="50%"}
+
+![Heatmap for 2018](images/heatmaps_lda_18-1.png){.r-stretch fig-align="center"}
+
+:::
+
+:::{.column width="50%"}
+
+![Heatmap for 2023](images/heatmaps_lda_23-1.png){.r-stretch fig-align="center"}
+
+:::
+::::
+
+
+
+## Wordfish
 
 ```{r}
 # Converting our corpus into another format
