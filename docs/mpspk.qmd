@@ -82,7 +82,7 @@ library(Rgraphviz)
 
 I do text analysis using topic modeling, sentiment, and linguistic analysis to the Monetary Policy Statements (MPS) of the State Bank of Pakistan from 2005-2024 to capture the focus, tone, and clarity of monetary policy communications. Overall I have total 81 MPS documents from 2005 to 2024 used in this analysis. I have included all MPS shown on [SBP website link](https://www.sbp.org.pk/m_policy/mon.asp). The data is in PDF format and I have used the `pdftools` package to extract the text from the PDF files. All these statements are stored as corpus. There are other forms of data storage in R such as `tibble` and `dataframe` but I have used `tm` package to store data as corpus. The text is then cleaned and pre-processed to remove any unwanted characters and symbols. The text is then tokenized and converted to a document term matrix to analyze the text data. `tm` package is used to clean and preprocess the text data, and to create the document term matrix. `tidyverse` and `tidytext` packages are used to analyze and visualize the text data. 
 
-Following is an example of one of the statment from the corpus. 
+Following is an example of one of the statement from the corpus. 
 
 
 ```{r}
