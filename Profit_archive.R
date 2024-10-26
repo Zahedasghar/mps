@@ -1,4 +1,14 @@
 library(rvest)
+# Load necessary libraries
+library(doParallel)
+library(rvest)
+library(tidyverse)
+library(tidytext)
+library(wordcloud)
+library(wordcloud2)
+library(tm)
+library(SnowballC)
+library(textdata)
 # Specify the URL of the Tribune Pakistan website
 url <- "https://profit.pakistantoday.com.pk/category/headlines/"
 
