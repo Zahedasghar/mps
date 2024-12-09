@@ -1,0 +1,922 @@
+---
+title: "Unlocking the Power of Data: Enhancing Public Policy through Advanced Data Infrastructure and Language Model Analysis"
+author: "Zahid Asghar, School of Economics, Quaid-i-Azam University, Islamabad, Pakistan"
+format: 
+  html:
+    toc: true
+    toc-float: true
+    number-sections: true
+execute:
+  freeze: auto
+  echo: false
+  warning: false
+  message: false
+bibliography: references.bib
+---
+
+## Abstract
+
+Data is the fundamental building block for advancements in artificial intelligence (AI), general AI (GAI), machine learning (ML), and large language models (LLMs). This study highlights two aspects. Firstly, the critical need for robust data infrastructure, arguing that without it, countries cannot fully benefit from technological advancements across various economic sectors. Secondly how unstructured data can be explored to evaluate policy documents. Governments possess vast repositories of both structured and unstructured data across domains such as the judiciary, parliaments, and civil bureaucracy. However, these potential goldmines remain largely untapped due to inadequate data management capabilities and a lack of appreciation for the necessity of high-quality data.
+
+This study aims to demonstrate how large amounts of unstructured policy document data can be leveraged to analyze policy objectives, enhance public policy formulation and implementation, and realize the potential of data as a strategic asset in governance. Data quality, trust, privacy and other data aspects are also highlighted to benefit from 4th industrial revolution which is based on information. Findings from 87 monetary policy statements using natural language processing (NLP) models indicate that State Bank of Pakistan (SBP) has maintained a neutral monetary policy stance over the years. The study concludes that text mining can provide valuable insights into policy objectives and enhance public policy formulation with data-driven insights.
+
+## Introduction
+
+Historically, the sources of national competitive advantage have evolved across different eras, reflecting shifts in global power dynamics. Civilizations gained dominance based on unique strengths, ranging from cultural influence and military prowess to technological advancements. For instance, Ancient India was known for its profound knowledge and cultural richness, establishing it as a center of learning and philosophy. Similarly, the Roman Empire's expansion was propelled by its organized legions and technological innovations like catapults. As history progressed, the Mongol Empire leveraged its horse archers and organised mobility , the Ottoman Empire capitalized on heavy artillery and cannons, and the British Empire expanded its empire backed by naval superiority and gunpowder. In the 20th century, the United States emerged as a global leader through a combination of economic strength and military power. Data has become a new competitive advantage in the 21st century, reshaping the global landscape and redefining power dynamics.
+
+Today, the trend shows that the next global superpower will be defined by its command over data. Nations that can harness, analyze, and use data effectively will gain a competitive edge. This marks a shift from traditional military and economic power to digital and information dominance. Data has become a strategic asset, essential for innovation, economic growth, and national security.
+
+Data is the backbone of AI, GAI, ML, and LLMs, driving the advancement of these technologies. The Fourth Industrial Revolution has made data a crucial resource, often called the "new currency" of the modern economy. Data powers AI and ML applications, reshaping industries and redefining global competitive advantage.
+
+There is synergy between data and digital technologies. Both public and private sectors are leveraging data to enhance decision-making, optimize operations, and improve service delivery. Governments worldwide are recognizing the importance of data as a strategic asset, investing in data infrastructure, and promoting data-driven policies. Data-driven governance is becoming the norm, with countries adopting data-centric approaches to address complex challenges. There are vast amounts of data, particularly in the public sector, encompassing records from the judiciary, legislative bodies, policy documents in pdfs, research and implementation reports and large volumne of other archives. Despite this abundance, many countries struggle to capitalize on these assets due to inadequate data infrastructure, lack of standardization, and insufficient appreciation of data's strategic value. In countries like Pakistan, the public sector's data infrastructure is often inadequate, hindering the realization of the full potential of data-driven technologies. Challenges include non-uniform data representation, data in non-machine-readable formats, and a general lack of robust data management practices.
+
+Unstructured data, often rich in textual content, encompasses a wide array of sources such as news articles, social media posts, transcriptions from videos, and formal documents. Its abundance offers fresh opportunities and simultaneous challenges for researchers and institutions alike. The application of natural language processing (NLP) and large language models (LLMs) offers significant opportunities to analyze policy documents and enhance public policy formulation and implementation. Text data, part of unstructured data. constitutes approximately 80% of total recorded data, is a rich source of insights that can inform decision-making processes. By effectively utilizing this data, governments can make informed decisions and improve public services. However, the lack of appreciation for the importance of high-quality data and the absence of robust data management practices pose significant challenges to leveraging this data effectively [^1]
+
+[^1]: Clark, M. (n.d.). *Text Analysis in R*. Retrieved from [Text Analysis in R](https://m-clark.github.io/text-analysis-with-R/intro.html#overview).
+
+With the increasing importance of ML, AI, and NLP, text analysis is becoming more crucial as computers can process and summarize text more efficiently than humans. Moreover, textual analysis may extract meanings from text missed by human readers, who may overlook certain patterns because they do not conform to prior beliefs and expectations . Several studies have conducted detailed textual analyses of central bank statements @shapiro2021. This study follows the guidelines of @benchimol2022 to perform textual analysis on the SBP's monetary policy statements to understand the central bank's monetary policy stance.
+
+The objectives of this research are to recognize data as a strategic asset in governance, explore effective use of public policy data, and harness NLP and LLMs to analyze key policy documents, focusing on monetary policy statements from the State Bank of Pakistan. It aims to demonstrate how unstructured policy documents can be used to study policy objectives and improve public policy formulation with data-driven insights. Text mining plays a crucial role by converting unstructured data into structured data, extracting valuable information, analyzing patterns, assessing sentiment, and classifying text. The main goal is to capture and understand all meanings embedded in text data.
+
+Rest of the paper is organized as follows. Section 2 mentions data as a new currency and its importance in the 21st century. It discusses the role of data quality in public policy and governance. Section 3 highlights the significance of text mining and its applications in economics and finance. Section 4 outlines a systematic approach to text mining using monetary policy statements as an example. Finally, section 6 concludes the paper.
+
+## Data as New Currency
+
+Now, in the 21st century, data has become the new source of competitive advantage. It is changing the global landscape and redefining power dynamics. Yet, Pakistan stands at the crossroads, overwhelmed by data but struggling to harness its true potential. Data fuels economic growth and innovation. The 4th Industrial Revolution uses data, artificial intelligence (AI), and advanced analytics to transform industries. It creates opportunities that were unimaginable a few decades ago. Water, water everywhere, nor a drop to drink from Samuel Taylor Coleridge's poem The Rime of the Ancient Mariner.
+
+It describes a sailor surrounded by water but unable to drink—a paradox of abundance without usability. We face a similar today. We have plenty of data, but not the right kind to make informed decisions. Despite an enormous amount of information, the public sector lacks proper indicators for evidence-based policy making. Similarly, Generative AI is based on right kind of data. 
+
+Data quality is also one of the most important requirements for effective public policy. Using AI for policy analysis based on poor quality data may do more harm than good. Data based policy making is key in sectors like healthcare, education, infrastructure development among others. Ensuring high data quality aims to guarantee the reliability of information systems used by government agencies, measured through technical standards and regulatory compliance. Poor data quality can have significant repercussions on decision-making processes, operational efficiency, compliance with international norms, and a government's reputation and ability to serve its citizens effectively.
+
+Data privacy is equally critical. People are increasingly worried about how their personal information is collected and used. To build trust, governments must ensure that data is handled securely. Transparency in data practices can encourage cooperation among citizens, businesses, and government agencies. For example, reports suggest that the data of many Pakistani citizens was hacked or sold on the dark web. Also, many people receive unwanted promotional calls without knowing how the caller got their information. These incidents show weak security measures and reduce public confidence in data systems.
+
+The integration of AI into data quality management represents a major breakthrough, enabling traditional deterministic rules to be enhanced or redefined. AI can enrich data, improving policy formulation and the delivery of public services. The relationship between AI and data quality is bidirectional, requiring the supply of high-quality data to ensure the effective use of AI in policy contexts.
+
+The key players responsible for data quality within the public sector are policymakers, government agencies, and public service providers who rely on this data. Changing mindsets around data quality has become crucial, especially with increasingly stringent compliance requirements and the pursuit of sustainable development goals. Change management plays an essential role in engaging stakeholders and fostering an understanding of the impact of data quality initiatives on public policy outcomes.
+
+## Analysis of MPS
+
+Monetary and fiscal policies are critical tools that governments and central banks use to manage the economy. Central banks communicate their monetary policy stance to the public through monetary policy statements (MPS), which contain assessments of the current economic state and future outlook. Analyzing these statements is essential for understanding the central bank's approach and its implications for the economy. Text mining techniques can extract nuanced information from these documents, providing deeper insights into monetary policy decisions.
+
+The primary objective of the MPS is to inform and guide economic analysts and other stakeholders involved in advising traders within the financial markets. These statements, released after each Monetary Policy Committee (MPC) meeting—usually held every two months—provide insights into recent economic developments and anticipate future trends, thereby facilitating informed decision-making. Analyzing how effectively the SBP communicates through its policy statements is essential, and we employ textual analysis techniques to assess this effectiveness.
+
+This study explores the utilization of public policy data through the application of natural language processing (NLP) and large language models (LLMs), focusing on the MPS issued by the State Bank of Pakistan (SBP) over the past 18 to 20 years. Traditionally, text analysis has not been emphasized in the training of economists and social scientists, despite its frequent necessity and potential to yield valuable insights [(Clark, n.d.)](https://m-clark.github.io/text-analysis-with-R/intro.html#overview). With advancements in machine learning and AI, text analysis has become increasingly important, as computer-based approaches can process and summarize text more efficiently than humans and may uncover meanings overlooked due to biases or preconceived notions @Herasymova. Previous studies, such as those by Shapiro and Wilson (2021), have performed detailed textual analyses of central bank statements. Following the guidelines of @benchimol2022, we explore how text mining techniques can enhance understanding of the SBP's monetary policy stance.
+
+Unstructured data rich in textual content from sources like news articles, social media posts, and formal documents presents both opportunities and challenges for researchers. We propose a systematic approach to leverage text mining techniques and examine potential empirical applications. While quantitative text analysis is extensively used in fields like political science, sociology, and linguistics, it is less prevalent in economics and finance in Pakistan. However, growing interest in this area is supported by advances in open-source software and the availability of large text datasets.
+
+Text mining transforms unstructured data into structured data, extracting information to analyze patterns, trends, sentiment, and classifications within the text. By analyzing the SBP's monetary policy statements, we aim to uncover patterns and insights that can enhance the understanding of monetary policy decisions, which have significant implications for the economy.
+
+Focus is on the primer of extracting information from unstructured data, and the potential applications of text mining in the context of monetary policy statements. Quantitative analysis of text data is a rapidly growing field, and the methods and techniques used in this paper are not exhaustive. These methods are in extensive use in political science, sociology, linguistics and information security but are not in wide use in economics and finance in Pakistan. Nevertheless, there is a growing interest in the use of text mining in economics and finance, and this paper aims to provide a starting point for researchers interested in text mining and its applications in economics and finance.
+
+As text data is usually unstructured, therefore, it is important that a reproducible and systematic approach is used to extract information from text data.
+> The principal goal of text mining is to capture and analyze all possible meanings embedded in text. Text mining transform unstructured data into structured data, and to extract information from text data. 
+
+Text mining is a rapidly growing field, and has applications in a wide range of fields, such as information retrieval, natural language processing, and data mining. Moreover, it analyzes-patterns and trends in the text data,the sentiment of text data, classify text data, to categorize the text data among many other functions.
+
+This section aims at providing a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements.
+
+### MPS Data
+
+We conduct text analysis using topic modeling, sentiment, and linguistic analysis on the Monetary Policy Statements of the State Bank of Pakistan from 2005 to 2024 to capture the focus, tone, and clarity of monetary policy communications. A total of 86 MPS documents were collected from the SBP website for this analysis. The data, originally in PDF format, was extracted and processed to convert it into a usable text format.
+
+```{r}
+#| label: load_libraries
+# Loading required R packages
+library(xts)
+# install.packages("igraph", type = "binary")
+library(igraph)
+library(plyr)
+library(tm) # Key library, documentation: https://cran.r-project.org/web/packages/tm/tm.pdf
+library(NLP)
+library(SnowballC)
+library(ggplot2) 
+library(cluster)  
+library(wordcloud)
+# library(qdap)
+library(quanteda)
+library(topicmodels)
+# library(XLConnect)
+library(lattice)
+library(gplots)
+library(data.table)
+# library(xlsx)
+library(stringi)
+library(pheatmap)
+library(readtext)
+library(quanteda.textmodels)
+library(stringr)    
+library(dplyr)    
+library(tidyr) 
+#library(rowr) 
+library(ggthemes)
+#install.packages("austin", repos="http://R-Forge.R-project.org")
+library(austin)
+library(igraph)
+library(gt)
+library(gtsummary)
+library(gtExtras)
+library(tidyverse)
+ # install.packages("BiocManager")
+ # BiocManager::install("Rgraphviz")
+library(Rgraphviz)
+
+```
+
+```{r}
+#| label: load_data
+#| echo: false
+# Creating corpus 
+file.path <- file.path("D:/RepTemplates/mps/data/mpd")
+corpus <- Corpus(DirSource(file.path)) # Creates a framework that holds a collection of documents (corpus)
+ 
+inspect(corpus[[1]]) # Checking that the document - here, its document #1 - was correctly read
+```
+
+```{r}
+#| label: extract_data
+# Extracting document names, dates, and creating time series
+list.my.files <- list.files(file.path, full.names = FALSE)
+list.my.files
+names(list.my.files) <- basename(list.my.files)
+document.corpus.names <- ldply(names(list.my.files))
+document.corpus.names <- gsub("_", "", document.corpus.names)
+document.corpus.names <- gsub(".txt", "", list.my.files)
+
+document.corpus.names.df <- data.frame(document.corpus.names, row.names = document.corpus.names)
+
+day <- substr(document.corpus.names, 1, 2)
+month <- substr(document.corpus.names, 3, 4)
+year <- substr(document.corpus.names, 5, 8)
+
+```
+
+### Cleaning and Preprocessing
+
+The extracted text was cleaned and preprocessed to remove any unwanted characters and symbols. This process involved converting all words to lowercase, removing stop words like 'the', 'is', 'at', and 'which', eliminating numbers, and stemming words to reduce them to their root forms (e.g., 'running', 'runs', 'ran' become 'run').
+
+```{r}
+#| label: clean_data
+# Using this function to remove idiosyncratic characters, numbers/punctuation, stop-words
+toSpace <- content_transformer(function(x, pattern){return (gsub(pattern, " ", x))})
+corpus <- tm_map(corpus, toSpace, "-")
+corpus <- tm_map(corpus, toSpace, ")")
+corpus <- tm_map(corpus, toSpace, ":")
+corpus <- tm_map(corpus, toSpace, "%")
+corpus <- tm_map(corpus, toSpace, "@")
+corpus <- tm_map(corpus, toSpace, " - ")
+corpus <- tm_map(corpus, toSpace, "\n")
+corpus <- tm_map(corpus, toSpace, ",")
+#corpus <- tm_map(corpus, toSpace, ".")
+corpus <- tm_map(corpus, function(x) iconv(x, to='latin1', sub='byte'))
+corpus <- tm_map(corpus, removeNumbers) 
+corpus <- tm_map(corpus, stripWhitespace) 
+corpus <- tm_map(corpus, removePunctuation)
+corpus <- tm_map(corpus, stripWhitespace)
+
+#inspect(corpus[[1]])
+
+corpus <- tm_map(corpus, tolower)
+#corpus <- tm_map(corpus, stripWhitespace)
+corpus <- tm_map(corpus, removeWords, stopwords("english"))
+#corpus <- tm_map(corpus, stemDocument)
+
+corpus <- tm_map(corpus, removeWords, c( "end", "also", "age",
+                                        "analysis", "number", "two", "three",
+                                        "minut", "third", "fourth", "spokesperson",
+                                        "staff", "like", "five", "four", 
+                                        "topf", "governor", "six","state","bank","year",
+                                       "page","pakistan", "sbp","mpc","november","october","june","july","may",
+                                       "august","september","december","january","february","march","april"))                                   
+corpus <- tm_map(corpus, stripWhitespace)
+
+```
+
+Below is the text left from corpus after removing the stop words.
+
+> monetary policy committee monetary policy statement’s economic growth track achieve highest level last eleven years average headline inflation remains within forecast range core inflation continued increase fiscal deficit h fy expected fall close last ’s percent visible improvement export growth remittances marginally higher however largely due high level imports current account deficit remains pressure exchange rate adjustment expected help ease pressure external front progress real sector indicates agriculture sector set perform better second row production major kharif crops except maize surpassed level fy similarly large scale manufacturing lsm recorded healthy broad based growth percent.
+
+### Document Term Matrix
+
+Following this, the text was tokenized and structured into a document-term matrix for further analysis. After cleaning, various data analysis and visualization techniques were applied to derive insights from the processed text. After cleaning, the text was converted into a document-term matrix (DTM).
+
+Each cell in the DTM contains the frequency of a term in a specific document. Exploratory data analysis was conducted on the DTM to identify patterns and key insights. The most frequent terms included 'percent', 'inflation', 'policy', 'growth', 'monetary', and 'sector', highlighting central themes in the monetary policy statements. Terms appearing in a high number of documents underscored consistent focus areas across the corpus.
+
+```{r}
+#| label: create_dtm
+# Converting the corpsus into Document Term Matrix
+# Choosing words with length between 3 and 12 characters
+dtm <- DocumentTermMatrix(corpus, control=list(wordLengths=c(3, 12))) # https://en.wikipedia.org/wiki/Document-term_matrix
+```
+
+```{r}
+#| label: term_freq
+termFreq <- colSums(as.matrix(dtm))
+```
+
+## Exploratory Data Analysis
+
+There are `r dim(dtm)[1]` documents and `r dim(dtm)[2]` columns. The most frequent top 6 and bottom 6 terms are shown below.
+
+```{r}
+#| label: top_terms
+# Removing some of the most sparse terms
+dtm.sparse <- removeSparseTerms(dtm,0.05)
+dim(dtm.sparse)
+
+term.frequencies <- colSums(as.matrix(dtm.sparse))
+order.frequencies <- order(term.frequencies)
+
+
+# Convert term frequencies to a data frame
+term_freq_df <- data.frame(term = names(term.frequencies), frequency = term.frequencies)
+
+# Sort the data frame by frequency in descending order
+term_freq_df <- term_freq_df[order(-term_freq_df$frequency), ]
+
+# Print the top terms
+head(term_freq_df)
+
+tail(term_freq_df)
+
+
+```
+
+```{r}
+#| label: find_frequency_term
+find.frequency.terms.100 <- findFreqTerms(dtm.sparse,lowfreq=100)
+# data.frame(find.frequency.terms.100) |> head(10)
+```
+
+```{r}
+#| label: find_frequency_terms
+find.frequency.terms.200 <- findFreqTerms(dtm.sparse,lowfreq=200)
+# data.frame(find.frequency.terms.200) |> head(10)
+
+```
+
+```{r}
+
+find.frequency.terms.300 <- findFreqTerms(dtm.sparse,lowfreq=300)
+# data.frame(find.frequency.terms.300) |> head(10)
+
+
+```
+
+```{r}
+
+ find.frequency.terms.500 <- findFreqTerms(dtm.sparse,lowfreq=500)
+
+# data.frame(find.frequency.terms.500) |> head(10)
+
+```
+
+```{r}
+ find.frequency.terms.700 <- findFreqTerms(dtm.sparse,lowfreq=700)
+ # data.frame(find.frequency.terms.700) |> head(10)
+```
+
+### Plotting data
+
+Visualization techniques such as term frequency plots, dendrograms, and correlation plots were employed to illustrate relationships between terms. Dendrograms provided a visual representation of how terms cluster together without pre-specifying the number of clusters. Correlation maps showed how certain terms relate to each other based on specified criteria. A word cloud was generated to visually represent word frequency, with the size of each word corresponding to its frequency in the corpus. The term frequency-inverse document frequency (tf-idf) weighting scheme was applied to adjust for commonality of words, enhancing the significance of terms that are important within specific documents but less frequent across the corpus. Using the 'tidytext' package, the text data was further analyzed by converting it into a tidy format with one word per row. This facilitated word counting and sentiment analysis. @fig-hist-100 and @fig-hist-200 show a histogram of words in the corpus, highlighting the most common terms.
+
+```{r}
+#| label: fig
+# Creating Corpus Histogram
+sorted.frequencies <- sort(colSums(as.matrix(dtm.sparse)), decreasing=TRUE)   
+# head(sorted.frequencies, 20)   
+
+word.frequencies.frame <- data.frame(word=names(sorted.frequencies), freq=sorted.frequencies)   
+# head(word.frequencies.frame,10) 
+word.frequencies.frame <- word.frequencies.frame[order(-sorted.frequencies),]
+```
+
+```{r}
+#| label: fig-hist-100
+#| fig-cap: "Histogram of words with 100 or mor frequencies in the corpus"
+
+# Plotting Frequencies
+# Term appears at least 100 times in the corpus (can be customized)
+plotted.frequencies <- ggplot(subset(word.frequencies.frame, freq>100), aes(reorder(word, -freq), freq))    
+plotted.frequencies <- plotted.frequencies + geom_bar(stat="identity")   
+plotted.frequencies <- plotted.frequencies + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
+plotted.frequencies <- plotted.frequencies + theme(axis.text=element_text(size=17), axis.title=element_text(size=16,face="bold"))
+# plotted.frequencies <- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))
+plotted.frequencies <- plotted.frequencies + xlab("Corpus Terms") 
+plotted.frequencies <- plotted.frequencies + ylab("Frequencies") 
+plotted.frequencies  # Printing word frequencies
+
+```
+
+```{r}
+#| label: fig-hist-200
+#| fig-cap: "Histogram of words with 200 or more frequencies in the corpus"
+
+# Plotting Frequencies (term appears at least 200 times in the corpus)
+
+plotted.frequencies <- ggplot(subset(word.frequencies.frame, freq>200), aes(reorder(word, -freq), freq))    
+plotted.frequencies <- plotted.frequencies + geom_bar(stat="identity")   
+plotted.frequencies <- plotted.frequencies + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
+plotted.frequencies <- plotted.frequencies + theme(axis.text=element_text(size=17), axis.title=element_text(size=16,face="bold"))
+#plotted.frequencies <- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))
+plotted.frequencies <- plotted.frequencies + xlab("Corpus Terms") 
+plotted.frequencies <- plotted.frequencies + ylab("Frequencies") 
+plotted.frequencies #printing word frequencies
+
+```
+
+Dendrogram is another way to visualize the data. The dendrogram is a tree diagram frequently used to illustrate the arrangement of the clusters produced by hierarchical clustering. Hierarchical clustering is a method of cluster analysis which seeks to build a hierarchy of clusters without specifying the number of clusters beforehand. This is shown in @fig-dendrogram. The adjacency figure is another way to visualize the data. The adjacency figure shows the relationship between terms in the corpus. The adjacency figure is shown in @fig-adjacency.
+
+```{r}
+#| label: fig-dendrogram
+#| fig-cap: "Dendrogram of the corpus"
+
+# Dendogram Figure
+dendogram <- dist(t(dtm.sparse), method="euclidian")   
+dendogram.fit <- hclust(d=dendogram, method="ward.D")   
+plot(dendogram.fit, cex=1.4, main="", cex.main=6)
+
+```
+
+@fig-dendrogram shows the dendrogram of the corpus. The dendrogram is a tree diagram that is frequently used to illustrate the arrangement of the clusters produced by hierarchical clustering. Ordering of the terms in the dendrogram is based on the similarity of the terms. The adjacency figure is another way to visualize the data. The adjacency figure shows the relationship between terms in the corpus. The adjacency figure is shown in @fig-adjacency.
+
+```{r}
+#| label: fig-adjancy
+#| fig-cap: "Adjacency Figure of the corpus"
+# Adjacency Figure
+dtm.sparse.matrix <- as.matrix(dtm.sparse)
+tdm.sparse.matrix <- t(dtm.sparse.matrix)
+tdm.sparse.matrix <- tdm.sparse.matrix %*% dtm.sparse.matrix
+
+graph.tdm.sparse <- graph.adjacency(tdm.sparse.matrix, weighted=T, mode="undirected")
+graph.tdm.sparse <- simplify(graph.tdm.sparse)
+
+# Visualizing the Adjacency Figure
+plot.igraph(graph.tdm.sparse, layout=layout.fruchterman.reingold(graph.tdm.sparse, niter=10, area=120*vcount(graph.tdm.sparse)^2),
+            vertex.color = 169)
+
+```
+
+### Correlation plot
+
+One of the most intuitive way to visualize relationships between terms is to with correlation maps. Based on a certain *ad-hoc* criteria,@fig-cor show how some certain terms relate to each other.
+
+```{r}
+#| label: fig-cor
+#| fig-cap: "Correlation Plot"
+corlimit <- 0.4
+title <- ""
+freq.term.tdm <- findFreqTerms(dtm,lowfreq=150)  
+
+plot(dtm,main=title,cex.main = 3, term=freq.term.tdm, corThreshold=corlimit,
+     attrs=list(node=list(width=15,fontsize=40,fontcolor=129,color="red")))
+```
+
+A dictionary-based approach was used to infer sentiment, employing the Loughran and McDonald financial sentiment dictionary. Special attention was given to context, as words like 'increase' or 'decrease' can have different sentiments depending on the economic indicator they describe. Relative frequencies of positive and negative words were calculated by dividing the frequency of these words by the total word count, providing normalized sentiment measures. Semantic analysis determined the overall sentiment orientation by calculating the ratio of positive to negative word frequencies for each document.
+
+Topic modeling, specifically Latent Dirichlet Allocation (LDA), was utilized to uncover abstract topics within the documents. This method identified clusters of similar words, revealing hidden semantic structures and the balance of topics within each document. Heatmaps visualized term frequencies across documents, enabling side-by-side content comparison and highlighting shifts in focus over time, such as differences between 2018 and 2023. Advanced text analysis methods like Wordfish and Wordscores were applied for quantitative analysis of textual data. Wordfish estimated document positions on a latent dimension based on word frequencies, allowing visualization of changes in policy stance over time. Wordscores assigned scores to words based on reference texts, facilitating comparative analysis of policy positions.
+
+### Word Cloud
+
+The `wordcloud` package is used to create the word cloud. There are three word clouds created in this analysis. @fig-wc-50 cloud is created with a minimum frequency of 50. @fig-wc-100 cloud is created with a minimum frequency of 100. @fig-wc-200 cloud is created with a minimum frequency of 200.
+
+```{r}
+#| label: fig-wc-50
+#| fig-cap: "Wordcloud with minimum frequency 50"
+# Removing some of the most sparse terms
+dtm.sparse1 <- removeSparseTerms(dtm,0.2)
+dim(dtm.sparse1)
+
+term.frequencies1 <- colSums(as.matrix(dtm.sparse1))
+
+# Wordclouds
+set.seed(142) # This is just the design of the wordcloud picture, can be changed (use same seed)
+pal2 <- brewer.pal(8,"Dark2") # This is just the design of the wordcloud picture, can be changed
+
+par(mfrow=c(1,1), mar=c(5,5,5,5))
+
+wordcloud(
+  names(term.frequencies1), 
+  term.frequencies1, 
+  min.freq = 50,  # Reduce the minimum frequency further
+  random.order = FALSE, 
+  colors = pal2, 
+  scale = c(4, .5)  # Adjust scaling
+)
+
+
+```
+
+```{r}
+#| label: fig-wc-100
+#| fig-cap: "Wordcloud with minimum frequency 100"
+wordcloud(
+  names(term.frequencies1), 
+  term.frequencies1, 
+  min.freq = 100,  # Reduce the minimum frequency further
+  random.order = FALSE, 
+  colors = pal2, 
+  scale = c(4, .5)  # Adjust scaling
+)
+
+
+
+```
+
+```{r}
+#| label: fig-wc-200
+#| fig-cap: "Wordcloud with minimum frequency 200"
+wordcloud(names(term.frequencies1), term.frequencies1, min.freq=200, random.order=FALSE, colors=pal2, scale=c(4, .5)) # Can be changed depending on the desired term frequency
+
+```
+
+```{r}
+#| label: fig-wc-300
+#| fig-cap: "Wordcloud with minimum frequency 300"
+
+wordcloud(names(term.frequencies1), term.frequencies1, min.freq=300, random.order=FALSE, colors=pal2, scale=c(4, .5))
+# wordcloud(names(term.frequencies1), term.frequencies1, min.freq=400, random.order=FALSE, colors=pal2, scale=c(4, .5))
+# wordcloud(names(term.frequencies1), term.frequencies1, min.freq=500, random.order=FALSE, colors=pal2, scale=c(4, .5))
+
+```
+
+### Weighting Scheme
+
+Another weighting scheme - term frequency/inverse document frequency is given here to create word clouds. The term frequency/inverse document frequency is a statistical measure used to evaluate the importance of a word in a document relative to a collection of documents.
+
+```{r}
+# Another weighting scheme - term frequency/inverse document frequency
+
+# Wordclouds w. tf-idf
+# Creating a new dtm with tf-idf weighting instead of term frequency weighting
+dtm.tf.idf <- DocumentTermMatrix(corpus, control = list(weighting = weightTfIdf, wordLengths=c(3, 12)))
+dtm.tf.idf.sparse<-removeSparseTerms(dtm.tf.idf,0.95) 
+dim(dtm.tf.idf.sparse) 
+
+term.frequencies.tf.idf <- colSums(as.matrix(dtm.tf.idf.sparse))
+
+sorted.frequencies.tf.idf <- sort(colSums(as.matrix(dtm.tf.idf.sparse)), decreasing=TRUE)   
+head(sorted.frequencies.tf.idf, 20)   
+
+word.frequencies.frame.tf.idf <- data.frame(word=names(sorted.frequencies.tf.idf), freq=sorted.frequencies.tf.idf)   
+head(word.frequencies.frame.tf.idf) 
+```
+
+@fig-wc-tf-idf is the bar graph created with the term frequency/inverse document frequency weighting scheme.
+
+```{r}
+#| label: fig-wc-tf-idf
+#| fig-cap: "Wordcloud with term frequency/inverse document frequency weighting"
+
+# Barplot of tf-idf terms
+plotted.frequencies.tf.idf <- ggplot(subset(word.frequencies.frame.tf.idf, freq>0.15), aes(reorder(word, -freq), freq))    
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + geom_bar(stat="identity")   
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text=element_text(size=17), axis.title=element_text(size=17))
+# plotted.frequencies <- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + xlab("Corpus Terms") 
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + ylab("Frequencies") 
+plotted.frequencies.tf.idf  #printing word frequencies
+
+
+```
+
+@fig-wc-tf-idf-wc is the word cloud created with the term frequency/inverse document frequency weighting scheme. @fig-wc-tf-idf-wc-10 and @fig-wc-tf-idf-wc-20 are the word clouds created with the term frequency/inverse document frequency weighting scheme with different minimum frequencies.
+
+```{r}
+#| warning: false
+#| label: fig-wc-tf-idf-wc 
+#| fig-cap: "Wordcloud with term frequency/inverse document frequency weighting of 0.05"
+# Wordclouds with tf-idf
+set.seed(142) # This is just the design of the wordcloud picture, can be changed (use same seed)
+pal2 <- brewer.pal(8,"Dark2")
+
+wordcloud(names(term.frequencies.tf.idf), term.frequencies.tf.idf, min.freq=0.05, random.order=FALSE, colors=pal2, scale=c(6, .4))
+
+
+
+```
+
+```{r}
+#| label: fig-wc-tf-idf-wc-10
+#| fig-cap: "Wordcloud with term frequency/inverse document frequency weighting of 0.10"
+wordcloud(names(term.frequencies.tf.idf), term.frequencies.tf.idf, min.freq=0.10, random.order=FALSE, colors=pal2, scale=c(6, .4))
+
+```
+
+```{r}
+#| label: fig-wc-tf-idf-wc-20
+#| fig-cap: "Wordcloud with term frequency/inverse document frequency weighting of 0.20"
+wordcloud(names(term.frequencies.tf.idf), term.frequencies.tf.idf, min.freq=0.20, random.order=FALSE, colors=pal2, scale=c(5, .6))
+
+```
+
+The purpose of creating a document-term matrix is twofold: first, to identify the main topics of each document by highlighting important and unique words; and second, to prepare the collection of documents for further analysis.
+
+However, simply counting how often each word appears isn't always helpful. Common words might show up frequently but don't necessarily tell us much about the content. To overcome this, we use a method called **term frequency-inverse document frequency (tf-idf)**.
+
+**Tf-idf** is a technique that helps determine how important a word is within a single document compared to all other documents in a collection. It gives more weight to words that appear often in one document but not in many others. This way, it highlights words that are significant to a particular document and reduces the impact of common words that are less informative.
+
+By using tf-idf, we can focus on the words that truly matter in each document. This makes it easier to summarize content, identify key topics, and improve how we retrieve and analyze information from the text.
+
+### Tidytext data table
+
+Now I shall use `tidytext` with the help of unnest_tokens to convert one word per row. @tbl-tidytext shows the first 10 rows of the data table. And @fig-bar-tf-idf is the bar graph created with the term frequency/inverse document frequency weighting scheme.
+
+```{r}
+#| label: tbl-tidytext
+#| tbl-cap: "Tidytext data table"
+# Creating Corpus Histogram w. Tf-Idf Weighting
+word.frequencies.frame.tf.idf <- data.frame(word=names(sorted.frequencies.tf.idf), freq=sorted.frequencies.tf.idf)   
+head(word.frequencies.frame.tf.idf,10) 
+```
+
+```{r}
+#| label: fig-bar-tf-idf
+#| fig-cap: "Bar graph with term frequency/inverse document frequency weighting"
+word.frequencies.frame.tf.idf <- word.frequencies.frame.tf.idf[order(-sorted.frequencies.tf.idf),]
+
+# Plotting Frequencies
+plotted.frequencies.tf.idf <- ggplot(subset(word.frequencies.frame.tf.idf, freq>0.15), aes(reorder(word, -freq), freq))    
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + geom_bar(stat="identity")   
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text.x=element_text(angle=45, hjust=1, size=18)) 
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + theme(axis.text=element_text(size=17), axis.title=element_text(size=17))
+# plotted.frequencies <- plotted.frequencies + theme(panel.background = element_rect(fill = 'white'))
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + xlab("Corpus Terms") 
+plotted.frequencies.tf.idf <- plotted.frequencies.tf.idf + ylab("Frequencies w. tf-idf Weighting") 
+plotted.frequencies.tf.idf  # printing word frequencies
+
+```
+
+To reduce dimensionality, we use sparse term-document matrix as shown in @fig-dendogram-tf-idf. The dendogram is created using the Euclidean distance and Ward's method.
+
+```{r}
+#| label: fig-dendogram-tf-idf
+#| fig-cap: "Dendogram with term frequency/inverse document frequency weighting"
+# Dendogram Figure
+tdm.tf.idf.sparse <- as.matrix(t(dtm.tf.idf.sparse))
+tdm.tf.idf.sparse <- tdm.tf.idf.sparse %*% t(tdm.tf.idf.sparse)
+
+dtm.tf.idf.sparse.095 <- removeSparseTerms(dtm.tf.idf, 0.05)
+dendogram <- dist(t(dtm.tf.idf.sparse.095), method="euclidian")   
+dendogram.fit <- hclust(d=dendogram, method="ward.D")    
+plot(dendogram.fit, cex=1.4, main="", cex.main=4)
+#dev.off()
+
+# HeatMap w. Tf-Idf (change format)
+dtm.tf.idf.sparse.matrix <- as.matrix(dtm.tf.idf.sparse)
+# rownames(dtm.tf.idf.sparse.matrix) <- document.corpus.names.df$date
+
+# arrange(document.corpus.names.df, date)
+date.dtm.tf.idf.sparse.matrix <- cbind(dtm.tf.idf.sparse.matrix,document.corpus.names.df$date)
+
+my_palette <- colorRampPalette(c("white", "pink", "red"))(n = 99) 
+
+```
+
+```{r}
+
+# Heatmaps
+pdf('D:/RepTemplates/mps/sbp/heatmaps.pdf')
+heatmap.2(date.dtm.tf.idf.sparse.matrix[1:12,1:18],
+          main = "", # heat map title
+          dendrogram = "none",
+          keysize = 1,
+          margins = c(5, 5),  # Adjusted margin values
+          density.info = "none",  # turns off density plot inside color legend
+          trace = "none",         # turns off trace lines inside the heat map
+          col = my_palette,       # use on color palette defined earlier
+          srtCol = 45,
+          cexCol = 1.4,
+          Colv = "NA")            # turn off column clustering
+
+heatmap.2(date.dtm.tf.idf.sparse.matrix[13:24,1:18],
+          main = "Frequencies", # heat map title
+          dendrogram = "none",
+          keysize = 1,
+          margins = c(5, 5),  # Adjusted margin values
+          density.info = "none",  # turns off density plot inside color legend
+          trace = "none",         # turns off trace lines inside the heat map
+          col = my_palette,       # use on color palette defined earlier
+          srtCol = 45,
+          cexCol = 1.4,
+          Colv = "NA")            # turn off column clustering
+
+heatmap.2(date.dtm.tf.idf.sparse.matrix[25:36,1:18],
+          main = "Frequencies", # heat map title
+          dendrogram = "none",
+          keysize = 1,
+          margins = c(5, 5),  # Adjusted margin values
+          density.info = "none",  # turns off density plot inside color legend
+          trace = "none",         # turns off trace lines inside the heat map
+          col = my_palette,       # use on color palette defined earlier
+          srtCol = 45,
+          cexCol = 1.4,
+          Colv = "NA")            # turn off column clustering
+
+dev.off()
+
+```
+
+With conversion to dtm, exploratory data analysis is performed to identify patterns and trends in the text data.
+
+```{r}
+#| eval: false
+order.frequencies<-order(term.frequencies)
+ head(order.frequencies,6)
+ tail(order.frequencies,6)
+```
+
+### Word counting
+
+Dictionary-based text analysis is popular approach mainly because its easy to implement and interpret. The dictionary-based approach is based on the idea that the frequency of certain words in a text can be used to infer the sentiment of the text. However, sentiment words from one discipline to another might be different. For example, words used in psychology to express positive sentiments might be different from words used in economics. Therefore, it is important to use a dictionary that is specific to the discipline. The `tidytext` package is used to count the frequency of words in the text data. The `get_sentiments` function is used to get the sentiment words from the dictionary. In this document, I am using Loughran and McDonald dictionary to count the frequency of positive and negative words in the text data.
+
+```{r}
+#| eval: false
+dictionary.finance.negative < - read.csv("negative.csv", stringsAsFactors=FALSE)[,1]
+dictionary.finance.positive < - read.csv("positive.csv", stringsAsFactors=FALSE)[,1]
+```
+
+It is important to be careful in use of words to be positive or negative. For example, the word 'increase' is generally considered to be positive, but in the context of inflation, it is considered to be negative. Similarly the word 'decrease' is generally considered to be negative, but in the context of inflation, it is considered to be positive. Another example is `tight` and `loose` monetary policy. The word `tight` is generally considered to be positive, but in the context of monetary policy, it is considered to be negative. Similarly, the word `loose` is generally considered to be negative, but in the context of monetary policy, it is considered to be positive. Therefore, it is important to be careful in use of words to be positive or negative.
+
+```{r}
+#| eval: false
+dictionary.negative < -tolower(dictionary.negative)dictionary.negative < -stemDocument(dictionary.negative)dictionary.negative < -unique(dictionary.negative)
+```
+
+Next we use the `match` function that compares the terms in both dictionary and the text data. The `match` function returns the position of the first match. If there is no match, the `match` function returns `NA`. The `match` function is used to count the frequency of positive and negative words in the text data.
+
+```{r}
+#| eval: false
+corpus.terms < - colnames(dtm)positive.matches < - match(corpus.terms, dictionary.positive, nomatch=0)negative.matches < - match(corpus.terms, dictionary.negative, nomatch=0)
+```
+
+We then assign a value of 1 to the positive and negative matches. The `ifelse` function is used to assign a value of 1 to the positive and negative, and measure the overall sentiment for each document $i$ by the following formula: $Score_i = \frac{Positive_i - Negative_i}{Positive_i + Negative} \in [-1,1]$
+
+A document is considered to be positive if the score is greater than 0, and negative if the score is less than 0.
+
+```{r}
+#| eval: false
+document.score=sum(positive.matches) - sum(negative.matches)
+scores.data.frame= data.frame(scores= document.score) 
+
+```
+
+### Relative frequency
+
+The relative frequency of positive and negative words is calculated by dividing the frequency of positive and negative words by the total number of words in the text.
+
+```{r}
+#| eval: false
+wordscore.estimation.results < - wordfish(corpus,dir 
+= c(1,5))
+
+```
+
+### Semantic analysis
+
+The semantic analysis is performed to identify the semantic orientation of the text data. The semantic orientation is the degree to which a word is positive or negative. The semantic orientation is calculated by dividing the frequency of positive words by the frequency of negative words. The semantic orientation is calculated for each document in the text data.
+
+```{r}
+#| eval: false
+lsa_model < - textmodel_lsa(dtm)lsa_predict < - predict(lsa_model)
+
+```
+
+### Topic models
+
+Topic modeling is a statistical technique used to uncover the underlying "topics" within a collection of documents. It is a common text-mining tool that identifies hidden patterns or themes in a body of text. The basic idea is that if a document discusses a specific topic, certain words related to that topic will appear more frequently. For instance, words like "dog" and "bone" are likely to be more common in texts about dogs, while "cat" and "meow" will be prevalent in documents about cats. Common words like "the" and "is" would appear across all topics. Typically, a document might cover multiple topics in varying proportions. For example, a text that is 10% about cats and 90% about dogs would likely have a higher occurrence of dog-related words. Topic modeling identifies clusters of similar words, which represent these topics, and applies a mathematical approach to analyze the text. This helps to determine the dominant topics across the entire set of documents and the specific balance of topics within each document.
+
+```{r}
+
+library(topicmodels)
+#Gibbs Sampling Calibration
+burnin <- 4000
+iter <- 1500
+thin <- 500
+seed <-list(2003,5,63,100001,765)
+nstart <- 5
+best <- TRUE
+
+# Number of topics
+# This is arbitrary, need to make educated guess/play around with data
+k <- 4
+
+# Run LDA using Gibbs sampling
+lda.results <-LDA(dtm.sparse, k, method="Gibbs", control=list(nstart=nstart, seed = seed, best=best, burnin = burnin, iter = iter, thin=thin))
+
+# Write out results
+# Docs to topics
+lda.topics <- as.matrix(topics(lda.results))
+# write.csv(ldaOut.topics,file=paste("LDAGibbs",k,"DocsToTopics.csv"))
+lda.topics |> head(10)
+# Top 6 terms in each topic
+lda.results.terms <- as.matrix(terms(lda.results,11))
+# write.csv(ldaOut.terms,file=paste("LDAGibbs",k,"TopicsToTerms.csv"))
+lda.results.terms
+# Probabilities associated with each topic assignment
+topic.probabilities <- as.data.frame(lda.results@gamma)
+write.csv(topic.probabilities,file=paste("LDAGibbs", k ,"TopicProbabilities.csv"))
+topic.probabilities <- as.matrix(topic.probabilities)
+
+# Probabilities for each term in each topic.
+posterior.terms <- t(posterior(lda.results)$terms)
+
+# Heatmaps with topic modeling
+
+# This is set manually by considering the words appearing in each list
+colnames(topic.probabilities) <- c("Policy Rate", "Inflation", "Monetary Policy", "Current Account")
+# rownames(topic.probabilities) <- document.corpus.names.df$date
+
+date.topic.probabilities <- cbind(document.corpus.names.df$date, topic.probabilities)
+
+```
+
+The four topics identified seem to revolve around key economic themes as are in objectives of MPS, based on the recurring words within each:
+
+**Topic 1: Monetary Policy and Growth** - Key words: "policy," "monetary," "rate," "growth," "inflation" - This topic appears to focus on monetary policy, growth rates, and inflation. Words like "policy," "rate," and "growth" suggest discussions around central bank decisions, economic growth strategies, and inflation control measures.
+
+**Topic 2: Inflation and Monetary Measures** - Key words: "inflation," "monetary," "percent," "growth," "expected" - This topic seems to center around inflation metrics and monetary policy. Terms like "inflation," "monetary," and "percent" imply discussions on inflation trends, forecasts, and central bank responses to inflationary pressures.
+
+**Topic 3: Economic Growth and Balance of Payments** - Key words: "sector," "growth," "current," "account," "deficit" - This topic appears to relate to economic growth and the balance of payments. The presence of "current," "account," and "deficit" indicates a focus on trade balances, external accounts, and their impact on sectors and overall growth.
+
+**Topic 4: Fiscal Policy and Inflation Dynamics** - Key words: "percent," "deficit," "account," "inflation," "monetary" - This topic seems to address fiscal policy, deficits, and their influence on inflation. The mention of "deficit," "account," and "inflation" suggests a focus on fiscal balances, how they affect inflation, and monetary policy considerations.
+
+These themes reflect typical discussions in economic policy circles, highlighting the interplay between growth strategies, inflation control, and fiscal management.
+
+### Wordfish
+
+```{r}
+#| label: fig-wordfish
+#| fig-cap: "Wordfish Analysis of Central Bank Speeches"
+
+library(quanteda)
+
+# Step 1: Create Corpus
+quanteda.corpus <- corpus(corpus)
+
+# Step 2: Tokenize the Corpus
+tokens_data <- tokens(quanteda.corpus)
+
+# Step 3: Create DFM from Tokens
+dfm_data <- dfm(tokens_data)
+
+# Step 4: Adjust Row Names
+rownames(dfm_data) <- rownames(document.corpus.names.df)
+# Defining which documents in the corpus represent the most dovish and the most hawkish positions
+dovish <- which(rownames(dfm_data) %in% "15032014" | rownames(dfm_data) %in% "29012024")
+hawkish <- which(rownames(dfm_data) %in% "17052014" | rownames(dfm_data) %in% "15112014")
+
+# Running the wordfish algorithm
+wordfish <- textmodel_wordfish(dfm_data, dir = c(dovish, hawkish))
+
+
+
+#summary(wordfish, n = 10)
+# coef(wordfish) |> head(10)
+# str(wordfish) 
+
+# Extracting estimated parameters
+documents <- wordfish$docs
+theta <- wordfish$theta
+se.theta <- wordfish$se.theta
+
+predicted.wordfish <- predict(wordfish, interval = "confidence")
+
+# Extracting sentiment score based on the algorithm
+wordfish.score <- as.data.frame(predicted.wordfish$fit)
+
+# Plotting Wordfish Score
+wordfish.score$day <- substr(document.corpus.names, 1, 2)
+wordfish.score$month <- substr(document.corpus.names, 3, 4)
+wordfish.score$year <- substr(document.corpus.names, 5, 8)
+
+wordfish.score$date <- paste(wordfish.score$month, wordfish.score$day, wordfish.score$year, sep="/")
+wordfish.score$date <- as.Date(wordfish.score$date, "%m/%d/%Y")
+
+wordfish.score <- wordfish.score[ order(wordfish.score$date), ]
+
+wordfish.score$lag <- lag(wordfish.score$fit)
+wordfish.score$change <- 100*(wordfish.score$fit - wordfish.score$lag)/wordfish.score$fit
+```
+
+### Plotting Wordfish Score
+
+```{r}
+#| label: fig-wordfish-plot
+#| fig-cap: "Wordfish Score Over Time"
+
+
+pdf('D:/RepTemplates/mps/sbp/wordfish.pdf')
+ggplot(wordfish.score, aes(date, fit, group = 1)) +
+  geom_line(aes(x = wordfish.score$date, y = fit)) + 
+  ggtitle("") +
+  theme_hc() +
+  scale_colour_hc() +
+  xlab("Date") + 
+  ylab("Sentiment") +
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=15)) 
+```
+
+```{r}
+# Plot Change in Wordfish Score over time
+ggplot(wordfish.score, aes(date, change, group = 1)) +
+  geom_line(aes(x = date, y = change)) + 
+  ggtitle("") +
+  theme_hc() +
+  scale_colour_hc() +
+  xlab("Date") + 
+  ylab("Sentiment") +
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=15)) 
+dev.off()
+```
+
+```{r}
+
+# Assiging scores to documents that we think represent most dovish/hawkish positions
+reference.scores <- rep(NA, nrow(dfm_data))
+reference.scores[str_detect(rownames(dfm_data), "15032014")] <- -1  
+reference.scores[str_detect(rownames(dfm_data), "29012024")] <- -1  
+ 
+reference.scores[str_detect(rownames(dfm_data), "17052014")] <- 1
+reference.scores[str_detect(rownames(dfm_data), "15112014")] <- 1
+
+# Running the Wordscores algorithm
+wordscores <- textmodel_wordscores(dfm_data, reference.scores, scale="linear", smooth=1) 
+
+#summary(wordscores, n = 10)
+coef(wordscores) |> head(10)
+
+
+# Extracting predicted wordscores
+predicted.wordscores <- predict(wordscores)
+
+wordscores.score <- as.data.frame(predicted.wordscores)
+wordscores.score$document.corpus.names <- NULL
+
+# Plots
+# wordscores.score <- wordscores.score[ order(wordscores.score$date), ]
+
+wordscores.score$lag <- lag(wordscores.score$predicted.wordscores)
+wordscores.score$change <- 100*(wordscores.score$predicted.wordscores - wordscores.score$lag)/wordscores.score$predicted.wordscores
+wordscores.score$date <- rownames(wordscores.score)
+wordscores.score$date <- as.Date(wordscores.score$date, format = "%d%m%Y")
+```
+
+### Plotting Wordscores Score
+
+@fig-wordscores-plot1 and @fig-wordscores-plot2 indicate the Wordscores score over time, the change in Wordscores score over time and the change in Wordscores score over time to indicate dovish/hawkish sentiment respectively.
+
+```{r}
+
+#| label: fig-wordscores-plot1
+#| fig-cap: "Wordscores Score Over Time" 
+#| 
+# Plot Wordscores Score over time
+ggplot(wordscores.score, aes(date, predicted.wordscores)) +
+  geom_line(aes(x = date, y = predicted.wordscores)) + 
+  ggtitle("") +
+  theme_hc() +
+  scale_colour_hc() +
+  xlab("Date") + 
+  ylab("Sentiment") +
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=15)) 
+```
+
+```{r}
+#| label: fig-wordscores-plot2
+#| fig-cap: "Change in Wordscores Score Over Time to indicate dovish/hawkish sentiment"
+# Plot Change in Wordscores Score over time
+ggplot(wordscores.score, aes(date, change)) +
+  geom_line(aes(x = date, y = change)) + 
+  ggtitle("") +
+  theme_hc() +
+  scale_colour_hc() +
+  xlab("Date") + 
+  ylab("Sentiment") +
+  theme(axis.text=element_text(size=12),
+        axis.title=element_text(size=15)) 
+
+
+
+
+```
+
+## Conclusion
+
+Data has emerged as a critical strategic asset in the modern era, fundamentally transforming how nations can approach governance, economic development, and technological advancement. This research demonstrates the immense potential of leveraging advanced technologies like Natural Language Processing (NLP) and Large Language Models (LLMs) to extract meaningful insights from public sector data.
+
+In conclusion, this study showed how text mining and sentiment analysis can turn unstructured data into a strategic asset. By analyzing monetary policy statements, the methods outlined offer a systematic approach to handling textual data, stressing the importance of context and careful interpretation. Initial findings indicate that the State Bank of Pakistan's policy communications generally maintain a neutral tone, without strong bias towards hawkish or dovish sentiments. This work highlights the value of data-driven insights in economic research and provides a reproducible methodology for future studies. Advances in software have made text data analysis more accessible, encouraging its use among researchers and practitioners in both academic and business sectors. Effective use of data as a strategic asset can improve policy formulation, decision-making, and economic understanding. Future research could explore the relationship between sentiment analysis and financial market reactions, as well as the impact of sentiment on economic indicators.
+
+Moving forward, realizing the full potential of data requires a comprehensive approach. This includes: - Investing in robust data infrastructure
+
+-   Promoting data literacy across public sector organizations
+
+-   Adopting standardized data management practices
+
+-   Fostering collaboration between government, academic, and private sector entities
+
+As we progress through the 4th Industrial Revolution, the ability to effectively harness, analyze, and leverage data will increasingly define national competitive advantage. Countries that prioritize data as a strategic asset will be better positioned to drive innovation, improve public services, and navigate the complex challenges of the digital age. This study highlights that data management, data quality, trust in data, data transparency etc, are important for data to serve as AI fuel. Second point is exploring unstructured data and analysing it for government analytics for policy relvance. This research serves as a call to action for policymakers, demonstrating that data the true power of data lies not in its collection, but in its intelligent and strategic utilization.
+

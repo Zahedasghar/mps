@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Zahid Asghar, School of Economics, Quaid-i-Azam University, Islamabad, Pakistan">
+
+<title>Unlocking the Power of Data: Enhancing Public Policy through Advanced Data Infrastructure and Language Model Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="26112024iba_paper_files/libs/clipboard/clipboard.min.js"></script>
+<script src="26112024iba_paper_files/libs/quarto-html/quarto.js"></script>
+<script src="26112024iba_paper_files/libs/quarto-html/popper.min.js"></script>
+<script src="26112024iba_paper_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="26112024iba_paper_files/libs/quarto-html/anchor.min.js"></script>
+<link href="26112024iba_paper_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="26112024iba_paper_files/libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="26112024iba_paper_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="26112024iba_paper_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="26112024iba_paper_files/libs/bootstrap/bootstrap-933a14f46f0e4d1503cecf416b5e09b4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body>
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#abstract" id="toc-abstract" class="nav-link active" data-scroll-target="#abstract"><span class="header-section-number">1</span> Abstract</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">2</span> Introduction</a></li>
+  <li><a href="#data-as-new-currency" id="toc-data-as-new-currency" class="nav-link" data-scroll-target="#data-as-new-currency"><span class="header-section-number">3</span> Data as New Currency</a></li>
+  <li><a href="#analysis-of-mps" id="toc-analysis-of-mps" class="nav-link" data-scroll-target="#analysis-of-mps"><span class="header-section-number">4</span> Analysis of MPS</a>
+  <ul class="collapse">
+  <li><a href="#mps-data" id="toc-mps-data" class="nav-link" data-scroll-target="#mps-data"><span class="header-section-number">4.1</span> MPS Data</a></li>
+  <li><a href="#cleaning-and-preprocessing" id="toc-cleaning-and-preprocessing" class="nav-link" data-scroll-target="#cleaning-and-preprocessing"><span class="header-section-number">4.2</span> Cleaning and Preprocessing</a></li>
+  <li><a href="#document-term-matrix" id="toc-document-term-matrix" class="nav-link" data-scroll-target="#document-term-matrix"><span class="header-section-number">4.3</span> Document Term Matrix</a></li>
+  </ul></li>
+  <li><a href="#exploratory-data-analysis" id="toc-exploratory-data-analysis" class="nav-link" data-scroll-target="#exploratory-data-analysis"><span class="header-section-number">5</span> Exploratory Data Analysis</a>
+  <ul class="collapse">
+  <li><a href="#plotting-data" id="toc-plotting-data" class="nav-link" data-scroll-target="#plotting-data"><span class="header-section-number">5.1</span> Plotting data</a></li>
+  <li><a href="#correlation-plot" id="toc-correlation-plot" class="nav-link" data-scroll-target="#correlation-plot"><span class="header-section-number">5.2</span> Correlation plot</a></li>
+  <li><a href="#word-cloud" id="toc-word-cloud" class="nav-link" data-scroll-target="#word-cloud"><span class="header-section-number">5.3</span> Word Cloud</a></li>
+  <li><a href="#weighting-scheme" id="toc-weighting-scheme" class="nav-link" data-scroll-target="#weighting-scheme"><span class="header-section-number">5.4</span> Weighting Scheme</a></li>
+  <li><a href="#tidytext-data-table" id="toc-tidytext-data-table" class="nav-link" data-scroll-target="#tidytext-data-table"><span class="header-section-number">5.5</span> Tidytext data table</a></li>
+  <li><a href="#word-counting" id="toc-word-counting" class="nav-link" data-scroll-target="#word-counting"><span class="header-section-number">5.6</span> Word counting</a></li>
+  <li><a href="#relative-frequency" id="toc-relative-frequency" class="nav-link" data-scroll-target="#relative-frequency"><span class="header-section-number">5.7</span> Relative frequency</a></li>
+  <li><a href="#semantic-analysis" id="toc-semantic-analysis" class="nav-link" data-scroll-target="#semantic-analysis"><span class="header-section-number">5.8</span> Semantic analysis</a></li>
+  <li><a href="#topic-models" id="toc-topic-models" class="nav-link" data-scroll-target="#topic-models"><span class="header-section-number">5.9</span> Topic models</a></li>
+  <li><a href="#wordfish" id="toc-wordfish" class="nav-link" data-scroll-target="#wordfish"><span class="header-section-number">5.10</span> Wordfish</a></li>
+  <li><a href="#plotting-wordfish-score" id="toc-plotting-wordfish-score" class="nav-link" data-scroll-target="#plotting-wordfish-score"><span class="header-section-number">5.11</span> Plotting Wordfish Score</a></li>
+  <li><a href="#plotting-wordscores-score" id="toc-plotting-wordscores-score" class="nav-link" data-scroll-target="#plotting-wordscores-score"><span class="header-section-number">5.12</span> Plotting Wordscores Score</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6</span> Conclusion</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">7</span> References</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Unlocking the Power of Data: Enhancing Public Policy through Advanced Data Infrastructure and Language Model Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Zahid Asghar, School of Economics, Quaid-i-Azam University, Islamabad, Pakistan </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="abstract" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="abstract"><span class="header-section-number">1</span> Abstract</h2>
+<p>Data is the fundamental building block for advancements in artificial intelligence (AI), general AI (GAI), machine learning (ML), and large language models (LLMs). This study highlights two aspects. Firstly, the critical need for robust data infrastructure, arguing that without it, countries cannot fully benefit from technological advancements across various economic sectors. Secondly how unstructured data can be explored to evaluate policy documents. Governments possess vast repositories of both structured and unstructured data across domains such as the judiciary, parliaments, and civil bureaucracy. However, these potential goldmines remain largely untapped due to inadequate data management capabilities and a lack of appreciation for the necessity of high-quality data.</p>
+<p>This study aims to demonstrate how large amounts of unstructured policy document data can be leveraged to analyze policy objectives, enhance public policy formulation and implementation, and realize the potential of data as a strategic asset in governance. Data quality, trust, privacy and other data aspects are also highlighted to benefit from 4th industrial revolution which is based on information. Findings from 87 monetary policy statements using natural language processing (NLP) models indicate that State Bank of Pakistan (SBP) has maintained a neutral monetary policy stance over the years. The study concludes that text mining can provide valuable insights into policy objectives and enhance public policy formulation with data-driven insights.</p>
+</section>
+<section id="introduction" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">2</span> Introduction</h2>
+<p>Historically, the sources of national competitive advantage have evolved across different eras, reflecting shifts in global power dynamics. Civilizations gained dominance based on unique strengths, ranging from cultural influence and military prowess to technological advancements. For instance, Ancient India was known for its profound knowledge and cultural richness, establishing it as a center of learning and philosophy. Similarly, the Roman Empire’s expansion was propelled by its organized legions and technological innovations like catapults. As history progressed, the Mongol Empire leveraged its horse archers and organised mobility , the Ottoman Empire capitalized on heavy artillery and cannons, and the British Empire expanded its empire backed by naval superiority and gunpowder. In the 20th century, the United States emerged as a global leader through a combination of economic strength and military power. Data has become a new competitive advantage in the 21st century, reshaping the global landscape and redefining power dynamics.</p>
+<p>Today, the trend shows that the next global superpower will be defined by its command over data. Nations that can harness, analyze, and use data effectively will gain a competitive edge. This marks a shift from traditional military and economic power to digital and information dominance. Data has become a strategic asset, essential for innovation, economic growth, and national security.</p>
+<p>Data is the backbone of AI, GAI, ML, and LLMs, driving the advancement of these technologies. The Fourth Industrial Revolution has made data a crucial resource, often called the “new currency” of the modern economy. Data powers AI and ML applications, reshaping industries and redefining global competitive advantage.</p>
+<p>There is synergy between data and digital technologies. Both public and private sectors are leveraging data to enhance decision-making, optimize operations, and improve service delivery. Governments worldwide are recognizing the importance of data as a strategic asset, investing in data infrastructure, and promoting data-driven policies. Data-driven governance is becoming the norm, with countries adopting data-centric approaches to address complex challenges. There are vast amounts of data, particularly in the public sector, encompassing records from the judiciary, legislative bodies, policy documents in pdfs, research and implementation reports and large volumne of other archives. Despite this abundance, many countries struggle to capitalize on these assets due to inadequate data infrastructure, lack of standardization, and insufficient appreciation of data’s strategic value. In countries like Pakistan, the public sector’s data infrastructure is often inadequate, hindering the realization of the full potential of data-driven technologies. Challenges include non-uniform data representation, data in non-machine-readable formats, and a general lack of robust data management practices.</p>
+<p>Unstructured data, often rich in textual content, encompasses a wide array of sources such as news articles, social media posts, transcriptions from videos, and formal documents. Its abundance offers fresh opportunities and simultaneous challenges for researchers and institutions alike. The application of natural language processing (NLP) and large language models (LLMs) offers significant opportunities to analyze policy documents and enhance public policy formulation and implementation. Text data, part of unstructured data. constitutes approximately 80% of total recorded data, is a rich source of insights that can inform decision-making processes. By effectively utilizing this data, governments can make informed decisions and improve public services. However, the lack of appreciation for the importance of high-quality data and the absence of robust data management practices pose significant challenges to leveraging this data effectively <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>With the increasing importance of ML, AI, and NLP, text analysis is becoming more crucial as computers can process and summarize text more efficiently than humans. Moreover, textual analysis may extract meanings from text missed by human readers, who may overlook certain patterns because they do not conform to prior beliefs and expectations . Several studies have conducted detailed textual analyses of central bank statements <span class="citation" data-cites="shapiro2021">Shapiro and Wilson (<a href="#ref-shapiro2021" role="doc-biblioref">2021</a>)</span>. This study follows the guidelines of <span class="citation" data-cites="benchimol2022">Benchimol, Kazinnik, and Saadon (<a href="#ref-benchimol2022" role="doc-biblioref">2022</a>)</span> to perform textual analysis on the SBP’s monetary policy statements to understand the central bank’s monetary policy stance.</p>
+<p>The objectives of this research are to recognize data as a strategic asset in governance, explore effective use of public policy data, and harness NLP and LLMs to analyze key policy documents, focusing on monetary policy statements from the State Bank of Pakistan. It aims to demonstrate how unstructured policy documents can be used to study policy objectives and improve public policy formulation with data-driven insights. Text mining plays a crucial role by converting unstructured data into structured data, extracting valuable information, analyzing patterns, assessing sentiment, and classifying text. The main goal is to capture and understand all meanings embedded in text data.</p>
+<p>Rest of the paper is organized as follows. Section 2 mentions data as a new currency and its importance in the 21st century. It discusses the role of data quality in public policy and governance. Section 3 highlights the significance of text mining and its applications in economics and finance. Section 4 outlines a systematic approach to text mining using monetary policy statements as an example. Finally, section 6 concludes the paper.</p>
+</section>
+<section id="data-as-new-currency" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="data-as-new-currency"><span class="header-section-number">3</span> Data as New Currency</h2>
+<p>Now, in the 21st century, data has become the new source of competitive advantage. It is changing the global landscape and redefining power dynamics. Yet, Pakistan stands at the crossroads, overwhelmed by data but struggling to harness its true potential. Data fuels economic growth and innovation. The 4th Industrial Revolution uses data, artificial intelligence (AI), and advanced analytics to transform industries. It creates opportunities that were unimaginable a few decades ago. Water, water everywhere, nor a drop to drink from Samuel Taylor Coleridge’s poem The Rime of the Ancient Mariner.</p>
+<p>It describes a sailor surrounded by water but unable to drink—a paradox of abundance without usability. We face a similar today. We have plenty of data, but not the right kind to make informed decisions. Despite an enormous amount of information, the public sector lacks proper indicators for evidence-based policy making. Similarly, Generative AI is based on right kind of data.</p>
+<p>Data quality is also one of the most important requirements for effective public policy. Using AI for policy analysis based on poor quality data may do more harm than good. Data based policy making is key in sectors like healthcare, education, infrastructure development among others. Ensuring high data quality aims to guarantee the reliability of information systems used by government agencies, measured through technical standards and regulatory compliance. Poor data quality can have significant repercussions on decision-making processes, operational efficiency, compliance with international norms, and a government’s reputation and ability to serve its citizens effectively.</p>
+<p>Data privacy is equally critical. People are increasingly worried about how their personal information is collected and used. To build trust, governments must ensure that data is handled securely. Transparency in data practices can encourage cooperation among citizens, businesses, and government agencies. For example, reports suggest that the data of many Pakistani citizens was hacked or sold on the dark web. Also, many people receive unwanted promotional calls without knowing how the caller got their information. These incidents show weak security measures and reduce public confidence in data systems.</p>
+<p>The integration of AI into data quality management represents a major breakthrough, enabling traditional deterministic rules to be enhanced or redefined. AI can enrich data, improving policy formulation and the delivery of public services. The relationship between AI and data quality is bidirectional, requiring the supply of high-quality data to ensure the effective use of AI in policy contexts.</p>
+<p>The key players responsible for data quality within the public sector are policymakers, government agencies, and public service providers who rely on this data. Changing mindsets around data quality has become crucial, especially with increasingly stringent compliance requirements and the pursuit of sustainable development goals. Change management plays an essential role in engaging stakeholders and fostering an understanding of the impact of data quality initiatives on public policy outcomes.</p>
+</section>
+<section id="analysis-of-mps" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="analysis-of-mps"><span class="header-section-number">4</span> Analysis of MPS</h2>
+<p>Monetary and fiscal policies are critical tools that governments and central banks use to manage the economy. Central banks communicate their monetary policy stance to the public through monetary policy statements (MPS), which contain assessments of the current economic state and future outlook. Analyzing these statements is essential for understanding the central bank’s approach and its implications for the economy. Text mining techniques can extract nuanced information from these documents, providing deeper insights into monetary policy decisions.</p>
+<p>The primary objective of the MPS is to inform and guide economic analysts and other stakeholders involved in advising traders within the financial markets. These statements, released after each Monetary Policy Committee (MPC) meeting—usually held every two months—provide insights into recent economic developments and anticipate future trends, thereby facilitating informed decision-making. Analyzing how effectively the SBP communicates through its policy statements is essential, and we employ textual analysis techniques to assess this effectiveness.</p>
+<p>This study explores the utilization of public policy data through the application of natural language processing (NLP) and large language models (LLMs), focusing on the MPS issued by the State Bank of Pakistan (SBP) over the past 18 to 20 years. Traditionally, text analysis has not been emphasized in the training of economists and social scientists, despite its frequent necessity and potential to yield valuable insights <a href="https://m-clark.github.io/text-analysis-with-R/intro.html#overview">(Clark, n.d.)</a>. With advancements in machine learning and AI, text analysis has become increasingly important, as computer-based approaches can process and summarize text more efficiently than humans and may uncover meanings overlooked due to biases or preconceived notions <span class="citation" data-cites="Herasymova">(<a href="#ref-Herasymova" role="doc-biblioref"><strong>Herasymova?</strong></a>)</span>. Previous studies, such as those by Shapiro and Wilson (2021), have performed detailed textual analyses of central bank statements. Following the guidelines of <span class="citation" data-cites="benchimol2022">Benchimol, Kazinnik, and Saadon (<a href="#ref-benchimol2022" role="doc-biblioref">2022</a>)</span>, we explore how text mining techniques can enhance understanding of the SBP’s monetary policy stance.</p>
+<p>Unstructured data rich in textual content from sources like news articles, social media posts, and formal documents presents both opportunities and challenges for researchers. We propose a systematic approach to leverage text mining techniques and examine potential empirical applications. While quantitative text analysis is extensively used in fields like political science, sociology, and linguistics, it is less prevalent in economics and finance in Pakistan. However, growing interest in this area is supported by advances in open-source software and the availability of large text datasets.</p>
+<p>Text mining transforms unstructured data into structured data, extracting information to analyze patterns, trends, sentiment, and classifications within the text. By analyzing the SBP’s monetary policy statements, we aim to uncover patterns and insights that can enhance the understanding of monetary policy decisions, which have significant implications for the economy.</p>
+<p>Focus is on the primer of extracting information from unstructured data, and the potential applications of text mining in the context of monetary policy statements. Quantitative analysis of text data is a rapidly growing field, and the methods and techniques used in this paper are not exhaustive. These methods are in extensive use in political science, sociology, linguistics and information security but are not in wide use in economics and finance in Pakistan. Nevertheless, there is a growing interest in the use of text mining in economics and finance, and this paper aims to provide a starting point for researchers interested in text mining and its applications in economics and finance.</p>
+<p>As text data is usually unstructured, therefore, it is important that a reproducible and systematic approach is used to extract information from text data. The principal goal of text mining is to capture and analyze all possible meanings embedded in text. Text mining transform unstructured data into structured data, and to extract information from text data. Text mining is a rapidly growing field, and has applications in a wide range of fields, such as information retrieval, natural language processing, and data mining. Moreover, it analyzes-patterns and trends in the text data,the sentiment of text data, classify text data, to categorize the text data among many other functions.</p>
+<p>This section aims at providing a systematic approach to text mining, and to demonstrate the potential applications of text mining in the context of monetary policy statements.</p>
+<section id="mps-data" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="mps-data"><span class="header-section-number">4.1</span> MPS Data</h3>
+<p>We conduct text analysis using topic modeling, sentiment, and linguistic analysis on the Monetary Policy Statements of the State Bank of Pakistan from 2005 to 2024 to capture the focus, tone, and clarity of monetary policy communications. A total of 86 MPS documents were collected from the SBP website for this analysis. The data, originally in PDF format, was extracted and processed to convert it into a usable text format.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;&lt;PlainTextDocument&gt;&gt;
+Metadata:  7
+Content:  chars: 5711
+
+                               MONETARY POLICY COMMITTEE
+                                STATE BANK OF PAKISTAN
+Monetary Policy Statement
+January 2018
+
+Pakistan’s economic growth is on track to achieve its highest level in the last eleven years. Average
+headline inflation remains within the forecast range of SBP, but core inflation has continued to
+increase. Fiscal deficit for H1-FY18 is expected to fall close to the last year’s 2.5 percent. There has
+been visible improvement in export growth and remittances are marginally higher. However, largely
+due to high level of imports the current account deficit remains under pressure. The exchange rate
+adjustment in December 2017 is expected to help ease the pressure on the external front.
+
+The progress in the real sector indicates that agriculture sector is set to perform better for the
+second year in a row. Production of all major Kharif crops, except maize, has surpassed the level of
+FY17. Similarly, large scale manufacturing (LSM) recorded a healthy broad-based growth of 7.2
+percent during Jul-Nov FY18 as compared to 3.2 percent during the same period last year. While
+there could be some deceleration in LSM growth due to sector specific issues such as sugar, POL
+and fertilizer, overall industrial activity is likely to remain strong. Benefiting from both infrastructure
+and CPEC related investments, construction and its allied industries are expected to maintain their
+higher growth momentum. After incorporating the impact of commodity sector dynamics on the
+services sector, the real GDP growth is projected to be around 5.8 percent, significantly higher than
+FY17, but marginally lower than the annual target of 6 percent for FY18. This is largely due to
+expectations of a below-target wheat crop because of a reduction in area under cultivation.
+
+Average headline inflation for H1-FY18 stands at 3.8 percent. Meanwhile, core inflation (non-food-
+non-energy) continued to maintain its higher trajectory, and clocked in at 5.5 percent during the first
+half of the year as compared to 4.9 percent last year. This together with a lagged impact of PKR
+depreciation and rising international oil prices are likely to increase inflation in the coming months.
+Taking into account the impact of all these developments, while the average inflation for FY18 is
+still projected to fall in the range of 4.5 to 5.5 percent, end of fiscal year YoY inflation is likely to
+inch towards the annual target of 6 percent.
+
+Broad money supply grew marginally by 1.9 percent during 1st Jul-12th Jan FY18.. This is a reflection
+of the decline in NFA and government efforts to contain expenditures. Higher tax collection and
+proceeds from the issuance of Sukuk and Eurobond have led to reduction in net budgetary
+borrowing which stood at Rs. 401.9 billion during 1st Jul-12th Jan FY18 as compared to Rs. 470.4
+billion in the corresponding period of the previous year. Moreover, the delay in the sugar crushing
+season also contributed to a moderation of demand in private sector credit.
+
+On the external front, export receipts posted the highest growth in the last seven years of 10.8
+percent in H1-FY18 against a reduction of 1.4 percent in H1-FY17. Worker’s remittances also
+recorded growth (2.5 percent) during the first half of the year as compared to a decline in the same
+period last year. However, favorable impact of these positives was overshadowed by the
+continuation of strong growth in imports of goods and services. The current account deficit
+widened to US$ 7.4 billion during the first half of the year, which was 1.6 times of the deficit during
+the same period last year. Developments in financial accounts show that one-fifth of this deficit was
+financed by healthy foreign direct investments inflows, and the rest was managed by the official
+flows and the country’s own resources. As a result, SBP’s liquid foreign exchange reserves
+
+                                                                                                     Page 1
+
+                               MONETARY POLICY COMMITTEE
+                               STATE BANK OF PAKISTAN
+witnessed a decline of US$ 2.6 billion since end June 2017 to reach US$ 13.5 billion as of 19th
+January 2018. Going forward, the PKR depreciation in December 2017, the export package, the
+lagged impact of adjustments in regulatory duties, favorable external environment, and expected
+increase in workers’ remittances, will contribute to a gradual reduction in the country’s current
+account deficit. While increase in international oil prices pose a major risk to this assessment,
+managing overall balance of payments in near term depends on the realization of official financial
+flows.
+
+Four key factors of Pakistan’s economy have witnessed important changes since November 2017
+impinging upon the policy rate decision. Firstly, PKR has depreciated by around 5 percent.
+Secondly, oil prices are hovering near USD 70 per barrel. Thirdly, a number of central banks have
+started to adjust their policy rates upwards adversely affecting PKR interest-rate differentials vis-à-
+vis their currencies. Fourthly, multiple indicators show that the output gap has significantly
+narrowed indicating a buildup of demand pressures.
+
+Based on these developments, MPC is of the view that in order to preempt overheating of the
+economy and inflation breaching its target rate, this is the right time to make a policy decision that
+would balance growth and stability in the medium to long term. Accordingly, the Monetary Policy
+Committee has decided to raise the policy rate by 25 bps to 6.00 percent.
+
+                                                                                                    Page 2</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "01012018.txt" "02032023.txt" "04042023.txt" "05102012.txt" "07072022.txt"
+ [6] "07082022.txt" "08032022.txt" "08062012.txt" "08102011.txt" "09042016.txt"
+[11] "10062024.txt" "10102022.txt" "12042013.txt" "12062023.txt" "12092015.txt"
+[16] "12092024.txt" "12122023.txt" "13042012.txt" "13112013.txt" "14072018.txt"
+[21] "14092023.txt" "14122012.txt" "14122021.txt" "15032014.txt" "15052020.txt"
+[26] "15112014.txt" "16042020.txt" "16072019.txt" "16092019.txt" "17032020.txt"
+[31] "17052014.txt" "18032024.txt" "19032021.txt" "19112021.txt" "20052017.txt"
+[36] "20052019.txt" "20092014.txt" "20092021.txt" "21032015.txt" "21052011.txt"
+[41] "21052016.txt" "21062013.txt" "21092020.txt" "21112015.txt" "22012021.txt"
+[46] "22072017.txt" "22082022.txt" "22112019.txt" "23012023.txt" "23052015.txt"
+[51] "23052022.txt" "23112020.txt" "24012022.txt" "24032020.txt" "24052010.txt"
+[56] "24092016.txt" "24112009.txt" "24112017.txt" "25032017.txt" "25052018.txt"
+[61] "25062020.txt" "25112022.txt" "26032011.txt" "26062023.txt" "26112017.txt"
+[66] "27032010.txt" "27072021.txt" "28012017.txt" "28012020.txt" "28052021.txt"
+[71] "29012024.txt" "29032019.txt" "29042024.txt" "29072024.txt" "29092010.txt"
+[76] "29092017.txt" "29092018.txt" "29112010.txt" "30012016.txt" "30032018.txt"
+[81] "30072016.txt" "30102023.txt" "30112011.txt" "30112018.txt" "31012019.txt"
+[86] "31072023.txt"</code></pre>
+</div>
+</div>
+</section>
+<section id="cleaning-and-preprocessing" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="cleaning-and-preprocessing"><span class="header-section-number">4.2</span> Cleaning and Preprocessing</h3>
+<p>The extracted text was cleaned and preprocessed to remove any unwanted characters and symbols. This process involved converting all words to lowercase, removing stop words like ‘the’, ‘is’, ‘at’, and ‘which’, eliminating numbers, and stemming words to reduce them to their root forms (e.g., ‘running’, ‘runs’, ‘ran’ become ‘run’).</p>
+<p>Below is the text left from corpus after removing the stop words.</p>
+<blockquote class="blockquote">
+<p>monetary policy committee monetary policy statement’s economic growth track achieve highest level last eleven years average headline inflation remains within forecast range core inflation continued increase fiscal deficit h fy expected fall close last ’s percent visible improvement export growth remittances marginally higher however largely due high level imports current account deficit remains pressure exchange rate adjustment expected help ease pressure external front progress real sector indicates agriculture sector set perform better second row production major kharif crops except maize surpassed level fy similarly large scale manufacturing lsm recorded healthy broad based growth percent.</p>
+</blockquote>
+</section>
+<section id="document-term-matrix" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="document-term-matrix"><span class="header-section-number">4.3</span> Document Term Matrix</h3>
+<p>Following this, the text was tokenized and structured into a document-term matrix for further analysis. Finally, various data analysis and visualization techniques were applied to derive insights from the processed text. After cleaning, the text was converted into a document-term matrix (DTM).</p>
+<p>Each cell in the DTM contains the frequency of a term in a specific document. Exploratory data analysis was conducted on the DTM to identify patterns and key insights. The most frequent terms included ‘percent’, ‘inflation’, ‘policy’, ‘growth’, ‘monetary’, and ‘sector’, highlighting central themes in the monetary policy statements. Terms appearing in a high number of documents underscored consistent focus areas across the corpus.</p>
+</section>
+</section>
+<section id="exploratory-data-analysis" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="exploratory-data-analysis"><span class="header-section-number">5</span> Exploratory Data Analysis</h2>
+<p>There are 86 documents and 3308 columns. The most frequent top 6 and bottom 6 terms are shown below.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 86 12</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>               term frequency
+percent     percent       992
+inflation inflation       961
+policy       policy       651
+growth       growth       566
+monetary   monetary       555
+sector       sector       455</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>             term frequency
+current   current       413
+account   account       356
+deficit   deficit       354
+rate         rate       320
+expected expected       307
+decided   decided        90</code></pre>
+</div>
+</div>
+<section id="plotting-data" class="level3" data-number="5.1">
+<h3 data-number="5.1" class="anchored" data-anchor-id="plotting-data"><span class="header-section-number">5.1</span> Plotting data</h3>
+<p>Visualization techniques such as term frequency plots, dendrograms, and correlation plots were employed to illustrate relationships between terms. Dendrograms provided a visual representation of how terms cluster together without pre-specifying the number of clusters. Correlation maps showed how certain terms relate to each other based on specified criteria. A word cloud was generated to visually represent word frequency, with the size of each word corresponding to its frequency in the corpus. The term frequency-inverse document frequency (tf-idf) weighting scheme was applied to adjust for commonality of words, enhancing the significance of terms that are important within specific documents but less frequent across the corpus. Using the ‘tidytext’ package, the text data was further analyzed by converting it into a tidy format with one word per row. This facilitated word counting and sentiment analysis. <a href="#fig-hist-100" class="quarto-xref">Figure&nbsp;1</a> and <a href="#fig-hist-200" class="quarto-xref">Figure&nbsp;2</a> show a histogram of words in the corpus, highlighting the most common terms.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-hist-100" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hist-100-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-hist-100-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-100-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Histogram of words with 100 or mor frequencies in the corpus
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-hist-200" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hist-200-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-hist-200-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hist-200-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Histogram of words with 200 or more frequencies in the corpus
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Dendrogram is another way to visualize the data. The dendrogram is a tree diagram frequently used to illustrate the arrangement of the clusters produced by hierarchical clustering. Hierarchical clustering is a method of cluster analysis which seeks to build a hierarchy of clusters without specifying the number of clusters beforehand. This is shown in <a href="#fig-dendrogram" class="quarto-xref">Figure&nbsp;3</a>. The adjacency figure is another way to visualize the data. The adjacency figure shows the relationship between terms in the corpus. The adjacency figure is shown in <strong>?@fig-adjacency</strong>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dendrogram" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dendrogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-dendrogram-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dendrogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Dendrogram of the corpus
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-dendrogram" class="quarto-xref">Figure&nbsp;3</a> shows the dendrogram of the corpus. The dendrogram is a tree diagram that is frequently used to illustrate the arrangement of the clusters produced by hierarchical clustering. Ordering of the terms in the dendrogram is based on the similarity of the terms. The adjacency figure is another way to visualize the data. The adjacency figure shows the relationship between terms in the corpus. The adjacency figure is shown in <strong>?@fig-adjacency</strong>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-adjancy" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-adjancy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-adjancy-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-adjancy-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Adjacency Figure of the corpus
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="correlation-plot" class="level3" data-number="5.2">
+<h3 data-number="5.2" class="anchored" data-anchor-id="correlation-plot"><span class="header-section-number">5.2</span> Correlation plot</h3>
+<p>One of the most intuitive way to visualize relationships between terms is to with correlation maps. Based on a certain <em>ad-hoc</em> criteria,<a href="#fig-cor" class="quarto-xref">Figure&nbsp;5</a> show how some certain terms relate to each other.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-cor" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-cor-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cor-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: Correlation Plot
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>A dictionary-based approach was used to infer sentiment, employing the Loughran and McDonald financial sentiment dictionary. Special attention was given to context, as words like ‘increase’ or ‘decrease’ can have different sentiments depending on the economic indicator they describe. Relative frequencies of positive and negative words were calculated by dividing the frequency of these words by the total word count, providing normalized sentiment measures. Semantic analysis determined the overall sentiment orientation by calculating the ratio of positive to negative word frequencies for each document.</p>
+<p>Topic modeling, specifically Latent Dirichlet Allocation (LDA), was utilized to uncover abstract topics within the documents. This method identified clusters of similar words, revealing hidden semantic structures and the balance of topics within each document. Heatmaps visualized term frequencies across documents, enabling side-by-side content comparison and highlighting shifts in focus over time, such as differences between 2018 and 2023. Advanced text analysis methods like Wordfish and Wordscores were applied for quantitative analysis of textual data. Wordfish estimated document positions on a latent dimension based on word frequencies, allowing visualization of changes in policy stance over time. Wordscores assigned scores to words based on reference texts, facilitating comparative analysis of policy positions.</p>
+</section>
+<section id="word-cloud" class="level3" data-number="5.3">
+<h3 data-number="5.3" class="anchored" data-anchor-id="word-cloud"><span class="header-section-number">5.3</span> Word Cloud</h3>
+<p>The <code>wordcloud</code> package is used to create the word cloud. There are three word clouds created in this analysis. <a href="#fig-wc-50" class="quarto-xref">Figure&nbsp;6</a> cloud is created with a minimum frequency of 50. <a href="#fig-wc-100" class="quarto-xref">Figure&nbsp;7</a> cloud is created with a minimum frequency of 100. <a href="#fig-wc-200" class="quarto-xref">Figure&nbsp;8</a> cloud is created with a minimum frequency of 200.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 86 36</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-wc-50" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wc-50-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-wc-50-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wc-50-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Wordcloud with minimum frequency 50
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-wc-100" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wc-100-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-wc-100-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wc-100-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;7: Wordcloud with minimum frequency 100
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-wc-200" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wc-200-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-wc-200-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wc-200-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8: Wordcloud with minimum frequency 200
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-wc-300" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wc-300-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-wc-300-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wc-300-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;9: Wordcloud with minimum frequency 300
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="weighting-scheme" class="level3" data-number="5.4">
+<h3 data-number="5.4" class="anchored" data-anchor-id="weighting-scheme"><span class="header-section-number">5.4</span> Weighting Scheme</h3>
+<p>Another weighting scheme - term frequency/inverse document frequency is given here to create word clouds. The term frequency/inverse document frequency is a statistical measure used to evaluate the importance of a word in a document relative to a collection of documents.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]   86 1199</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        jul       noted  borrowings   committee coronavirus      global 
+  0.3031460   0.2892047   0.2809725   0.2532277   0.2497686   0.2189878 
+   recovery     meeting       covid      floods     economy      system 
+  0.1991368   0.1981736   0.1930156   0.1876221   0.1858343   0.1854501 
+     market        half        thus        debt       month   liquidity 
+  0.1783914   0.1764875   0.1749407   0.1726483   0.1724567   0.1703647 
+  continued       views 
+  0.1697670   0.1657429 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   word      freq
+jul                 jul 0.3031460
+noted             noted 0.2892047
+borrowings   borrowings 0.2809725
+committee     committee 0.2532277
+coronavirus coronavirus 0.2497686
+global           global 0.2189878</code></pre>
+</div>
+</div>
+<p><a href="#fig-wc-tf-idf" class="quarto-xref">Figure&nbsp;10</a> is the bar graph created with the term frequency/inverse document frequency weighting scheme.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-wc-tf-idf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wc-tf-idf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-wc-tf-idf-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wc-tf-idf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;10: Wordcloud with term frequency/inverse document frequency weighting
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><a href="#fig-wc-tf-idf-wc" class="quarto-xref">Figure&nbsp;11</a> is the word cloud created with the term frequency/inverse document frequency weighting scheme. <a href="#fig-wc-tf-idf-wc-10" class="quarto-xref">Figure&nbsp;12</a> and <a href="#fig-wc-tf-idf-wc-20" class="quarto-xref">Figure&nbsp;13</a> are the word clouds created with the term frequency/inverse document frequency weighting scheme with different minimum frequencies.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-wc-tf-idf-wc" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wc-tf-idf-wc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-wc-tf-idf-wc-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wc-tf-idf-wc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;11: Wordcloud with term frequency/inverse document frequency weighting of 0.05
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-wc-tf-idf-wc-10" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wc-tf-idf-wc-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-wc-tf-idf-wc-10-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wc-tf-idf-wc-10-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;12: Wordcloud with term frequency/inverse document frequency weighting of 0.10
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-wc-tf-idf-wc-20" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wc-tf-idf-wc-20-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-wc-tf-idf-wc-20-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wc-tf-idf-wc-20-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;13: Wordcloud with term frequency/inverse document frequency weighting of 0.20
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>The purpose of creating a document-term matrix is twofold: first, to identify the main topics of each document by highlighting important and unique words; and second, to prepare the collection of documents for further analysis.</p>
+<p>However, simply counting how often each word appears isn’t always helpful. Common words might show up frequently but don’t necessarily tell us much about the content. To overcome this, we use a method called <strong>term frequency-inverse document frequency (tf-idf)</strong>.</p>
+<p><strong>Tf-idf</strong> is a technique that helps determine how important a word is within a single document compared to all other documents in a collection. It gives more weight to words that appear often in one document but not in many others. This way, it highlights words that are significant to a particular document and reduces the impact of common words that are less informative.</p>
+<p>By using tf-idf, we can focus on the words that truly matter in each document. This makes it easier to summarize content, identify key topics, and improve how we retrieve and analyze information from the text.</p>
+</section>
+<section id="tidytext-data-table" class="level3" data-number="5.5">
+<h3 data-number="5.5" class="anchored" data-anchor-id="tidytext-data-table"><span class="header-section-number">5.5</span> Tidytext data table</h3>
+<p>Now I shall use <code>tidytext</code> with the help of unnest_tokens to convert one word per row. <a href="#tbl-tidytext" class="quarto-xref">Table&nbsp;1</a> shows the first 10 rows of the data table. And <a href="#fig-bar-tf-idf" class="quarto-xref">Figure&nbsp;14</a> is the bar graph created with the term frequency/inverse document frequency weighting scheme.</p>
+<div id="tbl-tidytext" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tidytext-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Tidytext data table
+</figcaption>
+<div aria-describedby="tbl-tidytext-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output cell-output-stdout">
+<pre><code>                   word      freq
+jul                 jul 0.3031460
+noted             noted 0.2892047
+borrowings   borrowings 0.2809725
+committee     committee 0.2532277
+coronavirus coronavirus 0.2497686
+global           global 0.2189878
+recovery       recovery 0.1991368
+meeting         meeting 0.1981736
+covid             covid 0.1930156
+floods           floods 0.1876221</code></pre>
+</div>
+</div>
+</figure>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-bar-tf-idf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bar-tf-idf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-bar-tf-idf-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bar-tf-idf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;14: Bar graph with term frequency/inverse document frequency weighting
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>To reduce dimensionality, we use sparse term-document matrix as shown in <a href="#fig-dendogram-tf-idf" class="quarto-xref">Figure&nbsp;15</a>. The dendogram is created using the Euclidean distance and Ward’s method.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-dendogram-tf-idf" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dendogram-tf-idf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-dendogram-tf-idf-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dendogram-tf-idf-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15: Dendogram with term frequency/inverse document frequency weighting
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>png 
+  2 </code></pre>
+</div>
+</div>
+<p>With conversion to dtm, exploratory data analysis is performed to identify patterns and trends in the text data.</p>
+</section>
+<section id="word-counting" class="level3" data-number="5.6">
+<h3 data-number="5.6" class="anchored" data-anchor-id="word-counting"><span class="header-section-number">5.6</span> Word counting</h3>
+<p>Dictionary-based text analysis is popular approach mainly because its easy to implement and interpret. The dictionary-based approach is based on the idea that the frequency of certain words in a text can be used to infer the sentiment of the text. However, sentiment words from one discipline to another might be different. For example, words used in psychology to express positive sentiments might be different from words used in economics. Therefore, it is important to use a dictionary that is specific to the discipline. The <code>tidytext</code> package is used to count the frequency of words in the text data. The <code>get_sentiments</code> function is used to get the sentiment words from the dictionary. In this document, I am using Loughran and McDonald dictionary to count the frequency of positive and negative words in the text data.</p>
+<p>It is important to be careful in use of words to be positive or negative. For example, the word ‘increase’ is generally considered to be positive, but in the context of inflation, it is considered to be negative. Similarly the word ‘decrease’ is generally considered to be negative, but in the context of inflation, it is considered to be positive. Another example is <code>tight</code> and <code>loose</code> monetary policy. The word <code>tight</code> is generally considered to be positive, but in the context of monetary policy, it is considered to be negative. Similarly, the word <code>loose</code> is generally considered to be negative, but in the context of monetary policy, it is considered to be positive. Therefore, it is important to be careful in use of words to be positive or negative.</p>
+<p>Next we use the <code>match</code> function that compares the terms in both dictionary and the text data. The <code>match</code> function returns the position of the first match. If there is no match, the <code>match</code> function returns <code>NA</code>. The <code>match</code> function is used to count the frequency of positive and negative words in the text data.</p>
+<p>We then assign a value of 1 to the positive and negative matches. The <code>ifelse</code> function is used to assign a value of 1 to the positive and negative, and measure the overall sentiment for each document <span class="math inline">\(i\)</span> by the following formula: <span class="math inline">\(Score_i = \frac{Positive_i - Negative_i}{Positive_i + Negative} \in [-1,1]\)</span></p>
+<p>A document is considered to be positive if the score is greater than 0, and negative if the score is less than 0.</p>
+</section>
+<section id="relative-frequency" class="level3" data-number="5.7">
+<h3 data-number="5.7" class="anchored" data-anchor-id="relative-frequency"><span class="header-section-number">5.7</span> Relative frequency</h3>
+<p>The relative frequency of positive and negative words is calculated by dividing the frequency of positive and negative words by the total number of words in the text.</p>
+</section>
+<section id="semantic-analysis" class="level3" data-number="5.8">
+<h3 data-number="5.8" class="anchored" data-anchor-id="semantic-analysis"><span class="header-section-number">5.8</span> Semantic analysis</h3>
+<p>The semantic analysis is performed to identify the semantic orientation of the text data. The semantic orientation is the degree to which a word is positive or negative. The semantic orientation is calculated by dividing the frequency of positive words by the frequency of negative words. The semantic orientation is calculated for each document in the text data.</p>
+</section>
+<section id="topic-models" class="level3" data-number="5.9">
+<h3 data-number="5.9" class="anchored" data-anchor-id="topic-models"><span class="header-section-number">5.9</span> Topic models</h3>
+<p>Topic modeling is a statistical technique used to uncover the underlying “topics” within a collection of documents. It is a common text-mining tool that identifies hidden patterns or themes in a body of text. The basic idea is that if a document discusses a specific topic, certain words related to that topic will appear more frequently. For instance, words like “dog” and “bone” are likely to be more common in texts about dogs, while “cat” and “meow” will be prevalent in documents about cats. Common words like “the” and “is” would appear across all topics. Typically, a document might cover multiple topics in varying proportions. For example, a text that is 10% about cats and 90% about dogs would likely have a higher occurrence of dog-related words. Topic modeling identifies clusters of similar words, which represent these topics, and applies a mathematical approach to analyze the text. This helps to determine the dominant topics across the entire set of documents and the specific balance of topics within each document.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>             [,1]
+01012018.txt    4
+02032023.txt    1
+04042023.txt    4
+05102012.txt    3
+07072022.txt    2
+07082022.txt    1
+08032022.txt    4
+08062012.txt    4
+08102011.txt    3
+09042016.txt    3</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      Topic 1     Topic 2     Topic 3     Topic 4    
+ [1,] "policy"    "inflation" "sector"    "percent"  
+ [2,] "monetary"  "monetary"  "growth"    "deficit"  
+ [3,] "rate"      "percent"   "current"   "account"  
+ [4,] "expected"  "growth"    "percent"   "growth"   
+ [5,] "decided"   "current"   "policy"    "policy"   
+ [6,] "current"   "policy"    "account"   "inflation"
+ [7,] "growth"    "account"   "decided"   "current"  
+ [8,] "inflation" "expected"  "expected"  "decided"  
+ [9,] "account"   "decided"   "deficit"   "expected" 
+[10,] "deficit"   "deficit"   "inflation" "monetary" 
+[11,] "percent"   "rate"      "monetary"  "rate"     </code></pre>
+</div>
+</div>
+<p>The four topics identified seem to revolve around key economic themes as are in objectives of MPS, based on the recurring words within each:</p>
+<p><strong>Topic 1: Monetary Policy and Growth</strong> - Key words: “policy,” “monetary,” “rate,” “growth,” “inflation” - This topic appears to focus on monetary policy, growth rates, and inflation. Words like “policy,” “rate,” and “growth” suggest discussions around central bank decisions, economic growth strategies, and inflation control measures.</p>
+<p><strong>Topic 2: Inflation and Monetary Measures</strong> - Key words: “inflation,” “monetary,” “percent,” “growth,” “expected” - This topic seems to center around inflation metrics and monetary policy. Terms like “inflation,” “monetary,” and “percent” imply discussions on inflation trends, forecasts, and central bank responses to inflationary pressures.</p>
+<p><strong>Topic 3: Economic Growth and Balance of Payments</strong> - Key words: “sector,” “growth,” “current,” “account,” “deficit” - This topic appears to relate to economic growth and the balance of payments. The presence of “current,” “account,” and “deficit” indicates a focus on trade balances, external accounts, and their impact on sectors and overall growth.</p>
+<p><strong>Topic 4: Fiscal Policy and Inflation Dynamics</strong> - Key words: “percent,” “deficit,” “account,” “inflation,” “monetary” - This topic seems to address fiscal policy, deficits, and their influence on inflation. The mention of “deficit,” “account,” and “inflation” suggests a focus on fiscal balances, how they affect inflation, and monetary policy considerations.</p>
+<p>These themes reflect typical discussions in economic policy circles, highlighting the interplay between growth strategies, inflation control, and fiscal management.</p>
+</section>
+<section id="wordfish" class="level3" data-number="5.10">
+<h3 data-number="5.10" class="anchored" data-anchor-id="wordfish"><span class="header-section-number">5.10</span> Wordfish</h3>
+</section>
+<section id="plotting-wordfish-score" class="level3" data-number="5.11">
+<h3 data-number="5.11" class="anchored" data-anchor-id="plotting-wordfish-score"><span class="header-section-number">5.11</span> Plotting Wordfish Score</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="26112024iba_paper_files/figure-html/unnamed-chunk-42-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>pdf 
+  3 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>   monetary      policy   committee   statement   pakistans    economic 
+-0.31851327 -0.26847266 -0.70266638  0.01863794  0.01152245 -0.19212320 
+     growth       track     achieve     highest 
+ 0.01469201  0.01863794  0.01578806  0.01152245 </code></pre>
+</div>
+</div>
+</section>
+<section id="plotting-wordscores-score" class="level3" data-number="5.12">
+<h3 data-number="5.12" class="anchored" data-anchor-id="plotting-wordscores-score"><span class="header-section-number">5.12</span> Plotting Wordscores Score</h3>
+<p><strong>?@fig-wordscores-plot1</strong> and <a href="#fig-wordscores-plot2" class="quarto-xref">Figure&nbsp;16</a> indicate the Wordscores score over time, the change in Wordscores score over time and the change in Wordscores score over time to indicate dovish/hawkish sentiment respectively.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="26112024iba_paper_files/figure-html/unnamed-chunk-44-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-wordscores-plot2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-wordscores-plot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="26112024iba_paper_files/figure-html/fig-wordscores-plot2-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wordscores-plot2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;16: Change in Wordscores Score Over Time to indicate dovish/hawkish sentiment
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">6</span> Conclusion</h2>
+<p>Data has emerged as a critical strategic asset in the modern era, fundamentally transforming how nations can approach governance, economic development, and technological advancement. This research demonstrates the immense potential of leveraging advanced technologies like Natural Language Processing (NLP) and Large Language Models (LLMs) to extract meaningful insights from public sector data.</p>
+<p>In conclusion, this study showed how text mining and sentiment analysis can turn unstructured data into a strategic asset. By analyzing monetary policy statements, the methods outlined offer a systematic approach to handling textual data, stressing the importance of context and careful interpretation. Initial findings indicate that the State Bank of Pakistan’s policy communications generally maintain a neutral tone, without strong bias towards hawkish or dovish sentiments. This work highlights the value of data-driven insights in economic research and provides a reproducible methodology for future studies. Advances in software have made text data analysis more accessible, encouraging its use among researchers and practitioners in both academic and business sectors. Effective use of data as a strategic asset can improve policy formulation, decision-making, and economic understanding. Future research could explore the relationship between sentiment analysis and financial market reactions, as well as the impact of sentiment on economic indicators.</p>
+<p>Moving forward, realizing the full potential of data requires a comprehensive approach. This includes: - Investing in robust data infrastructure</p>
+<ul>
+<li><p>Promoting data literacy across public sector organizations</p></li>
+<li><p>Adopting standardized data management practices</p></li>
+<li><p>Fostering collaboration between government, academic, and private sector entities</p></li>
+</ul>
+<p>As we progress through the 4th Industrial Revolution, the ability to effectively harness, analyze, and leverage data will increasingly define national competitive advantage. Countries that prioritize data as a strategic asset will be better positioned to drive innovation, improve public services, and navigate the complex challenges of the digital age. This study highlights that data management, data quality, trust in data, data transparency etc, are important for data to serve as AI fuel. Second point is exploring unstructured data and analysing it for government analytics for policy relvance. This research serves as a call to action for policymakers, demonstrating that data the true power of data lies not in its collection, but in its intelligent and strategic utilization.</p>
+</section>
+<section id="references" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="references"><span class="header-section-number">7</span> References</h2>
+<ul>
+<li><p>Benchimol, J., et al.&nbsp;(2022). <em>[Title of the guideline paper]</em>.</p></li>
+<li><p>Clark, M. (n.d.). <em>Text Analysis in R</em>. Retrieved from <a href="https://m-clark.github.io/text-analysis-with-R/intro.html#overview">Text Analysis in R</a>.</p></li>
+<li><p>Herasymova, O. (2022). <em>[Title of the paper]</em>.</p></li>
+<li><p>Schwab, K. (2016). <em>The Fourth Industrial Revolution</em>. World Economic Forum.</p></li>
+<li><p>Shapiro, A. H., &amp; Wilson, D. J. (2021). <em>Taking the Fed at its word: Direct estimation of central bank objectives using text analytics</em>. Federal Reserve Bank of San Francisco.</p></li>
+</ul>
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-benchimol2022" class="csl-entry" role="listitem">
+Benchimol, Jonathan, Sophia Kazinnik, and Yossi Saadon. 2022. <span>“Text Mining Methodologies with R: An Application to Central Bank Texts.”</span> <em>Machine Learning with Applications</em> 8 (June): 100286. <a href="https://doi.org/10.1016/j.mlwa.2022.100286">https://doi.org/10.1016/j.mlwa.2022.100286</a>.
+</div>
+<div id="ref-shapiro2021" class="csl-entry" role="listitem">
+Shapiro, Adam Hale, and Daniel J Wilson. 2021. <span>“Taking the Fed at Its Word: A New Approach to Estimating Central Bank Objectives Using Text Analysis.”</span> <em>The Review of Economic Studies</em> 89 (5): 2768–2805. <a href="https://doi.org/10.1093/restud/rdab094">https://doi.org/10.1093/restud/rdab094</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Clark, M. (n.d.). <em>Text Analysis in R</em>. Retrieved from <a href="https://m-clark.github.io/text-analysis-with-R/intro.html#overview">Text Analysis in R</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
